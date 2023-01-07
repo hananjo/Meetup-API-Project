@@ -1357,7 +1357,7 @@ Returns the members of a group specified by its id.
 - Request
 
   - Method: GET
-  - URL: /api/groups/:groupId/memebers/
+  - URL: /api/groups/:groupId/members/
   - Body: none
 
 - Successful Response: If you ARE the organizer or a co-host of the group. Shows
