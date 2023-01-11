@@ -12,7 +12,6 @@ const isProduction = environment === "production";
 
 const app = express();
 
-app.use(routes);
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
@@ -31,6 +30,7 @@ app.use(
 );
 
 // Set the _csrf token and create req.csrfToken method
+
 app.use(
   csurf({
     cookie: {
@@ -41,4 +41,5 @@ app.use(
   })
 );
 
+app.use(routes);
 module.exports = app;
