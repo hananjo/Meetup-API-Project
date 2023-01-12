@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+`![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1673413873/Untitled_qdajat.png)`
 
 ## API Documentation
 
@@ -55,7 +55,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /api/users/:userId
+  - URL: /api/session
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -99,7 +99,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /api/login
+  - URL: /api/session
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -169,7 +169,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/users/signup
+  - URL: /api/users
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -286,7 +286,7 @@ Returns all the groups.
 - Request
 
   - Method: GET
-  - URL: /api/users/:userId/groups
+  - URL: /api/groups/current
   - Body: none
 
 - Successful Response
@@ -401,7 +401,7 @@ Creates and returns a new group.
 - Request
 
   - Method: POST
-  - URL: /api/groups/new
+  - URL: /api/groups
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -470,7 +470,7 @@ Create and return a new image for a group specified by id.
 - Request
 
   - Method: POST
-  - URL: /api/groups/:groupId/images/new
+  - URL: /api/groups/:groupId/images
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -698,7 +698,7 @@ Creates and returns a new venue for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: /api/groups/:groupId/venues/new
+  - URL: /api/groups/:groupId/venues
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1077,7 +1077,7 @@ Creates and returns a new event for a group specified by its id
 - Request
 
   - Method: POST
-  - URL: /api/groups/:groupId/events/new
+  - URL: /api/groups/:groupId/events
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1164,7 +1164,7 @@ Create and return a new image for an event specified by id.
 - Request
 
   - Method: POST
-  - URL: /api/events/:eventId/images/new
+  - URL: /api/events/:eventId/images
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1357,7 +1357,7 @@ Returns the members of a group specified by its id.
 - Request
 
   - Method: GET
-  - URL: /api/groups/:groupId/members/
+  - URL: /api/groups/:groupId/members
   - Body: none
 
 - Successful Response: If you ARE the organizer or a co-host of the group. Shows
@@ -1452,7 +1452,7 @@ Request a new membership for a group specified by id.
 - Request
 
   - Method: POST
-  - URL: /api/groups/:groupId/membership/new
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -1529,7 +1529,7 @@ Change the status of a membership for a group specified by id.
 - Request
 
   - Method: PUT
-  - URL: /api/groups/:groupId/members/status
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1629,7 +1629,7 @@ Delete a membership to a group specified by id.
 - Request
 
   - Method: DELETE
-  - URL: /api/groups/:groupId/members/:memberId
+  - URL: /api/groups/:groupId/membership
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1806,7 +1806,7 @@ Request attendance for an event specified by id.
 - Request
 
   - Method: POST
-  - URL: /api/events/:eventId/users/:userId/attandence
+  - URL: /api/events/:eventId/attandence
   - Headers:
     - Content-Type: application/json
   - Body: none
@@ -1879,7 +1879,7 @@ Change the status of an attendance for an event specified by id.
 - Request
 
   - Method: PUT
-  - URL: /api/events/:eventId/users/:userId/attendance
+  - URL: /api/events/:eventId/attendance
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1959,7 +1959,7 @@ Delete an attendance to an event specified by id.
 - Request
 
   - Method: DELETE
-  - URL: /api/events/:eventId/users/:userId/attendance
+  - URL: /api/events/:eventId/attendance
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2037,7 +2037,7 @@ Delete an existing image for a Group.
 - Request
 
   - Method: DELETE
-  - URL: /api/groups/:groupId/images/:imageId
+  - URL: /api/group-images/:imageId
   - Body: none
 
 - Successful Response
@@ -2078,7 +2078,7 @@ Delete an existing image for an Event.
 - Request
 
   - Method: DELETE
-  - URL: /api/events/:eventId/images/:imageId
+  - URL: /api/events-images/:imageId
   - Body: none
 
 - Successful Response
