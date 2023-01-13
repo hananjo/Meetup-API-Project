@@ -5,6 +5,16 @@ const { User } = require("../../db/models");
 
 const router = express.Router();
 
+// Restore session user
+router.get("/", restoreUser, (req, res) => {
+  const { user } = req;
+  if (user) {
+    return res.json({
+      user: user.toSafeObject(),
+    });
+  } else return res.json({});
+});
+
 router.post("/", async (req, res, next) => {
   const { credential, password } = req.body;
 
