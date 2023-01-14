@@ -3,5 +3,30 @@
     "bcrypt": "^5.1.0",
     "express-validator": "^6.14.2",
     "js": "^0.1.0"
-  }
+  },
+  "name": "meetup",
+  "description": "## Database Schema Design",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm --prefix backend install backend",
+    "dev:backend": "npm install --prefix backend start",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "start": "npm start --prefix backend",
+    "build": "npm run --prefix backend build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hananjo/Meetup-API-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hananjo/Meetup-API-Project/issues"
+  },
+  "homepage": "https://github.com/hananjo/Meetup-API-Project#readme"
 }
