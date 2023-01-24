@@ -408,7 +408,7 @@ router.post(
 //   const Member = await Membership.findOne({
 //     where: {user_id: req.user.id, group_id: req.params.groupId}
 //   })
-//   const {group_id, user_id, status} = req.body;
+//
 //   if(!group) {
 //     res.status(404).json({
 //       message: "Group couldn't be found",
@@ -428,9 +428,9 @@ router.post(
 //     })
 //   }
 //  const newMember = await Membership.create({
-//   group_id,
-//   user_id,
-//   status
+//   group_id: req.params.groupId,
+//   user_id: req.user.Id,
+//   status: "Pending"
 //  })
 
 //  res.json(newMember)
@@ -502,6 +502,7 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
     res.json(newImage);
   }
 });
+
 //Edit a Group
 
 router.put("/:groupId", requireAuth, validateInfo, async (req, res) => {
@@ -532,6 +533,69 @@ router.put("/:groupId", requireAuth, validateInfo, async (req, res) => {
   await group.save();
 
   return res.json(group);
+});
+
+//Change the status of a membership for a group specified by id
+router.put("/:groupId/membership", async (req, res) => {
+  const group = await Group.findByPk(req.params.groupId);
+  const member = await Membership.findOne({
+    where: { user_id: req.user.id, group_id: req.params.groupId },
+  });
+  const { user_id, status } = req.body;
+  if (!member) {
+    return res.status(404).json({
+      message: "Membership between the user and the group does not exist",
+      statusCode: 404,
+    });
+  }
+  if (!group) {
+    return res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+  if (!member.user_id) {
+    return res.status(400).json({
+      message: "Validation Error",
+      statusCode: 400,
+      errors: {
+        user_id: "User couldn't be found",
+      },
+    });
+  }
+  if (status === "Member") {
+    if (
+      req.user.id === group.dataValues.organizer_id ||
+      member.status === "Co-Host"
+    ) {
+      member.set({
+        // user_id,
+        status,
+      });
+      await member.save();
+    } else {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
+  }
+  if (status === "Co-Host") {
+    if (req.user.id === group.dataValues.organizer_id) {
+      member.set({
+        // user_id,
+        status,
+      });
+      await member.save();
+    } else {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: 403,
+      });
+    }
+  }
+
+  res.json(member);
 });
 
 //Delete a Group
