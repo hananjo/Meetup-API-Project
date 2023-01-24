@@ -314,7 +314,7 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
       // is associated with groupId input
     });
 
-    if (member.status == "Co-Hort" || group.organizer_id) {
+    if (member.status == "Co-Host" || group.organizer_id) {
       res.json({ Venues: group.Venues });
     }
   }
