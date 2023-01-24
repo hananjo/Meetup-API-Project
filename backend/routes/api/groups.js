@@ -11,6 +11,8 @@ const {
 } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
+const group = require("../../db/models/group");
+const e = require("express");
 
 const router = express.Router();
 
@@ -25,7 +27,14 @@ const validateInfo = [
     .exists({ checkFalsy: true })
     .isIn(["In-Person", "Online"])
     .withMessage('Type must be "Online" or "In person"'),
-  check("private").isBoolean().withMessage("Private must be a boolean"),
+  check("private")
+    .not()
+    .isString()
+    .not()
+    .isNumeric()
+    .notEmpty()
+    .isBoolean()
+    .withMessage("Private must be a boolean"),
   check("city").notEmpty().withMessage("City is required"),
   check("state").notEmpty().withMessage("State is required"),
   handleValidationErrors,
@@ -104,19 +113,33 @@ const validateEvent = [
 //Get all Groups
 router.get("/", async (req, res) => {
   const groups = await Group.findAll({
-    include: [
-      {
-        model: Event,
-        // as: "capacity",
-        attributes: ["capacity"],
-      },
-      {
-        model: GroupImage,
-        // as: "previewImage",
-        attributes: ["previewImage"],
-      },
-    ],
+    // include: [
+    //   {
+    //     model: Event,
+    //     // as: "capacity",
+    //     attributes: ["capacity"],
+    //   },
+    //   {
+    //     model: GroupImage,
+    //     // as: "previewImage",
+    //     attributes: ["previewImage"],
+    //   },
+    // ],
   });
+  for await (let group of groups) {
+    // console.log(group);
+    const members = await Membership.findAll({
+      where: { group_id: group.dataValues.id },
+    });
+
+    // console.log(members.length);
+    group.dataValues.numMembers = members.length;
+
+    const image = await GroupImage.findOne({
+      where: { previewImage: true, group_id: group.dataValues.id },
+    });
+    group.dataValues.previewImage = image.url;
+  }
 
   res.json({ Groups: groups });
 });
@@ -146,48 +169,53 @@ router.get("/current", requireAuth, async (req, res) => {
     });
     // console.log(members.length);
     group.dataValues.numMembers = members.length;
+
+    const image = await GroupImage.findOne({
+      where: { previewImage: true, group_id: group.dataValues.id },
+    });
+    group.dataValues.previewImage = image.url;
   }
 
   res.json({ Groups: groups });
 });
 
-//Get details of a Group from an id
-// router.get("/:groupId", async (req, res) => {
-//   const group = await Group.findByPk(req.params.groupId, {
-//     include: [
-//       {
-//         model: GroupImage,
-//         attributes: ["id", "url", "previewImage"],
-//       },
-//       {
-//         model: User,
-//         as: "Organizer",
-//         attributes: ["id", "firstName", "lastName"],
-//       },
+// Get details of a Group from an id
+router.get("/:groupId", async (req, res) => {
+  const group = await Group.findByPk(req.params.groupId, {
+    include: [
+      {
+        model: GroupImage,
+        attributes: ["id", "url", "previewImage"],
+      },
+      {
+        model: User,
+        as: "Organizer",
+        attributes: ["id", "firstName", "lastName"],
+      },
 
-//       {
-//         model: Venue,
-//         attributes: [
-//           "id",
-//           "group_Id",
-//           "address",
-//           "city",
-//           "state",
-//           "lat",
-//           "lng",
-//         ],
-//       },
-//     ],
-//   });
-//   if (!group) {
-//     res.status(404).json({
-//       message: "Group couldn't be found",
-//       statusCode: 404,
-//     });
-//   } else {
-//     res.json(group);
-//   }
-// });
+      {
+        model: Venue,
+        attributes: [
+          "id",
+          "group_Id",
+          "address",
+          "city",
+          "state",
+          "lat",
+          "lng",
+        ],
+      },
+    ],
+  });
+  if (!group) {
+    res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  } else {
+    res.json(group);
+  }
+});
 
 // Get all Members of a Group specified by its id
 // router.get("/:groupId/members", async (req, res) => {
@@ -321,34 +349,34 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
 });
 
 //Create a Group
-router.post("/", requireAuth, validateInfo, async (req, res) => {
-  const { name, about, type, private, city, state } = req.body;
-  const newGroup = await Group.create({
-    name,
-    about,
-    type,
-    private,
-    city,
-    state,
-    organizer_id: req.user.id,
-  });
+// router.post("/", requireAuth, validateInfo, async (req, res) => {
+//   const { name, about, type, private, city, state } = req.body;
+//   const newGroup = await Group.create({
+//     name,
+//     about,
+//     type,
+//     private,
+//     city,
+//     state,
+//     organizer_id: req.user.id,
+//   });
 
-  if (!newGroup) {
-    res.status(400).json({
-      message: "Validation Error",
-      statusCode: 400,
-      errors: [
-        "Name must be 60 characters or less",
-        "About must be 50 characters or more",
-        "Type must be 'Online' or 'In person'",
-        "Private must be a boolean",
-        "City is required",
-        "State is required",
-      ],
-    });
-  }
-  res.json(newGroup);
-});
+//   if (!newGroup) {
+//     res.status(400).json({
+//       message: "Validation Error",
+//       statusCode: 400,
+//       errors: [
+//         "Name must be 60 characters or less",
+//         "About must be 50 characters or more",
+//         "Type must be 'Online' or 'In person'",
+//         "Private must be a boolean",
+//         "City is required",
+//         "State is required",
+//       ],
+//     });
+//   }
+//   res.json(newGroup);
+// });
 
 // Create an Event for a Group specified by its id
 router.post(
@@ -509,6 +537,11 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
     });
 
     res.json(newImage);
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
   }
 });
 
@@ -538,10 +571,17 @@ router.put("/:groupId", requireAuth, validateInfo, async (req, res) => {
       ],
     });
   }
-  group.set({ name, about, type, private, city, state });
-  await group.save();
+  if (req.user.id === group.organizer_id) {
+    group.set({ name, about, type, private, city, state });
+    await group.save();
 
-  return res.json(group);
+    return res.json(group);
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 //Change the status of a membership for a group specified by id
@@ -617,11 +657,18 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  await deleteGroup.destroy();
-  res.json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  if (req.user.id === group.organizer_id) {
+    await deleteGroup.destroy();
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 module.exports = router;
