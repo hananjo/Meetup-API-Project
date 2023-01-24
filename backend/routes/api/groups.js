@@ -137,7 +137,16 @@ router.get("/current", requireAuth, async (req, res) => {
     //   },
     // ],
     where: [{ organizer_id: req.user.id }],
+    // attributes: { exclude: ["createdAt", "updatedAt"] },
   });
+  for await (let group of groups) {
+    // console.log(group);
+    const members = await Membership.findAll({
+      where: { group_id: group.dataValues.id },
+    });
+    // console.log(members.length);
+    group.dataValues.numMembers = members.length;
+  }
 
   res.json({ Groups: groups });
 });
@@ -270,7 +279,7 @@ router.get("/:groupId/events", async (req, res) => {
         ],
         include: [
           { model: Group, attributes: ["id", "name", "city", "state"] },
-          { model: Venue, attribtues: ['"id", "city", "state"'] },
+          { model: Venue, attributes: ["id", "city", "state"] },
         ],
       },
     ],
