@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      organizer_id: {
+      organizerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
       type: {
-        type: Sequelize.ENUM("In-Person", "Online"),
+        type: Sequelize.ENUM("In person", "Online"),
         allowNull: false,
       },
       private: {

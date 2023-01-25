@@ -16,27 +16,27 @@ module.exports = {
       {
         url: "",
         group_id: 1,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         group_id: 2,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         group_id: 3,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         group_id: 4,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         group_id: 1,
-        previewImage: true,
+        preview: true,
       },
     ]);
   },

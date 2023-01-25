@@ -30,9 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
+        firstName,
+        lastName,
         username,
         email,
         hashedPassword,
@@ -47,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // User.belongsToMany(models.Group, { through: models.Member });
-      User.hasMany(models.Membership, {foreignKey: "user_id"})
-      User.hasMany(models.Group, { foreignKey: "organizer_id" });
+      User.hasMany(models.Membership, { foreignKey: "userId" });
+      User.hasMany(models.Group, { foreignKey: "organizerId" });
       User.belongsToMany(models.Event, { through: models.Attendee });
     }
   }

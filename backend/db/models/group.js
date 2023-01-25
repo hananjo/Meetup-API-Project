@@ -22,13 +22,13 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.Venue, { foreignKey: "group_id" });
       Group.belongsTo(models.User, {
         as: "Organizer",
-        foreignKey: "organizer_id",
+        foreignKey: "organizerId",
       });
     }
   }
   Group.init(
     {
-      organizer_id: {
+      organizerId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       type: {
-        type: DataTypes.ENUM("In-Person", "Online"),
+        type: DataTypes.ENUM("In person", "Online"),
         allowNull: false,
       },
       private: {

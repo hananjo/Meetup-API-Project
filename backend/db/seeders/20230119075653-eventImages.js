@@ -16,22 +16,22 @@ module.exports = {
       {
         url: "",
         event_id: 1,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         event_id: 2,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         event_id: 3,
-        previewImage: true,
+        preview: true,
       },
       {
         url: "",
         event_id: 4,
-        previewImage: true,
+        preview: true,
       },
     ]);
   },

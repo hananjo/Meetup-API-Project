@@ -14,17 +14,17 @@ module.exports = {
      */
     await queryInterface.bulkInsert("Attendees", [
       {
-        user_id: 1,
+        userId: 1,
         status: "Member",
         event_id: 3,
       },
       {
-        user_id: 2,
+        userId: 2,
         status: "Pending",
         event_id: 1,
       },
       {
-        user_id: 3,
+        userId: 3,
         status: "Waitlist",
         event_id: 2,
       },

@@ -20,7 +20,7 @@ module.exports = {
           model: "Events",
         },
       },
-      previewImage: {
+      preview: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {

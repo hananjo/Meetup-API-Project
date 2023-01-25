@@ -19,7 +19,7 @@ module.exports = {
           model: "Groups",
         },
       },
-      previewImage: {
+      preview: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {

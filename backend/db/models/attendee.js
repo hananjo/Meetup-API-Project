@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Attendee.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
