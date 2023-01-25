@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      GroupImage.belongsTo(models.Group, { foreignKey: "group_id" });
+      GroupImage.belongsTo(models.Group, { foreignKey: "groupId" });
     }
   }
   GroupImage.init(
     {
       url: DataTypes.STRING,
-      group_id: {
+      groupId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

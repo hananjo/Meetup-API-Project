@@ -12,7 +12,7 @@ module.exports = {
       url: {
         type: Sequelize.STRING,
       },
-      group_id: {
+      groupId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

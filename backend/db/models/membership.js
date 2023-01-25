@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Membership.belongsTo(models.User, { foreignKey: "userId" });
-      Membership.belongsTo(models.Group, { foreignKey: "group_id" });
+      Membership.belongsTo(models.Group, { foreignKey: "groupId" });
     }
   }
   Membership.init(
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      group_id: {
+      groupId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

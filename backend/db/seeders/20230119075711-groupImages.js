@@ -15,27 +15,27 @@ module.exports = {
     await queryInterface.bulkInsert("GroupImages", [
       {
         url: "",
-        group_id: 1,
+        groupId: 1,
         preview: true,
       },
       {
         url: "",
-        group_id: 2,
+        groupId: 2,
         preview: true,
       },
       {
         url: "",
-        group_id: 3,
+        groupId: 3,
         preview: true,
       },
       {
         url: "",
-        group_id: 4,
+        groupId: 4,
         preview: true,
       },
       {
         url: "",
-        group_id: 1,
+        groupId: 1,
         preview: true,
       },
     ]);

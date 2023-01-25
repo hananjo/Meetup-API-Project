@@ -15,27 +15,27 @@ module.exports = {
     await queryInterface.bulkInsert("Memberships", [
       {
         userId: 4,
-        group_id: 4,
+        groupId: 4,
         status: "Member",
       },
       {
         userId: 2,
-        group_id: 1,
+        groupId: 1,
         status: "Pending",
       },
       {
         userId: 3,
-        group_id: 3,
+        groupId: 3,
         status: "Co-host",
       },
       {
         userId: 1,
-        group_id: 2,
+        groupId: 2,
         status: "Rejected",
       },
       // {
       //   userId: 5,
-      //   group_id: 5,
+      //   groupId: 5,
       //   status: "Co-host",
       // },
     ]);

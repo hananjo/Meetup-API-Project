@@ -14,8 +14,8 @@ module.exports = {
      */
     await queryInterface.bulkInsert("Events", [
       {
-        group_id: 1,
-        venue_id: 1,
+        groupId: 1,
+        venueId: 1,
         name: "Fun in the Sun",
         type: "In person",
         startDate: "2023-1-19 20:00:00",
@@ -25,8 +25,8 @@ module.exports = {
         price: 10.0,
       },
       {
-        group_id: 2,
-        venue_id: 2,
+        groupId: 2,
+        venueId: 2,
         name: "Technology Seminar",
         type: "Online",
         startDate: "2023-1-20 20:00:00",
@@ -36,8 +36,8 @@ module.exports = {
         price: 50.0,
       },
       {
-        group_id: 3,
-        venue_id: 3,
+        groupId: 3,
+        venueId: 3,
         name: "Paint Night",
         type: "In person",
         startDate: "2023-1-21 20:00:00",
@@ -48,8 +48,8 @@ module.exports = {
         price: 20.0,
       },
       {
-        group_id: 4,
-        venue_id: 4,
+        groupId: 4,
+        venueId: 4,
         name: "Mission Peak Hike",
         type: "In person",
         startDate: "2023-1-22 9:00:00",

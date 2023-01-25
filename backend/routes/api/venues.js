@@ -43,9 +43,9 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res) => {
   //     ],
   //   });
   // }
-  const group = await Group.findByPk(venue.group_id);
+  const group = await Group.findByPk(venue.groupId);
   const member = await Membership.findOne({
-    where: { userId: req.user.id, group_id: venue.group_id },
+    where: { userId: req.user.id, groupId: venue.groupId },
     //user in the member matches the req user id from the groupId input in the url, want to see if user
     // is associated with groupId input
   });
@@ -56,7 +56,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res) => {
 
     const returnObj = {
       id: venue.id,
-      group_id: venue.group_id,
+      groupId: venue.groupId,
       address: venue.address,
       city: venue.city,
       state: venue.state,

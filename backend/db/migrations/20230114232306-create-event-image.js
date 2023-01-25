@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      event_id: {
+      eventId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

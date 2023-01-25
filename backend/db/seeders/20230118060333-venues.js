@@ -15,7 +15,7 @@ module.exports = {
     //  options = {}
     await queryInterface.bulkInsert("Venues", [
       {
-        group_id: 1,
+        groupId: 1,
         address: "123 Eden Ave",
         city: "San Jose",
         state: "CA",
@@ -23,7 +23,7 @@ module.exports = {
         lng: -121.954543,
       },
       {
-        group_id: 2,
+        groupId: 2,
         address: "3455 Martin Ave",
         city: "Santa Clara",
         state: "CA",
@@ -31,7 +31,7 @@ module.exports = {
         lng: -121.962778,
       },
       {
-        group_id: 3,
+        groupId: 3,
         address: "125 Mowry Ave",
         city: "Fremont",
         state: "CA",
@@ -39,7 +39,7 @@ module.exports = {
         lng: -121.99358,
       },
       {
-        group_id: 4,
+        groupId: 4,
         address: "680 Stanford Ave",
         city: "Fremont",
         state: "CA",

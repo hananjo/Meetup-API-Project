@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      EventImage.belongsTo(models.Event, { foreignKey: "event_id" });
+      EventImage.belongsTo(models.Event, { foreignKey: "eventId" });
     }
   }
   EventImage.init(
     {
       url: DataTypes.STRING,
-      event_id: {
+      eventId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

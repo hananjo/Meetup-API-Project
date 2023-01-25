@@ -7,6 +7,7 @@ const {
   Venue,
   EventImage,
   Attendee,
+  Membership,
 } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
@@ -16,7 +17,7 @@ const group = require("../../db/models/group");
 const router = express.Router();
 
 const validateEvent = [
-  check("venue_id")
+  check("venueId")
     .exists({ checkFalsy: true })
     .withMessage("Venue does not exist"),
   check("name")
@@ -34,11 +35,22 @@ const validateEvent = [
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
   check("startDate").isAfter().withMessage("Start date must be in the future"),
-  check("endDate").custom((value, { req }) => {
-    if (new Date(value) <= new Date(req.body.startDate)) {
-      throw new Error("End date is less than start date");
-    }
-  }),
+  check("endDate")
+    .exists({ checkFalsy: true })
+    .withMessage("End date is less than start date"),
+
+  // .custom((value, { req }) => {
+  //   if (new Date(value) <= new Date(req.body.startDate)) {
+  //     throw new Error("End date is less than start date");
+  //   }
+  // }),
+  // .withMessage("End date is less than start date")
+
+  // check("endDate")
+  //   .isAfter(check("startDate"))
+  //   .withMessage("End date is less than start date"),
+
+  // .if(endDate.value.Date(be specific) < startDate.Date())
   handleValidationErrors,
 ];
 //Get all Events
@@ -51,17 +63,18 @@ router.get("/", async (req, res) => {
       { model: Venue, attributes: ["id", "city", "state"] },
     ],
   });
+  // console.log(events);
   for await (let event of events) {
-    // console.log(event);
+    // console.log(event.dataValues.id);
     const attending = await Attendee.findAll({
-      where: { event_id: event.dataValues.id },
+      where: { eventId: event.dataValues.id },
     });
-
+    // console.log(attending);
     // console.log(attending.length);
     event.dataValues.numAttending = attending.length;
 
     const image = await EventImage.findOne({
-      where: { preview: true, event_id: event.dataValues.id },
+      where: { preview: true, eventId: event.dataValues.id },
     });
     event.dataValues.preview = image.url;
   }
@@ -83,13 +96,21 @@ router.get("/:eventId", async (req, res) => {
     ],
   });
   if (!event) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Event couldn't be found",
       statusCode: 404,
     });
-  } else {
-    res.json(event);
   }
+
+  // console.log(event.dataValues.id);
+  const attending = await Attendee.findAll({
+    where: { eventId: event.id },
+  });
+  console.log(attending);
+  // console.log(attending.length);
+  event.dataValues.numAttending = attending.length;
+
+  res.json(event);
 });
 
 //Get all Attendees of an Event specified by its id
@@ -124,7 +145,7 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
   // if(req.user.id === event.)
 
   const newImage = await EventImage.create({
-    event_id: req.params.eventId,
+    eventId: req.params.eventId,
     url,
     preview,
   });
@@ -139,42 +160,7 @@ router.post("/:eventId/images", requireAuth, async (req, res) => {
 router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
   const event = await Event.findByPk(req.params.eventId);
   const {
-    venue_id,
-    name,
-    type,
-    capacity,
-    price,
-    description,
-    startDate,
-    endDate,
-  } = req.body;
-  if (!event) {
-    res.status(404).json({
-      message: "Venue couldn't be found",
-      statusCode: 404,
-    });
-  }
-
-  if (!event) {
-    res.status(400).json({
-      message: "Validation error",
-      statusCode: 400,
-      errors: [
-        "Venue does not exist",
-        "Name must be at least 5 characters",
-        "Type must be 'Online' or 'In person'",
-        "Capacity must be an integer",
-        "Price is invalid",
-        "Description is required",
-        "Start date must be in the future",
-        "End date is less than start date",
-      ],
-    });
-  }
-
-  // if(req.user.id === event.group.organizerId || member.status === 'Co-Host')
-  event.set({
-    venue_id,
+    venueId,
     name,
     about,
     type,
@@ -183,10 +169,51 @@ router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
     description,
     startDate,
     endDate,
-  });
-  await event.save();
+  } = req.body;
+  if (!event) {
+    return res.status(404).json({
+      message: "Venue couldn't be found",
+      statusCode: 404,
+    });
+  }
 
-  return res.json(event);
+  const group = await Group.findByPk(event.groupId);
+  const member = await Membership.findOne({
+    where: { userId: req.user.id, groupId: event.groupId },
+  });
+
+  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+    event.set({
+      venueId,
+      name,
+      about,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate,
+    });
+    await event.save();
+
+    const returnObj = {
+      venueId: event.venueId,
+      name: event.name,
+      about: event.about,
+      type: event.type,
+      capacity: event.capacity,
+      price: event.price,
+      description: event.description,
+      startDate: event.startDate,
+      endDate: event.endDate,
+    };
+    return res.json(returnObj);
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 //Delete an Event specified by its id
@@ -194,15 +221,28 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
   const deleteEvent = await Event.findByPk(req.params.eventId);
 
   if (!deleteEvent) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Event couldn't be found",
       statusCode: 404,
     });
   }
-  await deleteEvent.destroy();
-  res.json({
-    message: "Successfully deleted",
+
+  const group = await Group.findByPk(deleteEvent.groupId);
+  const member = await Membership.findOne({
+    where: { userId: req.user.id, groupId: deleteEvent.groupId },
   });
+
+  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+    await deleteEvent.destroy();
+    res.json({
+      message: "Successfully deleted",
+    });
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 module.exports = router;

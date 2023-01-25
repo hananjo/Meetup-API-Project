@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      group_id: {
+      groupId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "Groups",
         },
       },
-      venue_id: {
+      venueId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

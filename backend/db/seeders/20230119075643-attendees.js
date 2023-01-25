@@ -16,17 +16,17 @@ module.exports = {
       {
         userId: 1,
         status: "Member",
-        event_id: 3,
+        eventId: 3,
       },
       {
         userId: 2,
         status: "Pending",
-        event_id: 1,
+        eventId: 1,
       },
       {
         userId: 3,
         status: "Waitlist",
-        event_id: 2,
+        eventId: 2,
       },
     ]);
   },

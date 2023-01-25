@@ -8,6 +8,8 @@ const {
   User,
   Venue,
   Membership,
+  Attendee,
+  EventImage,
 } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
@@ -50,7 +52,7 @@ const validateVenue = [
 ];
 
 const validateEvent = [
-  check("venue_id")
+  check("venueId")
     .exists({ checkFalsy: true })
     .withMessage("Venue does not exist"),
   check("name")
@@ -68,11 +70,15 @@ const validateEvent = [
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
   check("startDate").isAfter().withMessage("Start date must be in the future"),
-  check("endDate").custom((value, { req }) => {
-    if (new Date(value) <= new Date(req.body.startDate)) {
-      throw new Error("End date is less than start date");
-    }
-  }),
+  check("endDate")
+    .exists({ checkFalsy: true })
+    .withMessage("End date is less than start date"),
+
+  // .custom((value, { req }) => {
+  //   if (new Date(value) <= new Date(req.body.startDate)) {
+  //     throw new Error("End date is less than start date");
+  //   }
+  // }),
   // .withMessage("End date is less than start date")
 
   // check("endDate")
@@ -116,14 +122,14 @@ router.get("/", async (req, res) => {
   for await (let group of groups) {
     // console.log(group);
     const members = await Membership.findAll({
-      where: { group_id: group.dataValues.id },
+      where: { groupId: group.dataValues.id },
     });
 
     // console.log(members.length);
     group.dataValues.numMembers = members.length;
 
     const image = await GroupImage.findOne({
-      where: { preview: true, group_id: group.dataValues.id },
+      where: { preview: true, groupId: group.dataValues.id },
     });
     group.dataValues.preview = image.url;
   }
@@ -152,13 +158,13 @@ router.get("/current", requireAuth, async (req, res) => {
   for await (let group of groups) {
     // console.log(group);
     const members = await Membership.findAll({
-      where: { group_id: group.dataValues.id },
+      where: { groupId: group.dataValues.id },
     });
     // console.log(members.length);
     group.dataValues.numMembers = members.length;
 
     const image = await GroupImage.findOne({
-      where: { preview: true, group_id: group.dataValues.id },
+      where: { preview: true, groupId: group.dataValues.id },
     });
     group.dataValues.preview = image.url;
   }
@@ -183,15 +189,7 @@ router.get("/:groupId", async (req, res) => {
 
       {
         model: Venue,
-        attributes: [
-          "id",
-          "group_Id",
-          "address",
-          "city",
-          "state",
-          "lat",
-          "lng",
-        ],
+        attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
       },
     ],
   });
@@ -202,7 +200,7 @@ router.get("/:groupId", async (req, res) => {
     });
   } else {
     const members = await Membership.findAll({
-      where: { group_id: group.dataValues.id },
+      where: { groupId: group.dataValues.id },
     });
     console.log(group.dataValues);
     // console.log(members.length);
@@ -224,7 +222,7 @@ router.get("/:groupId", async (req, res) => {
 //     const members = await Member.findAll({
 //       include: [{ model: User, attributes: ["firstName", "lastName"] }],
 //       where: {
-//         group_id: groupId,
+//         groupId: groupId,
 //       },
 //     });
 //     res.json(members);
@@ -235,8 +233,8 @@ router.get("/:groupId", async (req, res) => {
 router.get("/:groupId/members", async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   const loggedInMember = await Membership.findOne({
-    where: { userId: req.user.id, group_id: req.params.groupId },
-    //as long as the userId from members matches the logged in user and the group_id
+    where: { userId: req.user.id, groupId: req.params.groupId },
+    //as long as the userId from members matches the logged in user and the groupId
     //from the members is the groupId from the params entered in
   });
   if (!group) {
@@ -247,11 +245,11 @@ router.get("/:groupId/members", async (req, res) => {
   }
   if (!loggedInMember) {
     //if no logged in member/user then you want to grab all the members from the group that
-    //group_id matches
+    //groupId matches
     let groupMembers = await User.findAll({
       attributes: ["id", "firstName", "lastName"],
-      include: { model: Membership, where: { group_id: req.params.groupId } },
-      //want to grab the mmeber where group_id matches the params
+      include: { model: Membership, where: { groupId: req.params.groupId } },
+      //want to grab the mmeber where groupId matches the params
     });
     return res.json({ Members: groupMembers });
   }
@@ -264,8 +262,8 @@ router.get("/:groupId/members", async (req, res) => {
         attributes: ["id", "firstName", "lastName"],
         include: {
           model: Membership,
-          where: { group_id: req.params.groupId },
-          //where group_id matches the member, where group Id is coming from our params
+          where: { groupId: req.params.groupId },
+          //where groupId matches the member, where group Id is coming from our params
           attributes: ["status"],
         },
       });
@@ -276,7 +274,7 @@ router.get("/:groupId/members", async (req, res) => {
       attributes: ["id", "firstName", "lastName"],
       include: {
         model: Membership,
-        where: { group_id: req.params.groupId },
+        where: { groupId: req.params.groupId },
         attributes: ["status"],
       },
     });
@@ -292,8 +290,8 @@ router.get("/:groupId/events", async (req, res) => {
         model: Event,
         attributes: [
           "id",
-          "group_id",
-          "venue_id",
+          "groupId",
+          "venueId",
           "name",
           "type",
           "startDate",
@@ -307,13 +305,27 @@ router.get("/:groupId/events", async (req, res) => {
     ],
   });
   if (!group) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Group couldn't be found",
       statusCode: 404,
     });
-  } else {
-    res.json({ Events: group.Events });
   }
+  for await (let event of group.Events) {
+    // console.log(event.dataValues.id);
+    const attending = await Attendee.findAll({
+      where: { eventId: event.dataValues.id },
+    });
+    // console.log(attending);
+    // console.log(attending.length);
+    event.dataValues.numAttending = attending.length;
+
+    const image = await EventImage.findOne({
+      where: { preview: true, eventId: event.dataValues.id },
+    });
+    event.dataValues.preview = image.url;
+  }
+
+  res.json({ Events: group.Events });
 });
 
 //Get all Venues for a Group specified by its id
@@ -321,7 +333,7 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
   const group = await Group.findByPk(req.params.groupId, {
     include: {
       model: Venue,
-      //   attributes: ["id", "group_id", "address", "city", "state", "lat", "lng"],
+      //   attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
       attributes: { exclude: ["createdAt", "updatedAt"] },
     },
   });
@@ -332,7 +344,7 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
     });
   }
   const member = await Membership.findOne({
-    where: { userId: req.user.id, group_id: req.params.groupId },
+    where: { userId: req.user.id, groupId: req.params.groupId },
     //user in the member matches the req user id from the groupId input in the url, want to see if user
     // is associated with groupId input
   });
@@ -361,7 +373,7 @@ router.post("/", requireAuth, validateInfo, async (req, res) => {
   });
   if (newGroup) {
     const newMembership = await Membership.create({
-      group_id: newGroup.id,
+      groupId: newGroup.id,
       userId: req.user.id,
       status: "Member",
     });
@@ -392,7 +404,7 @@ router.post(
   async (req, res) => {
     const group = await Group.findByPk(req.params.groupId);
     const member = await Membership.findOne({
-      where: { userId: req.user.id, group_Id: req.params.groupId },
+      where: { userId: req.user.id, groupId: req.params.groupId },
     });
     if (!group) {
       res.status(404);
@@ -401,26 +413,10 @@ router.post(
         statusCode: 404,
       });
     }
-    if (!group) {
-      res.status(400).json({
-        message: "Validation error",
-        statusCode: 400,
-        error: [
-          "Venue does not exist",
-          "Name must be at least 5 characters",
-          "Type must be 'Online' or 'In person'",
-          "Capacity must be an integer",
-          "Price is invalid",
-          "Description is required",
-          "Start date must be in the future",
-          "End date is less than start date",
-        ],
-      });
-    }
 
     if (req.user.id === group.organizerId || member.status === "Co-Host") {
       const {
-        venue_id,
+        venueId,
         name,
         type,
         capacity,
@@ -431,7 +427,8 @@ router.post(
       } = req.body;
 
       const newEvent = await Event.create({
-        venue_id,
+        groupId: req.params.groupId,
+        venueId,
         name,
         type,
         capacity,
@@ -440,7 +437,21 @@ router.post(
         startDate,
         endDate,
       });
-      res.json(newEvent);
+
+      const returnObj = {
+        id: newEvent.id,
+        groupId: newEvent.groupId,
+        venueId: newEvent.venueId,
+        name: newEvent.name,
+        type: newEvent.type,
+        capacity: newEvent.capacity,
+        price: newEvent.price,
+        description: newEvent.description,
+        startDate: newEvent.startDate,
+        endDate: newEvent.endDate,
+      };
+
+      res.json(returnObj);
     }
   }
 );
@@ -449,7 +460,7 @@ router.post(
 // router.post('/:groupId/membership', async(req, res) => {
 //   const group = await Group.findByPk(req.params.groupId)
 //   const Member = await Membership.findOne({
-//     where: {userId: req.user.id, group_id: req.params.groupId}
+//     where: {userId: req.user.id, groupId: req.params.groupId}
 //   })
 //
 //   if(!group) {
@@ -471,7 +482,7 @@ router.post(
 //     })
 //   }
 //  const newMember = await Membership.create({
-//   group_id: req.params.groupId,
+//   groupId: req.params.groupId,
 //   userId: req.user.Id,
 //   status: "Pending"
 //  })
@@ -512,7 +523,7 @@ router.post(
     const member = await Membership.findOne({
       where: {
         userId: req.user.id,
-        // group_id: req.params.groupId
+        // groupId: req.params.groupId
       },
       //user in the member matches the req user id from the groupId input in the url, want to see if user
       // is associated with groupId input
@@ -523,7 +534,7 @@ router.post(
       req.user.id === group.dataValues.organizerId
     ) {
       const newVenue = await Venue.create({
-        group_id: req.params.groupId,
+        groupId: req.params.groupId,
         address,
         city,
         state,
@@ -532,7 +543,7 @@ router.post(
       });
       const returnObj = {
         id: newVenue.id,
-        group_id: newVenue.group_id,
+        groupId: newVenue.groupId,
         address: newVenue.address,
         city: newVenue.city,
         state: newVenue.state,
@@ -564,7 +575,7 @@ router.post("/:groupId/images", requireAuth, async (req, res) => {
   }
   if (req.user.id === group.organizerId) {
     const newImage = await GroupImage.create({
-      group_id: req.params.groupId,
+      groupId: req.params.groupId,
       url,
       preview,
     });
@@ -625,7 +636,7 @@ router.put("/:groupId", requireAuth, validateInfo, async (req, res) => {
 router.put("/:groupId/membership", async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   const member = await Membership.findOne({
-    where: { userId: req.user.id, group_id: req.params.groupId },
+    where: { userId: req.user.id, groupId: req.params.groupId },
   });
   const { userId, status } = req.body;
   if (!member) {
@@ -719,7 +730,7 @@ router.delete("/:groupId/membership", requireAuth, async (req, res) => {
     });
   }
   const member = await Membership.findOne({
-    where: { userId: req.user.id, group_id: req.params.groupId },
+    where: { userId: req.user.id, groupId: req.params.groupId },
   });
 
   if (!member) {
