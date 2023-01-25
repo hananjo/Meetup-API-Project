@@ -264,6 +264,7 @@ router.get("/:groupId/members", async (req, res) => {
           model: Membership,
           where: { groupId: req.params.groupId },
           //where groupId matches the member, where group Id is coming from our params
+
           attributes: ["status"],
         },
       });
@@ -470,7 +471,7 @@ router.post("/:groupId/membership", async (req, res) => {
     });
   }
   if (Member.status === "Pending") {
-    res.status(404).json({
+    res.status(400).json({
       message: "Membership has already been requested",
       statusCode: 400,
     });
@@ -723,7 +724,7 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
 router.delete("/:groupId/membership", requireAuth, async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   if (!group) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Group couldn't be found",
       statusCode: 404,
     });
