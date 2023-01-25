@@ -114,21 +114,6 @@ router.get("/:eventId", async (req, res) => {
 });
 
 //Get all Attendees of an Event specified by its id
-// router.get("/:eventId/attendees", async (req, res) => {
-//   const event = await Event.findByPk(req.params.eventId, {
-//     include: {
-//       model: Attendee,
-//       attributes: ["userId"],
-//     },
-//   });
-//   if (!event) {
-//     res.status(404).json({
-//       message: "Event couldn't be found",
-//       statusCode: 404,
-//     });
-//   }
-//   res.json(event);
-// });
 
 //Add an Image to an Event based on the Event's id
 router.post("/:eventId/images", requireAuth, async (req, res) => {
@@ -197,6 +182,7 @@ router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
     await event.save();
 
     const returnObj = {
+      id: event.id,
       venueId: event.venueId,
       name: event.name,
       about: event.about,

@@ -457,39 +457,38 @@ router.post(
 );
 
 //Request a Membership for a Group based on Group's id
-// router.post('/:groupId/membership', async(req, res) => {
-//   const group = await Group.findByPk(req.params.groupId)
-//   const Member = await Membership.findOne({
-//     where: {userId: req.user.id, groupId: req.params.groupId}
-//   })
-//
-//   if(!group) {
-//     res.status(404).json({
-//       message: "Group couldn't be found",
-//       statusCode: 404
-//     })
-//   }
-//   if(Member.status === "Pending") {
-//     res.status(404).json({
-//       message: "Membership has already been requested",
-//       statusCode: 400
-//     })
-//   }
-//   if(Member.status === "Member") {
-//     res.status(400).json({
-//       message: "User is already a member of the group",
-//       statusCode: 400
-//     })
-//   }
-//  const newMember = await Membership.create({
-//   groupId: req.params.groupId,
-//   userId: req.user.Id,
-//   status: "Pending"
-//  })
+router.post("/:groupId/membership", async (req, res) => {
+  const group = await Group.findByPk(req.params.groupId);
+  const Member = await Membership.findOne({
+    where: { userId: req.user.id, groupId: req.params.groupId },
+  });
 
-//  res.json(newMember)
+  if (!group) {
+    return res.status(404).json({
+      message: "Group couldn't be found",
+      statusCode: 404,
+    });
+  }
+  if (Member.status === "Pending") {
+    res.status(404).json({
+      message: "Membership has already been requested",
+      statusCode: 400,
+    });
+  }
+  if (Member.status === "Member") {
+    res.status(400).json({
+      message: "User is already a member of the group",
+      statusCode: 400,
+    });
+  }
+  const newMember = await Membership.create({
+    groupId: req.params.groupId,
+    userId: req.user.Id,
+    status: "Pending",
+  });
 
-// })
+  res.json(newMember);
+});
 //Create a new Venue for a Group specified by its id
 router.post(
   "/:groupId/venues",
