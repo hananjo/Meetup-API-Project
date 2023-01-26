@@ -14,22 +14,22 @@ module.exports = {
      */
     await queryInterface.bulkInsert("Memberships", [
       {
-        userId: 4,
+        memberId: 4,
         groupId: 4,
         status: "Member",
       },
       {
-        userId: 2,
+        memberId: 2,
         groupId: 1,
         status: "Pending",
       },
       {
-        userId: 3,
+        memberId: 3,
         groupId: 3,
         status: "Co-host",
       },
       {
-        userId: 1,
+        memberId: 1,
         groupId: 2,
         status: "Rejected",
       },

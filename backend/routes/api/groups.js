@@ -256,7 +256,7 @@ router.get("/:groupId/members", async (req, res) => {
   if (req.user) {
     if (
       group.organizerId === req.user.id ||
-      loggedInMember.status === "Co-Host"
+      loggedInMember.status === "Co-host"
     ) {
       let groupMembers = await User.findAll({
         attributes: ["id", "firstName", "lastName"],
@@ -301,6 +301,7 @@ router.get("/:groupId/events", async (req, res) => {
         include: [
           { model: Group, attributes: ["id", "name", "city", "state"] },
           { model: Venue, attributes: ["id", "city", "state"] },
+          // { model: EventImage },
         ],
       },
     ],
@@ -321,9 +322,17 @@ router.get("/:groupId/events", async (req, res) => {
     event.dataValues.numAttending = attending.length;
 
     const image = await EventImage.findOne({
-      where: { preview: true, eventId: event.dataValues.id },
+      where: {
+        preview: true,
+        eventId: event.dataValues.id,
+      },
     });
-    event.dataValues.preview = image.url;
+    if (image) {
+      console.log(image.eventId);
+      event.dataValues.preview = image.url;
+    } else {
+      event.dataValues.preview = null;
+    }
   }
 
   res.json({ Events: group.Events });
@@ -350,7 +359,10 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
     // is associated with groupId input
   });
 
-  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+  if (
+    // member.status === "Co-host" ||
+    req.user.id === group.organizerId
+  ) {
     return res.json({ Venues: group.Venues });
   } else {
     return res.status(403).json({
@@ -372,27 +384,28 @@ router.post("/", requireAuth, validateInfo, async (req, res) => {
     state,
     organizerId: req.user.id,
   });
-  if (newGroup) {
-    const newMembership = await Membership.create({
-      groupId: newGroup.id,
-      userId: req.user.id,
-      status: "Member",
-    });
-  }
-  if (!newGroup) {
-    res.status(400).json({
-      message: "Validation Error",
-      statusCode: 400,
-      errors: [
-        "Name must be 60 characters or less",
-        "About must be 50 characters or more",
-        "Type must be 'Online' or 'In person'",
-        "Private must be a boolean",
-        "City is required",
-        "State is required",
-      ],
-    });
-  }
+  // if (newGroup) {
+  //   const newMembership = await Membership.create({
+  //     groupId: newGroup.id,
+  //     userId: req.user.id,
+  //     status: "Member",
+  //   });
+  // console.log(newMembership);
+  // }
+  // if (!newGroup) {
+  //   res.status(400).json({
+  //     message: "Validation Error",
+  //     statusCode: 400,
+  //     errors: [
+  //       "Name must be 60 characters or less",
+  //       "About must be 50 characters or more",
+  //       "Type must be 'Online' or 'In person'",
+  //       "Private must be a boolean",
+  //       "City is required",
+  //       "State is required",
+  //     ],
+  //   });
+  // }
 
   res.json(newGroup);
 });
@@ -405,7 +418,7 @@ router.post(
   async (req, res) => {
     const group = await Group.findByPk(req.params.groupId);
     const member = await Membership.findOne({
-      where: { userId: req.user.id, groupId: req.params.groupId },
+      where: { memberId: req.user.id, groupId: req.params.groupId },
     });
     if (!group) {
       res.status(404);
@@ -461,7 +474,7 @@ router.post(
 router.post("/:groupId/membership", async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   const Member = await Membership.findOne({
-    where: { userId: req.user.id, groupId: req.params.groupId },
+    where: { memberId: req.user.id, groupId: req.params.groupId },
   });
 
   if (!group) {
@@ -470,25 +483,32 @@ router.post("/:groupId/membership", async (req, res) => {
       statusCode: 404,
     });
   }
-  if (Member.status === "Pending") {
-    res.status(400).json({
-      message: "Membership has already been requested",
-      statusCode: 400,
-    });
+  if (Member) {
+    if (Member.status === "Pending") {
+      return res.status(400).json({
+        message: "Membership has already been requested",
+        statusCode: 400,
+      });
+    }
+    if (Member.status === "Member") {
+      return res.status(400).json({
+        message: "User is already a member of the group",
+        statusCode: 400,
+      });
+    }
   }
-  if (Member.status === "Member") {
-    res.status(400).json({
-      message: "User is already a member of the group",
-      statusCode: 400,
-    });
-  }
+
   const newMember = await Membership.create({
     groupId: req.params.groupId,
-    userId: req.user.Id,
+    memberId: req.user.id,
     status: "Pending",
   });
-
-  res.json(newMember);
+  const returnObj = {
+    groupId: newMember.groupId,
+    memberId: newMember.memberId,
+    status: newMember.status,
+  };
+  res.json(returnObj);
 });
 //Create a new Venue for a Group specified by its id
 router.post(
@@ -522,7 +542,7 @@ router.post(
     }
     const member = await Membership.findOne({
       where: {
-        userId: req.user.id,
+        memberId: req.user.id,
         // groupId: req.params.groupId
       },
       //user in the member matches the req user id from the groupId input in the url, want to see if user
@@ -530,7 +550,7 @@ router.post(
     });
 
     if (
-      member.dataValues.status === "Co-Host" ||
+      // member.dataValues.status === "Co-host" ||
       req.user.id === group.dataValues.organizerId
     ) {
       const newVenue = await Venue.create({
@@ -633,37 +653,53 @@ router.put("/:groupId", requireAuth, validateInfo, async (req, res) => {
 });
 
 //Change the status of a membership for a group specified by id
-router.put("/:groupId/membership", async (req, res) => {
+router.put("/:groupId/membership", requireAuth, async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
+
   const member = await Membership.findOne({
-    where: { userId: req.user.id, groupId: req.params.groupId },
+    where: {
+      memberId: req.body.memberId,
+      groupId: req.params.groupId,
+    },
   });
+  // member.forEach((mem) => console.log(mem));
   const { userId, status } = req.body;
-  if (!member) {
-    return res.status(404).json({
-      message: "Membership between the user and the group does not exist",
-      statusCode: 404,
-    });
-  }
+  // console.log(group, "!!!!!!!");
+  // console.log(req.params.groupId);
+  console.log(req.body);
+  // console.log(member.dataValues, "!!!!!");
+
+  // console.log(member.userId);
+  console.log(req.user.id);
   if (!group) {
     return res.status(404).json({
       message: "Group couldn't be found",
       statusCode: 404,
     });
   }
-  if (!member.userId) {
-    return res.status(400).json({
-      message: "Validation Error",
-      statusCode: 400,
-      errors: {
-        userId: "User couldn't be found",
-      },
+  // for await (let member of group.dataValues.Memberships) {
+  if (!member) {
+    return res.status(404).json({
+      message: "Membership between the user and the group does not exist",
+      statusCode: 404,
     });
+    // }
   }
+
+  // if (!member.userId) {
+  //   return res.status(400).json({
+  //     message: "Validation Error",
+  //     statusCode: 400,
+  //     errors: {
+  //       userId: "User couldn't be found",
+  //     },
+  //   });
+  // }
+
   if (status === "Member") {
     if (
       req.user.id === group.dataValues.organizerId ||
-      member.status === "Co-Host"
+      member.status === "Co-host"
     ) {
       member.set({
         // userId,
@@ -677,7 +713,7 @@ router.put("/:groupId/membership", async (req, res) => {
       });
     }
   }
-  if (status === "Co-Host") {
+  if (status === "Co-host") {
     if (req.user.id === group.dataValues.organizerId) {
       member.set({
         // userId,
@@ -692,7 +728,14 @@ router.put("/:groupId/membership", async (req, res) => {
     }
   }
 
-  res.json(member);
+  const returnObj = {
+    id: member.id,
+    memberId: member.memberId,
+    groupId: member.groupId,
+    status: member.status,
+  };
+
+  res.json(returnObj);
 });
 
 //Delete a Group

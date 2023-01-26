@@ -10,7 +10,10 @@ const router = express.Router();
 router.delete("/:imageId", requireAuth, async (req, res) => {
   const deleteImage = await EventImage.findByPk(req.params.imageId);
   const event = await Event.findByPk(deleteImage.eventId);
-  const group = await G;
+  const group = await Group.findByPk(event.groupId);
+  const member = await Membership.findOne({
+    where: { userId: req.user.id, groupId: event.groupId },
+  });
 
   if (!deleteImage) {
     res.status(404).json({
@@ -18,12 +21,18 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-
-  await deleteImage.destroy();
-  res.json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  if (req.user.id === group.organizerId || member.status === "Co-host") {
+    await deleteImage.destroy();
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  } else {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 module.exports = router;

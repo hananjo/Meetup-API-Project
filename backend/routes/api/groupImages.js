@@ -21,9 +21,9 @@ router.delete("/:imageId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  if (req.user.id === group.organizerid || member.status === "Co-Host") {
+  if (req.user.id === group.organizerid || member.status === "Co-host") {
     await deleteImage.destroy();
-    res.json({
+    return res.json({
       message: "Successfully deleted",
       statusCode: 200,
     });

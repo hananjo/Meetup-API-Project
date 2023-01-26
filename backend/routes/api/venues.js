@@ -50,7 +50,10 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res) => {
     // is associated with groupId input
   });
 
-  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+  if (
+    // member.status === "Co-host" ||
+    req.user.id === group.organizerId
+  ) {
     venue.set({ address, city, state, lat, lng });
     await venue.save();
 

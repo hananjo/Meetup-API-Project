@@ -8,6 +8,7 @@ const {
   EventImage,
   Attendee,
   Membership,
+  User,
 } = require("../../db/models");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
@@ -15,6 +16,24 @@ const { route } = require("./session");
 const group = require("../../db/models/group");
 
 const router = express.Router();
+
+// const validateQueryParam = [
+//   check("page")
+//     // .isGreaterThanOrEqual(0)
+//     .withMessage("Page must be greater than or equal to 0"),
+//   check("size")
+//     // .isGreaterThanOrEqual(0)
+//     .withMessage("Size must be greater than or equal to 0"),
+//   check("name").isString().withMessage("Name must be a string"),
+//   check("type")
+//     .exists({ checkFalsy: true })
+//     .isIn(["In person", "Online"])
+//     .withMessage("Type must be 'Online' or 'In person'"),
+//   check(
+//     "startDate".isDate().withMessage("Start date must be a valid datetime")
+//   ),
+//   handleValidationErrors,
+// ];
 
 const validateEvent = [
   check("venueId")
@@ -54,32 +73,47 @@ const validateEvent = [
   handleValidationErrors,
 ];
 //Get all Events
-router.get("/", async (req, res) => {
-  const events = await Event.findAll({
-    attributes: { exclude: ["createdAt", "updatedAt"] },
-    include: [
-      // { model: EventImage, attributes: ["previewImage"] },
-      { model: Group, attributes: ["id", "name", "city", "state"] },
-      { model: Venue, attributes: ["id", "city", "state"] },
-    ],
-  });
-  // console.log(events);
-  for await (let event of events) {
-    // console.log(event.dataValues.id);
-    const attending = await Attendee.findAll({
-      where: { eventId: event.dataValues.id },
-    });
-    // console.log(attending);
-    // console.log(attending.length);
-    event.dataValues.numAttending = attending.length;
+router.get(
+  "/",
+  // validateQueryParam,
+  async (req, res) => {
+    const { page, size, name, type, startDate } = req.query;
+    const where = {};
+    if (!page) where.page = 0;
+    if (!size) where.size = 20;
+    if (name) where.name = name;
+    if (type) where.type = type;
+    if (startDate) where.startDate = startDate;
 
-    const image = await EventImage.findOne({
-      where: { preview: true, eventId: event.dataValues.id },
+    const events = await Event.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: [
+        // { model: EventImage, attributes: ["previewImage"] },
+        { model: Group, attributes: ["id", "name", "city", "state"] },
+        { model: Venue, attributes: ["id", "city", "state"] },
+      ],
+      where,
+      limit: size,
+      offset: size * (page - 1),
     });
-    event.dataValues.preview = image.url;
+    // console.log(events);
+    for await (let event of events) {
+      // console.log(event.dataValues.id);
+      const attending = await Attendee.findAll({
+        where: { eventId: event.dataValues.id },
+      });
+      // console.log(attending);
+      // console.log(attending.length);
+      event.dataValues.numAttending = attending.length;
+
+      const image = await EventImage.findOne({
+        where: { preview: true, eventId: event.dataValues.id },
+      });
+      event.dataValues.preview = image.url;
+    }
+    res.json({ Events: events });
   }
-  res.json({ Events: events });
-});
+);
 
 //Get details of an Event specified by its id
 
@@ -129,7 +163,7 @@ router.get("/:eventId/attendees", async (req, res) => {
   });
 
   if (req.user) {
-    if (group.organizerId === req.user.id || member.status === "Co-Host") {
+    if (group.organizerId === req.user.id || member.status === "Co-host") {
       let attendees = await User.findAll({
         attributes: ["id", "firstName", "lastName"],
         include: {
@@ -240,7 +274,10 @@ router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
     where: { userId: req.user.id, groupId: event.groupId },
   });
 
-  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+  if (
+    // member.status === "Co-host" ||
+    req.user.id === group.organizerId
+  ) {
     event.set({
       venueId,
       name,
@@ -320,7 +357,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
     }
   }
 
-  if (member.status === "Co-Host") {
+  if (member.status === "Co-host") {
     if (req.user.id === group.dataValues.organizerId) {
       attendance.set({
         status,
@@ -353,7 +390,7 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
     where: { userId: req.user.id, groupId: deleteEvent.groupId },
   });
 
-  if (member.status === "Co-Host" || req.user.id === group.organizerId) {
+  if (member.status === "Co-host" || req.user.id === group.organizerId) {
     await deleteEvent.destroy();
     res.json({
       message: "Successfully deleted",
