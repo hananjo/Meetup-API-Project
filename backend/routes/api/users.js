@@ -27,6 +27,15 @@ const validateSignup = [
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
   const { lastName, firstName, email, password, username } = req.body;
+  const foundUser = await User.findOne({
+    where: { email },
+  });
+  if (foundUser) {
+    return res.status(403).json({
+      message: "email must be unique",
+      statusCode: 403,
+    });
+  }
   const user = await User.signup({
     firstName,
     lastName,
@@ -34,6 +43,7 @@ router.post("/", validateSignup, async (req, res) => {
     username,
     password,
   });
+
   // console.log(user);
   await setTokenCookie(res, user);
 

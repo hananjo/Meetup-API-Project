@@ -17,24 +17,6 @@ const group = require("../../db/models/group");
 
 const router = express.Router();
 
-// const validateQueryParam = [
-//   check("page")
-//     // .isGreaterThanOrEqual(0)
-//     .withMessage("Page must be greater than or equal to 0"),
-//   check("size")
-//     // .isGreaterThanOrEqual(0)
-//     .withMessage("Size must be greater than or equal to 0"),
-//   check("name").isString().withMessage("Name must be a string"),
-//   check("type")
-//     .exists({ checkFalsy: true })
-//     .isIn(["In person", "Online"])
-//     .withMessage("Type must be 'Online' or 'In person'"),
-//   check(
-//     "startDate".isDate().withMessage("Start date must be a valid datetime")
-//   ),
-//   handleValidationErrors,
-// ];
-
 const validateEvent = [
   check("venueId")
     .exists({ checkFalsy: true })
@@ -75,27 +57,71 @@ const validateEvent = [
 //Get all Events
 router.get(
   "/",
-  // validateQueryParam,
+
   async (req, res) => {
-    const { page, size, name, type, startDate } = req.query;
+    let { page, size, name, type, startDate } = req.query;
+    let errors = {};
+
+    if (page < 1 || page > 10) {
+      errors.page = "Page must be greater than or equal to 1";
+    }
+    if (size < 1 || size > 20) {
+      errors.size = "Size must be greater than or equal to 1";
+    }
+    if (typeof name !== "string" && name !== undefined) {
+      errors.name = "Name must be a string";
+    }
+    if (type !== "Online" && type !== "In Person" && type !== undefined) {
+      errors.type = "Type must be 'Online' or 'In Person'";
+    }
+    if (!(startDate instanceof Date) && startDate !== undefined) {
+      errors.startDate = "Start date must be a valid datetime";
+    }
+    if (Object.keys(errors).length) {
+      return res.status(400).json({
+        message: "Validation error",
+        statusCode: 400,
+        errors,
+      });
+    }
+
     const where = {};
-    if (!page) where.page = 0;
-    if (!size) where.size = 20;
-    if (name) where.name = name;
-    if (type) where.type = type;
-    if (startDate) where.startDate = startDate;
+    if (!page) {
+      // page = Number(page);
+      page = 1;
+      // where.page = 1;
+    }
+    if (!size) {
+      // size = Number(size);
+      size = 20;
+      // where.size = 20;
+    }
+    let limit = size;
+    let offset = size * (page - 1);
+    if (name) {
+      where.name = name;
+    }
+    if (type) {
+      where.type = type;
+    }
+    if (startDate) {
+      where.startDate = startDate;
+    }
+    // console.log(page, size, where);
 
     const events = await Event.findAll({
+      limit: limit,
+      offset: offset,
+
       attributes: { exclude: ["createdAt", "updatedAt"] },
       include: [
         // { model: EventImage, attributes: ["previewImage"] },
         { model: Group, attributes: ["id", "name", "city", "state"] },
         { model: Venue, attributes: ["id", "city", "state"] },
       ],
-      where,
-      limit: size,
-      offset: size * (page - 1),
+      where: { ...where },
     });
+
     // console.log(events);
     for await (let event of events) {
       // console.log(event.dataValues.id);
@@ -158,33 +184,60 @@ router.get("/:eventId/attendees", async (req, res) => {
   }
 
   const group = await Group.findByPk(event.groupId);
-  const member = await Membership.findOne({
-    where: { memberId: req.user.id, groupId: event.groupId },
-  });
+  // const member = await Membership.findOne({
+  //   where: { memberId: req.body.memberId, groupId: event.groupId },
+  // });
 
-  if (req.user) {
-    if (group.organizerId === req.user.id || member.status === "Co-host") {
-      let attendees = await User.findAll({
-        attributes: ["id", "firstName", "lastName"],
-        include: {
-          model: Attendee,
-          where: { eventId: req.params.eventId },
-          attributes: ["status"],
-        },
-      });
-      return res.json({ Attendees: attendees });
-    }
-  } else {
-    let attendees = await User.findAll({
-      attributes: ["id", "firstName", "lastName"],
-      include: {
-        model: Attendee,
-        where: { eventId: req.params.eventId },
-        attributes: ["status"],
-      },
+  const attendee = await Attendee.findAll({
+    where: {
+      // userId: req.user.id,
+      eventId: req.params.eventId,
+    },
+  });
+  console.log(attendee);
+  const resObj = { Attendees: [] };
+  for await (let oneOfAttendee of attendee) {
+    const user = await User.findOne({
+      where: { id: oneOfAttendee.userId },
     });
-    return res.json({ Attendees: attendees });
+    const userObj = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      Attendance: { status: oneOfAttendee.status },
+    };
+    resObj.Attendees.push(userObj);
+    // console.log(user);
   }
+  // console.log(req.user.id);
+  // if (req.user) {
+  //   // console.log(attendee.userId, group.organizerId);
+
+  //   if (
+  //     group.organizerId === attendee.userId ||
+  //     attendee.status === "Co-host"
+  //   ) {
+  //     let attendees = await User.findAll({
+  //       attributes: ["id", "firstName", "lastName"],
+  //       include: {
+  //         model: Attendee,
+  //         where: { eventId: req.params.eventId },
+  //         attributes: ["status"],
+  //       },
+  //     });
+  //     return res.json({ Attendees: attendees });
+  //   } else {
+  //     let attendees = await User.findAll({
+  //       attributes: ["id", "firstName", "lastName"],
+  //       include: {
+  //         model: Attendee,
+  //         through: { where: { eventId: req.params.eventId } },
+  //         attributes: ["status"],
+  //       },
+  //     });
+  return res.json(resObj);
+  // }
+  // }
 });
 
 //Request to Attend an Event based on the Event's id
@@ -301,6 +354,7 @@ router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
 
     const returnObj = {
       id: event.id,
+      groupId: event.groupId,
       venueId: event.venueId,
       name: event.name,
       about: event.about,
@@ -322,16 +376,21 @@ router.put("/:eventId", requireAuth, validateEvent, async (req, res) => {
 
 //Change the status of an attendance for an event specified by id
 router.put("/:eventId/attendance", requireAuth, async (req, res) => {
+  const { userId, status } = req.body;
   const event = await Event.findByPk(req.params.eventId);
   const group = await Group.findByPk(event.groupId);
   const attendance = await Attendee.findOne({
-    where: { userId: req.body.userId, eventId: req.params.eventId },
+    where: {
+      userId: req.body.userId,
+      eventId: req.params.eventId,
+    },
   });
-
+  // console.log(event, group);
+  console.log(attendance);
   // const attendance = await Attendee.findOne({
   //   where: { userId: req.user.id, eventId: req.params.eventId },
   // });
-  const { userId, status } = req.body;
+
   if (!event) {
     return res.status(404).json({
       message: "Event couldn't be found",
@@ -352,7 +411,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
   }
 
   if (status === "Member") {
-    if (req.user.id === group.dataValues.organizerId) {
+    if (req.body.userId === group.dataValues.organizerId) {
       attendance.set({
         status,
       });
@@ -366,7 +425,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
   }
 
   if (status === "Co-host") {
-    if (req.user.id === group.dataValues.organizerId) {
+    if (req.body.userId === group.dataValues.organizerId) {
       attendance.set({
         status,
       });
@@ -378,8 +437,14 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
       });
     }
   }
-
-  res.json(attendance);
+  console.log(attendance);
+  const returnObj = {
+    id: attendance.id,
+    userId: attendance.userId,
+    eventId: attendance.eventId,
+    status: attendance.status,
+  };
+  res.json(returnObj);
 });
 
 //Delete an Event specified by its id
@@ -396,12 +461,16 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
   const group = await Group.findByPk(deleteEvent.groupId);
   const member = await Membership.findOne({
     where: {
-      memberId: req.body.memberId,
+      memberId: req.user.id,
       groupId: deleteEvent.dataValues.groupId,
     },
   });
 
-  if (member.status === "Co-host" || req.user.id === group.organizerId) {
+  if (
+    //   member.status === "Co-host"
+    //  ||
+    req.user.id === group.organizerId
+  ) {
     await deleteEvent.destroy();
     res.json({
       message: "Successfully deleted",
@@ -418,7 +487,7 @@ router.delete("/:eventId", requireAuth, async (req, res) => {
 router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
   const event = await Event.findByPk(req.params.eventId);
   const attendance = await Attendee.findOne({
-    where: { userId: req.body.id, eventId: req.params.eventId },
+    where: { userId: req.body.userId, eventId: req.params.eventId },
   });
   const group = await Group.findByPk(event.groupId);
 

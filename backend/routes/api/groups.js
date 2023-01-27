@@ -210,26 +210,6 @@ router.get("/:groupId", async (req, res) => {
 });
 
 // Get all Members of a Group specified by its id
-// router.get("/:groupId/members", async (req, res) => {
-//   console.log("DGFDGD!!!!!!!!!!");
-//   const groupId = req.params.groupId;
-//   if (!groupId) {
-//     res.status(404).json({
-//       message: "Group couldn't be found",
-//       statusCode: 404,
-//     });
-//   } else {
-//     const members = await Member.findAll({
-//       include: [{ model: User, attributes: ["firstName", "lastName"] }],
-//       where: {
-//         groupId: groupId,
-//       },
-//     });
-//     res.json(members);
-//   }
-// });
-
-// Get all Members of a Group specified by its id
 router.get("/:groupId/members", async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   const loggedInMember = await Membership.findOne({
@@ -776,7 +756,7 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
   const deleteGroup = await Group.findByPk(req.params.groupId);
 
   if (!deleteGroup) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Group couldn't be found",
       statusCode: 404,
     });
@@ -810,7 +790,7 @@ router.delete("/:groupId/membership", requireAuth, async (req, res) => {
   });
 
   if (!member) {
-    res.status(400).json({
+    return res.status(400).json({
       message: "Validation Error",
       statusCode: 400,
       errors: {
@@ -819,14 +799,14 @@ router.delete("/:groupId/membership", requireAuth, async (req, res) => {
     });
   }
   if (!member.status) {
-    res.status(404).json({
+    return res.status(404).json({
       message: "Membership does not exist for this User",
       statusCode: 404,
     });
   } else {
     await member.destroy();
 
-    res.json({
+    return res.json({
       message: "Successfully deleted membership from group",
     });
   }
