@@ -17,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("Memberships", [
+    await queryInterface.bulkInsert(options, [
       {
         memberId: 4,
         groupId: 4,

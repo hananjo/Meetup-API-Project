@@ -17,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("Attendees", [
+    await queryInterface.bulkInsert(options, [
       {
         userId: 1,
         status: "Member",

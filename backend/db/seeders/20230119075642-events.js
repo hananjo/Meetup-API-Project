@@ -17,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("Events", [
+    await queryInterface.bulkInsert(options, [
       {
         groupId: 1,
         venueId: 1,

@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "production") {
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = "EventImages"
+    options.tableName = "EventImages";
     /**
      * Add seed commands here.
      *
@@ -17,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("EventImages", [
+    await queryInterface.bulkInsert(options, [
       {
         url: "image-url",
         eventId: 1,

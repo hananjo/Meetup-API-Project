@@ -18,7 +18,7 @@ module.exports = {
      * }], {});
      */
     //  options = {}
-    await queryInterface.bulkInsert("Venues", [
+    await queryInterface.bulkInsert(options, [
       {
         groupId: 1,
         address: "123 Eden Ave",
