@@ -14,22 +14,22 @@ module.exports = {
      */
     await queryInterface.bulkInsert("EventImages", [
       {
-        url: "",
+        url: "image-url",
         eventId: 1,
         preview: true,
       },
       {
-        url: "",
+        url: "image-url",
         eventId: 2,
         preview: true,
       },
       {
-        url: "",
+        url: "image-url",
         eventId: 3,
         preview: true,
       },
       {
-        url: "",
+        url: "image-url",
         eventId: 4,
         preview: true,
       },

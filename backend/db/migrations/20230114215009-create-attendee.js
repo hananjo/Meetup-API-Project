@@ -15,6 +15,7 @@ module.exports = {
         references: {
           model: "Users",
         },
+        onDelete: "cascade",
       },
       status: {
         type: Sequelize.ENUM("Member", "Pending", "Waitlist"),
@@ -26,6 +27,7 @@ module.exports = {
         references: {
           model: "Events",
         },
+        onDelete: "cascade",
       },
       createdAt: {
         type: Sequelize.DATE,

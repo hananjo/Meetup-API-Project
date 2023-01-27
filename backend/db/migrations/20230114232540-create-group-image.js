@@ -18,6 +18,7 @@ module.exports = {
         references: {
           model: "Groups",
         },
+        onDelete: "cascade",
       },
       preview: {
         type: Sequelize.BOOLEAN,

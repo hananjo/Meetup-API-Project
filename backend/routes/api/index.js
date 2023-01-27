@@ -33,7 +33,7 @@ router.use("/groups", groupsRouter);
 router.use("/venues", venuesRouter);
 router.use("/events", eventsRouter);
 router.use("/group-images", groupImagesRouter);
-router.use("/events-images", eventImagesRouter);
+router.use("/event-images", eventImagesRouter);
 
 router.post("/test", (req, res) => {
   res.json({ requestBody: req.body });

@@ -19,6 +19,7 @@ module.exports = {
         references: {
           model: "Events",
         },
+        onDelete: "cascade",
       },
       preview: {
         type: Sequelize.BOOLEAN,

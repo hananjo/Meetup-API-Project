@@ -233,7 +233,7 @@ router.get("/:groupId", async (req, res) => {
 router.get("/:groupId/members", async (req, res) => {
   const group = await Group.findByPk(req.params.groupId);
   const loggedInMember = await Membership.findOne({
-    where: { userId: req.user.id, groupId: req.params.groupId },
+    where: { memberId: req.user.id, groupId: req.params.groupId },
     //as long as the userId from members matches the logged in user and the groupId
     //from the members is the groupId from the params entered in
   });
@@ -251,7 +251,20 @@ router.get("/:groupId/members", async (req, res) => {
       include: { model: Membership, where: { groupId: req.params.groupId } },
       //want to grab the mmeber where groupId matches the params
     });
-    return res.json({ Members: groupMembers });
+    const memberArray = [];
+    groupMembers.forEach((member) => {
+      const memberObj = {};
+
+      console.log(member.Memberships);
+      memberObj.id = member.id;
+      memberObj.firstName = member.firstName;
+      memberObj.lastName = member.lastName;
+
+      memberObj.Membership = { status: member.Memberships[0].status };
+      memberArray.push(memberObj);
+    });
+
+    return res.json({ Members: memberArray });
   }
   if (req.user) {
     if (
@@ -268,7 +281,17 @@ router.get("/:groupId/members", async (req, res) => {
           attributes: ["status"],
         },
       });
-      return res.json({ Members: groupMembers });
+      const memberArray = [];
+      groupMembers.forEach((member) => {
+        const memberObj = {};
+        memberObj.id = member.userId;
+        memberObj.firstName = member.firstName;
+        memberObj.lastName = member.lastName;
+        memberObj.Membership = { status: member.Memberships[0].status };
+        memberArray.push(memberObj);
+      });
+
+      return res.json({ Members: memberArray });
     }
   } else {
     let groupMembers = await User.findAll({
@@ -279,7 +302,17 @@ router.get("/:groupId/members", async (req, res) => {
         attributes: ["status"],
       },
     });
-    return res.json({ Members: groupMembers });
+    const memberArray = [];
+    groupMembers.forEach((member) => {
+      const memberObj = {};
+      memberObj.id = member.userId;
+      memberObj.firstName = member.firstName;
+      memberObj.lastName = member.lastName;
+      memberObj.Membership = { status: member.Memberships[0].status };
+      memberArray.push(memberObj);
+    });
+
+    return res.json({ Members: memberArray });
   }
 });
 
@@ -354,7 +387,7 @@ router.get("/:groupId/venues", requireAuth, async (req, res) => {
     });
   }
   const member = await Membership.findOne({
-    where: { userId: req.user.id, groupId: req.params.groupId },
+    where: { memberId: req.user.id, groupId: req.params.groupId },
     //user in the member matches the req user id from the groupId input in the url, want to see if user
     // is associated with groupId input
   });
@@ -748,7 +781,7 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  if (req.user.id === organizerId) {
+  if (req.user.id === deleteGroup.organizerId) {
     await deleteGroup.destroy();
     return res.json({
       message: "Successfully deleted",
@@ -773,7 +806,7 @@ router.delete("/:groupId/membership", requireAuth, async (req, res) => {
     });
   }
   const member = await Membership.findOne({
-    where: { userId: req.user.id, groupId: req.params.groupId },
+    where: { memberId: req.body.memberId, groupId: req.params.groupId },
   });
 
   if (!member) {

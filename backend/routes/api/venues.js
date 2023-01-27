@@ -45,7 +45,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res) => {
   // }
   const group = await Group.findByPk(venue.groupId);
   const member = await Membership.findOne({
-    where: { userId: req.user.id, groupId: venue.groupId },
+    where: { memberId: req.user.id, groupId: venue.groupId },
     //user in the member matches the req user id from the groupId input in the url, want to see if user
     // is associated with groupId input
   });

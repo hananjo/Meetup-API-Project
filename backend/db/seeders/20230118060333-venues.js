@@ -46,6 +46,14 @@ module.exports = {
         lat: 37.24657,
         lng: -121.98765,
       },
+      // {
+      //   groupId: 5,
+      //   address: "235 Disney Street",
+      //   city: "Fremont",
+      //   state: "CA",
+      //   lat: 37.98378,
+      //   lng: -121.98738,
+      // },
     ]);
   },
 
