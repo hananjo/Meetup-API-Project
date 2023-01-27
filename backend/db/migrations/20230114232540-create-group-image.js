@@ -1,16 +1,14 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
-
 let options = {};
 
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Users",
+      "GroupImages",
       {
         id: {
           allowNull: false,
@@ -18,27 +16,19 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        lastName: {
-          type: Sequelize.STRING(30),
-          allowNull: false,
+        url: {
+          type: Sequelize.STRING,
         },
-        firstName: {
-          type: Sequelize.STRING(30),
+        groupId: {
+          type: Sequelize.INTEGER,
           allowNull: false,
+          references: {
+            model: "Groups",
+          },
+          onDelete: "cascade",
         },
-        username: {
-          type: Sequelize.STRING(30),
-          allowNull: false,
-          unique: true,
-        },
-        email: {
-          type: Sequelize.STRING(256),
-          allowNull: false,
-          unique: true,
-        },
-        hashedPassword: {
-          type: Sequelize.STRING.BINARY,
-          allowNull: false,
+        preview: {
+          type: Sequelize.BOOLEAN,
         },
         createdAt: {
           allowNull: false,
@@ -55,6 +45,6 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users", options);
+    await queryInterface.dropTable("GroupImages", options);
   },
 };

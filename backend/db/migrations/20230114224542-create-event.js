@@ -1,16 +1,14 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
-
 let options = {};
 
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Users",
+      "Events",
       {
         id: {
           allowNull: false,
@@ -18,36 +16,57 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        lastName: {
-          type: Sequelize.STRING(30),
+        groupId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: "Groups",
+          },
+          onDelete: "cascade",
+        },
+        venueId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: "Venues",
+          },
+          onDelete: "cascade",
+        },
+        name: {
+          type: Sequelize.STRING,
           allowNull: false,
         },
-        firstName: {
-          type: Sequelize.STRING(30),
+        type: {
+          type: Sequelize.ENUM("In person", "Online"),
           allowNull: false,
         },
-        username: {
-          type: Sequelize.STRING(30),
+        startDate: {
+          type: Sequelize.DATE,
           allowNull: false,
-          unique: true,
         },
-        email: {
-          type: Sequelize.STRING(256),
+        endDate: {
+          type: Sequelize.DATE,
           allowNull: false,
-          unique: true,
         },
-        hashedPassword: {
-          type: Sequelize.STRING.BINARY,
+        description: {
+          type: Sequelize.STRING,
           allowNull: false,
+        },
+        capacity: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        price: {
+          type: Sequelize.DECIMAL(4, 2),
         },
         createdAt: {
-          allowNull: false,
           type: Sequelize.DATE,
+          allowNull: false,
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
         updatedAt: {
-          allowNull: false,
           type: Sequelize.DATE,
+          allowNull: false,
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         },
       },
@@ -55,6 +74,6 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users", options);
+    await queryInterface.dropTable("Events", options);
   },
 };
