@@ -130,12 +130,20 @@ router.get(
       });
       // console.log(attending);
       // console.log(attending.length);
-      event.dataValues.numAttending = attending.length;
+      if (attending) {
+        event.dataValues.numAttending = attending.length;
+      } else {
+        event.dataValues.numAttending = 0;
+      }
 
       const image = await EventImage.findOne({
         where: { preview: true, eventId: event.dataValues.id },
       });
-      event.dataValues.preview = image.url;
+      if (image) {
+        event.dataValues.preview = image.url;
+      } else {
+        event.dataValues.preview = "No image url";
+      }
     }
     res.json({ Events: events });
   }
