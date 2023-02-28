@@ -1,6 +1,6 @@
 import { csrfFetch } from "./csrf";
 
-const LOAD = "group/LOAD";
+const LOAD = "groups/LOAD";
 
 const load = (list) => ({
   type: LOAD,

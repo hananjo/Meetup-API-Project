@@ -22,7 +22,7 @@ const GroupBrowser = () => {
       <h1>Groups List</h1>
       <ol>
         {groups.map((group) => {
-          <li key={group.id}>{group.name}</li>;
+          return <li key={group.id}>{group.name}</li>;
         })}
       </ol>
     </div>
