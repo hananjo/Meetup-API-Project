@@ -75,6 +75,7 @@ const CreateGroupForm = () => {
           City:
           <input
             type="text"
+            name="city"
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
@@ -84,6 +85,7 @@ const CreateGroupForm = () => {
           State:
           <input
             type="text"
+            name="state"
             placeholder="State"
             value={state}
             onChange={(e) => setState(e.target.value)}
