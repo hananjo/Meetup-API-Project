@@ -1,5 +1,3 @@
-import { csrfFetch } from "./csrf";
-
 const LOAD = "groups/LOAD";
 
 const load = (list) => ({
@@ -8,16 +6,17 @@ const load = (list) => ({
 });
 
 export const getAllGroups = () => async (dispatch) => {
-  const response = await csrfFetch("/api/groups");
+  const response = await fetch("/api/groups");
   console.log("*****", response);
   if (response.ok) {
     const list = await response.json();
-    dispatch(load(list));
+    console.log("12345", list);
+    dispatch(load(list.Groups));
   }
 };
 
 const initialState = {
-  groups: {},
+  groups: [],
 };
 const groupReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -27,7 +26,7 @@ const groupReducer = (state = initialState, action) => {
         newState[group.id] = group;
       });
       return {
-        ...state,
+        // ...state,
         ...newState,
       };
     default:
