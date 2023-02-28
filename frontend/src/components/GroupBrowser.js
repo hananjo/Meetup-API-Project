@@ -12,7 +12,7 @@ const GroupBrowser = () => {
     return Object.values(state?.group);
     // console.log("*********", groups);
   });
-  console.log("9999999", groups);
+  //   console.log("9999999", groups);
 
   useEffect(() => {
     dispatch(getAllGroups());
@@ -21,30 +21,21 @@ const GroupBrowser = () => {
   return (
     <div>
       <h1>Groups List</h1>
-      <ul style={{ listStyleType: "none" }}>
-        {groups?.map((group) => {
-          return (
-            <div key={group.id}>
+      {groups?.map((group) => {
+        return (
+          <div key={group.id}>
+            <NavLink key={group.id} to={`/api/groups/${group.id}`}>
               <img src={group.preview} />
-              <NavLink key={group.id} to={`/api/groups/${group.id}`}>
-                {group.name}
-              </NavLink>
-              <p>{group.city}</p>
-              <p>{group.state}</p>
-              <p>{group.about}</p>
-              <p>{group.numMembers}</p>
-              {group.private ? <p>Private</p> : <p>Public</p>}
-            </div>
-            // <li key={group.id}>{group.preview}</li>
-
-            // (<li>{group.name}</li>),
-            // (<li>{group.city}</li>),
-            // (<li>{group.state}</li>),
-            // (<li>{group.about}</li>),
-            // (<li>{group.private}</li>)
-          );
-        })}
-      </ul>
+              {group.name}
+            </NavLink>
+            <p>{group.city}</p>
+            <p>{group.state}</p>
+            <p>{group.about}</p>
+            <p>{group.numMembers}</p>
+            {group.private ? <p>Private</p> : <p>Public</p>}
+          </div>
+        );
+      })}
     </div>
   );
 };
