@@ -45,7 +45,7 @@ const LandingPage = () => {
           </Link>
         </div>
         <div className="create-group-column">
-          <Link to="/api/groups" className="disabled">
+          <Link to="/api/groups/new" className="disabled">
             <img
               src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549283/Project%20Schema/crowd-clipart-event-13_ocahsp.png"
               alt="Create-Event"
