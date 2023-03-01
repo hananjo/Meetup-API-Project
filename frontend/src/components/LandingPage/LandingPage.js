@@ -1,7 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 const LandingPage = () => {
+  const user = useSelector((state) => state.session.user);
+  console.log("******123", user);
   return (
     <>
       <section className="section1">
@@ -27,31 +30,34 @@ const LandingPage = () => {
       </section>
       <section className="section3">
         <div className="group-column">
-          <Link to="/api/groups">
+          <NavLink to="/api/groups">
             <img
               src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677548492/Project%20Schema/groups_igjkqj.jpg"
               alt="Meetup Pic"
             />
             <p>See all groups</p>
-          </Link>
+          </NavLink>
         </div>
         <div className="event-column">
-          <Link to="/api/events">
+          <NavLink to="/api/events">
             <img
               src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549283/Project%20Schema/33-339853_calendar-invite-cartoon_xoat94.png"
               alt="Find Event"
             />
             <p>Find an event</p>
-          </Link>
+          </NavLink>
         </div>
         <div className="create-group-column">
-          <Link to="/api/groups/new" className="disabled">
+          <NavLink
+            to="/api/groups/new"
+            className={user ? "not-disabled" : "disabled"}
+          >
             <img
               src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549283/Project%20Schema/crowd-clipart-event-13_ocahsp.png"
               alt="Create-Event"
             />
             <p>Start a new group</p>
-          </Link>
+          </NavLink>
         </div>
       </section>
       <section className="section4">

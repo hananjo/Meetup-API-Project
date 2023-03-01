@@ -1,52 +1,61 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import group from "../../../../backend/db/models/group";
+import { addNewGroup } from "../../store/group";
+
+// import group from "../../../../backend/db/models/group";
 const CreateGroupForm = () => {
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [about, setAbout] = useState("");
-  const [privacy, setPrivacy] = useState("Private");
+  const [privacy, setPrivacy] = useState(true);
   const [preview, setPreview] = useState("");
-  const [groupSetting, setGroupSetting] = useState("In Person");
-  const [errors, setErrors] = useState({});
+  const [groupSetting, setGroupSetting] = useState("In person");
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    const validationErrors = {};
-    if (name.length === "") {
-      validationErrors.name("Name is required");
+    const validationErrors = [];
+    if (!name.length) {
+      validationErrors.push("Name is required");
     }
-    if (city.length === "") {
-      validationErrors.city("City is required");
+    if (!city.length) {
+      validationErrors.push("City is required");
     }
-    if ((state.length = "")) {
-      validationErrors.state("State is required");
+    if (!state.length) {
+      validationErrors.push("State is required");
     }
-    if (description.length < 30) {
-      validationErrors.about("Description needs 30 or more characters");
+    if (about.length < 50) {
+      validationErrors.push("Description needs 50 or more characters");
     }
     setErrors(validationErrors);
   }, [name, city, state, about]);
 
-  const handleSubmit = (e) => {
-    e.peventDefault();
-    if (!Object.keys(validationErrors).length) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!errors.length) {
+      // if (!Object.keys(errors).length) {
       const groupFormInput = {
         name,
         city,
         state,
         about,
-        privacy,
+        private: privacy,
         preview,
-        groupSetting,
+        type: groupSetting,
       };
+      let addedNewGroup;
+      addedNewGroup = await dispatch(addNewGroup(groupFormInput));
+      console.log("******", addedNewGroup);
+      console.log(addNewGroup);
+      if (addedNewGroup) {
+        history.push(`/api/groups/${addedNewGroup.id}`);
+        // hideForm();
+      }
     }
-    dispatch(createGroup(groupFormInput));
-    history.push(`/api/groups/${group.id}`);
 
     setName("");
     setCity("");
@@ -54,7 +63,7 @@ const CreateGroupForm = () => {
     setAbout("");
     setPrivacy("Private");
     setPreview("");
-    setGroupSetting("In Person");
+    setGroupSetting("In person");
   };
 
   return (
@@ -115,25 +124,28 @@ const CreateGroupForm = () => {
           should join? 3. What will you do at your events?
         </p>
         <textarea
+          type="text"
           name="about"
-          placeholder="Please write at least 30 characters"
+          placeholder="Please write at least 50 characters"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
         />
       </div>
       <div className="form-section4">
         <label>Is this an in-person or online group?</label>
         <select name="groupSetting">
-          <option value={groupSetting}>In Person</option>
+          <option value={groupSetting}>In person</option>
           <option value={groupSetting}>Online</option>
         </select>
         <label>Is this group private or public?</label>
         <select name="privacy">
-          <option value={privacy}>Private</option>
-          <option value={privacy}>Public</option>
+          <option value={true}>Private</option>
+          <option value={false}>Public</option>
         </select>
         <label>Please add an image URL for your group below:</label>
         <input type="text" name="preview" placeholder="Image Url" />
       </div>
-      <button type="submit" disabled={Object.keys(validationErrors).length > 0}>
+      <button type="submit" disabled={errors.length > 0}>
         Create Group
       </button>
     </form>

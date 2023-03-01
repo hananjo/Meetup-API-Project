@@ -5,6 +5,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GroupBrowser from "./components/GroupBrowser";
 import LandingPage from "./components/LandingPage/LandingPage";
+import CreateGroupForm from "./components/CreateGroupForm/CreateGroupForm";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,6 +21,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/api/groups" component={GroupBrowser} />
+          <Route exact path="/api/groups/new" component={CreateGroupForm} />
         </Switch>
       )}
     </>
