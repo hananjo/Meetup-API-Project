@@ -48,16 +48,20 @@ const LandingPage = () => {
           </NavLink>
         </div>
         <div className="create-group-column">
-          <NavLink
-            to="/api/groups/new"
-            className={user ? "not-disabled" : "disabled"}
-          >
-            <img
-              src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549283/Project%20Schema/crowd-clipart-event-13_ocahsp.png"
-              alt="Create-Event"
-            />
-            <p>Start a new group</p>
-          </NavLink>
+          {user ? (
+            <NavLink
+              to="/api/groups/new"
+              // className={user ? "not-disabled" : "disabled"}
+            >
+              <img
+                src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549283/Project%20Schema/crowd-clipart-event-13_ocahsp.png"
+                alt="Create-Event"
+              />
+              <p>Start a new group</p>
+            </NavLink>
+          ) : (
+            <br />
+          )}
         </div>
       </section>
       <section className="section4">

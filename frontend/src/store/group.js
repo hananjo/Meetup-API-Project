@@ -61,17 +61,20 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
     dispatch(loadDetails(group));
   }
 };
-export const updateGroup = (data) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${data.id}`, {
+export const updateGroup = (groupId, data) => async (dispatch) => {
+  console.log("hit");
+  console.log(data, "^^^^^^^^^^^");
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     // headers: {
-    //   'Content-Type': 'application/json'
+    //   "Content-Type": "application/json",
     // },
     body: JSON.stringify(data),
   });
 
   if (response.ok) {
     const group = await response.json();
+
     dispatch(addGroup(group));
     return group;
   }
