@@ -118,6 +118,7 @@ const validateEvent = [
 
 //Get all Groups
 router.get("/", async (req, res) => {
+  // console.log("hello");
   const groups = await Group.findAll({});
   for await (let group of groups) {
     // console.log(group);
