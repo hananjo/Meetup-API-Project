@@ -49,8 +49,8 @@ const CreateGroupForm = () => {
       };
       let addedNewGroup;
       addedNewGroup = await dispatch(addNewGroup(groupFormInput));
-      console.log("******", addedNewGroup);
-      console.log(addNewGroup);
+      // console.log("******", addedNewGroup);
+      // console.log(addNewGroup);
       if (addedNewGroup) {
         history.push(`/api/groups/${addedNewGroup.id}`);
         // hideForm();

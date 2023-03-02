@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 const LandingPage = () => {
   const user = useSelector((state) => state.session.user);
-  console.log("******123", user);
+  // console.log("******123", user);
   return (
     <>
       <section className="section1">

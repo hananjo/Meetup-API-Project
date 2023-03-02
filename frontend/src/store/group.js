@@ -9,10 +9,10 @@ const load = (list) => ({
   list,
 });
 
-// const loadDetails = (details) => {
-//   type: LOAD_DETAILS;
-//   details;
-// };
+const loadDetails = (groupId) => ({
+  type: LOAD_DETAILS,
+  groupId,
+});
 const addGroup = (group) => ({
   type: ADD_GROUP,
   group,
@@ -28,7 +28,6 @@ export const getAllGroups = () => async (dispatch) => {
   }
 };
 
-// export const getGroupDetails = (group) => async dispatch {};
 export const addNewGroup = (data) => async (dispatch) => {
   console.log(data);
   console.log("8974485");
@@ -42,9 +41,43 @@ export const addNewGroup = (data) => async (dispatch) => {
   return group;
 };
 
-const initialState = {
-  groups: [],
+// export const getGroupDetails = (groupId) => async (dispatch) => {
+//   const response = await fetch(`/api/groups/${groupId}`);
+
+//   if (response.ok) {
+//     const group = await response.json();
+//     console.log(group);
+//     dispatch(addGroup(group));
+//   }
+// };
+
+export const getGroupDetails = (groupId) => async (dispatch) => {
+  // console.log(group);
+  const response = await fetch(`/api/groups/${groupId}`);
+  // console.log(response);
+  if (response.ok) {
+    const group = await response.json();
+    console.log(group, "0000");
+    dispatch(loadDetails(group));
+  }
 };
+export const updateGroup = (data) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${data.id}`, {
+    method: "PUT",
+    // headers: {
+    //   'Content-Type': 'application/json'
+    // },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    const group = await response.json();
+    dispatch(addGroup(group));
+    return group;
+  }
+};
+
+const initialState = {};
 const groupReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD:
@@ -53,11 +86,12 @@ const groupReducer = (state = initialState, action) => {
         newState[group.id] = group;
       });
       return {
-        // ...state,
         ...newState,
       };
     case ADD_GROUP:
       return { ...state, [action.group.id]: action.group };
+    case LOAD_DETAILS:
+      return { ...state, details: action.groupId };
     default:
       return state;
   }

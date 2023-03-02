@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getAllGroups } from "../store/group";
+import { getAllGroups } from "../../store/group";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import React from "react";
