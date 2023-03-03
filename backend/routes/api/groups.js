@@ -764,10 +764,7 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
   }
   if (req.user.id === deleteGroup.organizerId) {
     await deleteGroup.destroy();
-    return res.json({
-      message: "Successfully deleted",
-      statusCode: 200,
-    });
+    return res.json(deleteGroup);
   } else {
     return res.status(403).json({
       message: "Forbidden",
