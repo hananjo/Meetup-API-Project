@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getGroupDetails } from "../../store/group";
-import DeleteGroupConfirmation from "../DeleteGroup/DeleteGroup";
 import { deleteGroup } from "../../store/group";
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";

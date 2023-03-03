@@ -33,6 +33,14 @@ export const getAllEvents = () => async (dispatch) => {
     dispatch(load(list.Events));
   }
 };
+
+export const getEventsForGroup = (groupId) => async (dispatch) => {
+  const response = await fetch(`/api/groups/${groupId}/events`);
+  if (response.ok) {
+    const list = await response.json();
+    dispatch(load(list.Events));
+  }
+};
 export const getEventDetails = (eventId) => async (dispatch) => {
   const response = await fetch(`/api/events/${eventId}`);
   if (response.ok) {
