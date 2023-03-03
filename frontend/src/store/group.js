@@ -1,8 +1,9 @@
 import { csrfFetch } from "./csrf";
 
-const LOAD = "groups/LOAD";
+const LOAD = "/groups/LOAD";
 const ADD_GROUP = "/groups/ADD_GROUP";
 const LOAD_DETAILS = "/groups/LOAD_DETAILS";
+const REMOVE_GROUP = "/groups/REMOVE_GROUP";
 
 const load = (list) => ({
   type: LOAD,
@@ -18,43 +19,31 @@ const addGroup = (group) => ({
   group,
 });
 
+const removeGroup = (groupId) => ({
+  type: REMOVE_GROUP,
+  groupId,
+});
+
 export const getAllGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
-  console.log("*****", response);
   if (response.ok) {
     const list = await response.json();
-    console.log("12345", list);
     dispatch(load(list.Groups));
   }
 };
 
 export const addNewGroup = (data) => async (dispatch) => {
-  console.log(data);
-  console.log("8974485");
   const response = await csrfFetch("/api/groups", {
     method: "POST",
     body: JSON.stringify(data),
   });
   const group = await response.json();
-  //   console.log(group);
   dispatch(addGroup(group));
   return group;
 };
 
-// export const getGroupDetails = (groupId) => async (dispatch) => {
-//   const response = await fetch(`/api/groups/${groupId}`);
-
-//   if (response.ok) {
-//     const group = await response.json();
-//     console.log(group);
-//     dispatch(addGroup(group));
-//   }
-// };
-
 export const getGroupDetails = (groupId) => async (dispatch) => {
-  // console.log(group);
   const response = await fetch(`/api/groups/${groupId}`);
-  // console.log(response);
   if (response.ok) {
     const group = await response.json();
     console.log(group, "0000");
@@ -62,24 +51,25 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
   }
 };
 export const updateGroup = (groupId, data) => async (dispatch) => {
-  console.log("hit");
-  console.log(data, "^^^^^^^^^^^");
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
-    // headers: {
-    //   "Content-Type": "application/json",
-    // },
     body: JSON.stringify(data),
   });
-
   if (response.ok) {
     const group = await response.json();
-
     dispatch(addGroup(group));
     return group;
   }
 };
 
+export const deleteGroup = (groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    dispatch(removeGroup(groupId));
+  }
+};
 const initialState = {};
 const groupReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -95,6 +85,10 @@ const groupReducer = (state = initialState, action) => {
       return { ...state, [action.group.id]: action.group };
     case LOAD_DETAILS:
       return { ...state, details: action.groupId };
+    case REMOVE_GROUP:
+      const deleteNewState = { ...state };
+      delete deleteNewState[action.group.id];
+      return deleteNewState;
     default:
       return state;
   }

@@ -9,6 +9,8 @@ import CreateGroupForm from "./components/CreateGroupForm/CreateGroupForm";
 import GroupDetail from "./components/GroupDetails/GroupDetails";
 import UpdateGroup from "./components/UpdateGroup/UpdateGroup";
 import EventBrowser from "./components/EventBrowser/EventBrowser";
+import EventDetail from "./components/EventDetails/EventDetails";
+import CreateEventForm from "./components/CreateEventForm/CreateEventForm";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +28,12 @@ function App() {
           <Route exact path="/api/events" component={EventBrowser} />
           <Route exact path="/api/groups/new" component={CreateGroupForm} />
           <Route exact path="/api/groups/:groupId" component={GroupDetail} />
+          <Route
+            exact
+            path="/api/groups/:groupId/events"
+            component={CreateEventForm}
+          />
+          <Route exact path="/api/events/:eventId" component={EventDetail} />
           <Route
             exact
             path="/api/groups/:groupId/update"
