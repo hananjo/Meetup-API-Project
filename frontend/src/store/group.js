@@ -19,9 +19,9 @@ const addGroup = (group) => ({
   group,
 });
 
-const removeGroup = (groupId) => ({
+const removeGroup = (group) => ({
   type: REMOVE_GROUP,
-  groupId,
+  group,
 });
 
 export const getAllGroups = () => async (dispatch) => {
@@ -67,7 +67,8 @@ export const deleteGroup = (groupId) => async (dispatch) => {
     method: "DELETE",
   });
   if (response.ok) {
-    dispatch(removeGroup(groupId));
+    const group = await response.json();
+    dispatch(removeGroup(group));
   }
 };
 const initialState = {};
@@ -87,7 +88,9 @@ const groupReducer = (state = initialState, action) => {
       return { ...state, details: action.groupId };
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
+      console.log(action, "******");
       delete deleteNewState[action.group.id];
+
       return deleteNewState;
     default:
       return state;

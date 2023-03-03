@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { getEventDetails } from "../../store/event";
 import { getGroupDetails } from "../../store/group";
 import { NavLink } from "react-router-dom";
-// import { useRef } from "react";
+import { useRef } from "react";
+import { deleteEvent } from "../../store/event";
 // import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom";
 
@@ -25,35 +26,35 @@ const EventDetail = () => {
     dispatch(getEventDetails(eventId));
   }, [dispatch]);
 
-  //   const [showMenu, setShowMenu] = useState(false);
-  //   const ulRef = useRef();
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
-  //   const openMenu = () => {
-  //     if (showMenu) return;
-  //     setShowMenu(true);
-  //   };
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
 
-  //   useEffect(() => {
-  //     if (!showMenu) return;
+  useEffect(() => {
+    if (!showMenu) return;
 
-  //     const closeMenu = (e) => {
-  //       if (!ulRef.current.contains(e.target)) {
-  //         setShowMenu(false);
-  //       }
-  //     };
+    const closeMenu = (e) => {
+      //   if (!ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+      //   }
+    };
 
-  //     document.addEventListener("click", closeMenu);
+    document.addEventListener("click", closeMenu);
 
-  //     return () => document.removeEventListener("click", closeMenu);
-  //   }, [showMenu]);
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
 
-  //   const closeMenu = () => setShowMenu(false);
+  const closeMenu = () => setShowMenu(false);
 
-  //   const handleDelete = () => {
-  //     dispatch(deleteEvent(eventId));
-  //     setShowMenu(false);
-  //     history.push("/api/events");
-  //   };
+  const handleDelete = () => {
+    dispatch(deleteEvent(eventId));
+    setShowMenu(false);
+    history.push(`/api/groups/${events.Group.id}`);
+  };
   return (
     <div>
       <p>
@@ -81,23 +82,21 @@ const EventDetail = () => {
         </div>
       )}
 
-      {/* <div>
+      <div>
         <button onClick={openMenu}>Delete</button>
         {showMenu && (
-          <OpenModalButton>
-            <div className="delete-modal">
-              <h3> Confirm Delete</h3>
-              <p> Are you sure you want to remove this event?</p>
-              <button className="delete-button" onClick={handleDelete}>
-                Yes (Delete Event)
-              </button>
-              <button className="keep-button" onClick={closeMenu}>
-                No (Keep Event)
-              </button>
-            </div>
-          </OpenModalButton>
+          <div className="delete-modal">
+            <h3> Confirm Delete</h3>
+            <p> Are you sure you want to remove this event?</p>
+            <button className="delete-button" onClick={handleDelete}>
+              Yes (Delete Event)
+            </button>
+            <button className="keep-button" onClick={closeMenu}>
+              No (Keep Event)
+            </button>
+          </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };
