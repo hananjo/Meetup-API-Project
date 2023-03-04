@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getGroupDetails } from "../../store/group";
-import DeleteGroupConfirmation from "../DeleteGroup/DeleteGroup";
 import { deleteGroup } from "../../store/group";
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom";
+import EventGroups from "../EventsForGroup/EventsForGroup";
 
 const GroupDetail = () => {
-  // const user = useSelector((state) => state.session.user);
-  // console.log(user)
+  const user = useSelector((state) => state.session.user);
+  console.log(user);
   const history = useHistory();
   const dispatch = useDispatch();
   const { groupId } = useParams();
@@ -25,7 +25,7 @@ const GroupDetail = () => {
   }, [dispatch]);
 
   const [showMenu, setShowMenu] = useState(false);
-  const ulRef = useRef();
+  // const ulRef = useRef();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -36,9 +36,9 @@ const GroupDetail = () => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
+      //   if (!ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+      //   }
     };
 
     document.addEventListener("click", closeMenu);
@@ -55,7 +55,10 @@ const GroupDetail = () => {
   };
   return (
     <div>
-      <NavLink to="/api/groups"> Back to Groups List</NavLink>
+      {" "}
+      <p>
+        &lt; <NavLink to="/api/groups">Groups </NavLink>
+      </p>
       {groups && (
         <div>
           <h1>{groups.name}</h1>
@@ -72,18 +75,21 @@ const GroupDetail = () => {
             {groups.Organizer.lastName}
           </label>
           <div>
-            <button
-              onClick={() => alert("Feature coming soon")}
-              style={{ backgroundColor: "red" }}
-            >
-              Join the Group
-            </button>
+            {user && user.id !== groups.organizerId && (
+              <button
+                onClick={() => alert("Feature coming soon")}
+                style={{ backgroundColor: "red" }}
+              >
+                Join the Group
+              </button>
+            )}
           </div>
+
           <h2>What we're about</h2>
           <p>{groups.about}</p>
         </div>
       )}
-
+      {/* {user && user.id === groups.organizerId ? ( */}
       <div>
         <NavLink to={`/api/groups/${groupId}/events`}>
           <button>Create Event</button>
@@ -92,20 +98,27 @@ const GroupDetail = () => {
           <button>Update</button>
         </NavLink>
         <button onClick={openMenu}>Delete</button>
+
         {showMenu && (
-          <OpenModalButton>
-            <div className="delete-modal">
-              <h3> Confirm Delete</h3>
-              <p> Are you sure you want to remove this group?</p>
-              <button className="delete-button" onClick={handleDelete}>
-                Yes (Delete Group)
-              </button>
-              <button className="keep-button" onClick={closeMenu}>
-                No (Keep Group)
-              </button>
-            </div>
-          </OpenModalButton>
+          //   <OpenModalButton>
+          <div className="delete-modal">
+            <h3> Confirm Delete</h3>
+            <p> Are you sure you want to remove this group?</p>
+            <button className="delete-button" onClick={handleDelete}>
+              Yes (Delete Group)
+            </button>
+            <button className="keep-button" onClick={closeMenu}>
+              No (Keep Group)
+            </button>
+          </div>
+          //   </OpenModalButton>
         )}
+      </div>
+      {/* ) : (
+        <br />
+      )} */}
+      <div className="events-group-list">
+        <EventGroups />
       </div>
     </div>
   );

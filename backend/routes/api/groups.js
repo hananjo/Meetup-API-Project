@@ -52,9 +52,9 @@ const validateVenue = [
 ];
 
 const validateEvent = [
-  check("venueId")
-    .exists({ checkFalsy: true })
-    .withMessage("Venue does not exist"),
+  // check("venueId")
+  //   .exists({ checkFalsy: true })
+  //   .withMessage("Venue does not exist"),
   check("name")
     .isLength({ min: 5 })
     .withMessage("Name must be at least 5 characters"),
@@ -62,9 +62,9 @@ const validateEvent = [
     .exists({ checkFalsy: true })
     .isIn(["In person", "Online"])
     .withMessage("Type must be 'Online' or 'In person'"),
-  check("capacity")
-    .isNumeric({ min: 1 })
-    .withMessage("Capacity must be an integer"),
+  // check("capacity")
+  //   .isNumeric({ min: 1 })
+  //   .withMessage("Capacity must be an integer"),
   check("price").isDecimal({ min: 1 }).withMessage("Price is invalid"),
   check("description")
     .exists({ checkFalsy: true })
