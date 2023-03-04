@@ -26,7 +26,7 @@ module.exports = {
         },
         venueId: {
           type: Sequelize.INTEGER,
-          allowNull: false,
+          // allowNull: false,
           references: {
             model: "Venues",
           },
@@ -54,7 +54,7 @@ module.exports = {
         },
         capacity: {
           type: Sequelize.INTEGER,
-          allowNull: false,
+          // allowNull: false,
         },
         price: {
           type: Sequelize.DECIMAL(4, 2),

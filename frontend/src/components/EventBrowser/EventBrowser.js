@@ -19,19 +19,23 @@ const EventBrowser = () => {
   return (
     <div>
       <h2>Events</h2>
-      <h2>Groups</h2>
+      <NavLink to="/api/groups">
+        {" "}
+        <h2>Groups</h2>
+      </NavLink>
+
       <p>Events in Meetup</p>
       {events?.map((event) => {
         return (
           <div key={event.id}>
             <NavLink key={event.id} to={`/api/events/${event.id}`}>
               {/* <img src={event.preview} /> */}
-              {event.name}
+              <h2>{event.name}</h2>
+              <p>{event.description}</p>
+              <p>Price: ${event.price}</p>
+              <p>Capacity: {event.capacity}</p>
+              <p>{event.type}</p>{" "}
             </NavLink>
-            <p>{event.description}</p>
-            <p>Price: ${event.price}</p>
-            <p>Capacity: {event.capacity}</p>
-            <p>{event.type}</p>
           </div>
         );
       })}

@@ -9,10 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Event.belongsToMany(models.User, { through: models.Attendee, foreignKey: 'eventId', otherKey: 'userId', onDelete: 'CASCADE' });
-      Event.hasMany(models.EventImage, { foreignKey: "eventId", onDelete: 'CASCADE' });
-      Event.belongsTo(models.Group, { foreignKey: "groupId", onDelete: 'CASCADE' });
-      Event.belongsTo(models.Venue, { foreignKey: "venueId", onDelete: 'CASCADE' });
+      Event.belongsToMany(models.User, {
+        through: models.Attendee,
+        foreignKey: "eventId",
+        otherKey: "userId",
+        onDelete: "CASCADE",
+      });
+      Event.hasMany(models.EventImage, {
+        foreignKey: "eventId",
+        onDelete: "CASCADE",
+      });
+      Event.belongsTo(models.Group, {
+        foreignKey: "groupId",
+        onDelete: "CASCADE",
+      });
+      Event.belongsTo(models.Venue, {
+        foreignKey: "venueId",
+        onDelete: "CASCADE",
+      });
     }
   }
   Event.init(
@@ -23,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       venueId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        // allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -60,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       capacity: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        // allowNull: false,
       },
       price: {
         type: DataTypes.DECIMAL(4, 2),

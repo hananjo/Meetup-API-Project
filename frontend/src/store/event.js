@@ -38,6 +38,7 @@ export const getEventsForGroup = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}/events`);
   if (response.ok) {
     const list = await response.json();
+    console.log(list.Events[0], "list^^^^");
     dispatch(load(list.Events));
   }
 };
@@ -50,8 +51,9 @@ export const getEventDetails = (eventId) => async (dispatch) => {
   }
 };
 
-export const addNewEvent = (data) => async (dispatch) => {
-  const response = await csrfFetch("/api/events", {
+export const addNewEvent = (groupId, data) => async (dispatch) => {
+  console.log("hit &&&&&&");
+  const response = await csrfFetch(`/api/groups/${groupId}/events`, {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -76,6 +78,7 @@ const eventReducer = (state = initialState, action) => {
       const newState = {};
       action.list.forEach((event) => {
         newState[event.id] = event;
+        console.log(newState, "newState");
       });
       return {
         ...newState,

@@ -20,19 +20,24 @@ const GroupBrowser = () => {
 
   return (
     <div>
-      <h1>Groups List</h1>
+      <NavLink to="/api/events">
+        {" "}
+        <h2>Events</h2>
+      </NavLink>
+
+      <h2>Groups</h2>
       {groups?.map((group) => {
         return (
           <div key={group.id}>
             <NavLink key={group.id} to={`/api/groups/${group.id}`}>
               <img src={group.preview} />
-              {group.name}
+              <h2>{group.name}</h2>
+              <p>{group.city}</p>
+              <p>{group.state}</p>
+              <p>{group.about}</p>
+              <p>{group.numMembers}</p>
+              {group.private ? <p>Private</p> : <p>Public</p>}
             </NavLink>
-            <p>{group.city}</p>
-            <p>{group.state}</p>
-            <p>{group.about}</p>
-            <p>{group.numMembers}</p>
-            {group.private ? <p>Private</p> : <p>Public</p>}
           </div>
         );
       })}

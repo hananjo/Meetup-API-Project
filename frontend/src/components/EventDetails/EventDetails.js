@@ -58,8 +58,7 @@ const EventDetail = () => {
   return (
     <div>
       <p>
-        &lt;
-        <NavLink to="/api/events"> Events</NavLink>
+        &lt; <NavLink to="/api/events"> Events</NavLink>
       </p>
       {events && (
         <div>
