@@ -1,12 +1,12 @@
 import React from "react";
-
+import "./LandingPage.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 const LandingPage = () => {
   const user = useSelector((state) => state.session.user);
   // console.log("******123", user);
   return (
-    <>
+    <div className="container">
       <section className="section1">
         <div className="title-info">
           <h1>
@@ -19,6 +19,7 @@ const LandingPage = () => {
           <img
             src="https://res.cloudinary.com/dwphwqyrn/image/upload/v1677549284/Project%20Schema/Screen_Shot_2023-02-27_at_5.47.16_PM_vmztld.png"
             alt="inforgraphic"
+            width="800"
           />
         </div>
       </section>
@@ -67,7 +68,7 @@ const LandingPage = () => {
       <section className="section4">
         <button>Join Meetup</button>
       </section>
-    </>
+    </div>
   );
 };
 

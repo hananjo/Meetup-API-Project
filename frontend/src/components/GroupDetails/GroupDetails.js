@@ -89,34 +89,34 @@ const GroupDetail = () => {
           <p>{groups.about}</p>
         </div>
       )}
-      {/* {user && user.id === groups.organizerId ? ( */}
-      <div>
-        <NavLink to={`/api/groups/${groupId}/events`}>
-          <button>Create Event</button>
-        </NavLink>
-        <NavLink to={`/api/groups/${groupId}/update`}>
-          <button>Update</button>
-        </NavLink>
-        <button onClick={openMenu}>Delete</button>
+      {user && groups && user.id === groups.organizerId ? (
+        <div>
+          <NavLink to={`/api/groups/${groupId}/events`}>
+            <button>Create Event</button>
+          </NavLink>
+          <NavLink to={`/api/groups/${groupId}/update`}>
+            <button>Update</button>
+          </NavLink>
+          <button onClick={openMenu}>Delete</button>
 
-        {showMenu && (
-          //   <OpenModalButton>
-          <div className="delete-modal">
-            <h3> Confirm Delete</h3>
-            <p> Are you sure you want to remove this group?</p>
-            <button className="delete-button" onClick={handleDelete}>
-              Yes (Delete Group)
-            </button>
-            <button className="keep-button" onClick={closeMenu}>
-              No (Keep Group)
-            </button>
-          </div>
-          //   </OpenModalButton>
-        )}
-      </div>
-      {/* ) : (
+          {showMenu && (
+            //   <OpenModalButton>
+            <div className="delete-modal">
+              <h3> Confirm Delete</h3>
+              <p> Are you sure you want to remove this group?</p>
+              <button className="delete-button" onClick={handleDelete}>
+                Yes (Delete Group)
+              </button>
+              <button className="keep-button" onClick={closeMenu}>
+                No (Keep Group)
+              </button>
+            </div>
+            //   </OpenModalButton>
+          )}
+        </div>
+      ) : (
         <br />
-      )} */}
+      )}
       <div className="events-group-list">
         <EventGroups />
       </div>
