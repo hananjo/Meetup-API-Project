@@ -1,0 +1,129 @@
+.breadcrumb-group-link {
+    display: flex;
+    margin:  0 auto;
+    flex-direction: row;
+    width: 70%;
+    gap: 3px;
+    padding-bottom: 5px;
+}
+
+.get-all-groups {
+    color: blue
+}
+
+.top-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    width: 70%;
+    gap: 40px
+}
+
+.top-right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 78px;
+}
+
+.top-four-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+    margin-top: -23px;
+
+}
+.group-detail-name {
+    font-family: sans-serif;
+}
+.location-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #666666;
+    margin-top: -5px;
+}
+ .number-of-events-privacy {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-right: 20px;
+    color: #666666;
+    margin-top: -15px;
+ }
+
+ .organizer-group-detail {
+    margin-top: -15px;
+ }
+.three-middle-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px
+}
+.manage-group-container {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+}
+
+.manage-buttons {
+    font-size: 16px;
+    box-shadow: 2px 2px 2px .5px black;
+    color: white;
+    background-color: dimgray;
+    border: 2px solid black;
+    font-family: sans-serif;
+}
+
+.group-bottom-container {
+    display: flex;
+    margin:  0 auto;
+    flex-direction: column;
+    width: 70%;
+    margin-top: -80px
+}
+
+.events-bottom-container {
+    display: flex;
+    margin:  0 auto;
+    flex-direction: column;
+    width: 70%
+}
+
+.organizer-title {
+    font-family: Calibri;
+
+}
+
+.organizer-values {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-top: -30px;
+    color: #807a7a
+}
+
+.about-groups-title {
+    font-family: Calibri;
+}
+
+.about-groups {
+    margin-top: -30px
+}
+
+.group-join-button {
+    background-color: #D0312D;
+    width: 160px;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 3px 3px 5px #000000;
+    border: 1px solid black;
+    margin-top: -10px;
+
+}
+.group-manage-buttons-container {
+    margin-top: 65px;
+    /* margin-bottom: 50px */
+}
