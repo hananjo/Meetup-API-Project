@@ -1,21 +1,70 @@
-.container {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    width: 33%
-}
-
-.title-info {
+/* .container {
+    /* position: relative; */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* width: 50% */
+/* }  */
+ /* .section1{
     position: absolute;
+    display: flex;
+    justify-content: center;
     top: 100px;
     left: 250px;
-    float: left;
-    width: 75%;
+
+ }  */
+.section1 {
+    display: inline-flex;
+    justify-content: center;
+    left: 100px;
+    /* margin: 10px; */
+    margin-left: 200px;
+}
+.title-info {
+    /* position: absolute; */
+    /* top: 100px; */
+    /* left: 250px; */
+    /* float: left; */
+    flex: 30%;
+    width: 30%;
+    margin-top: 110px;
+
+    /* justify-content: center; */
 }
 
 .infographic {
     float: right;
-    width: 25%;
-    left: 100px;
+    width: 70%;
+
+    /* justify-content: center; */
+    /* left: 100px; */
+    /* flex: 30%; */
 
 }
+
+.section2 {
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.subTitle-info {
+    justify-content: center;
+}
+
+/* .section3 { */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* justify-content: space-around; */
+    /* width: 20% */
+/* } */
+
+/* .column{
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    /* justify-content: center; */
+    /* align-items: center; */
+
+/* } */
