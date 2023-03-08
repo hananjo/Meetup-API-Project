@@ -1,0 +1,45 @@
+.get-all-nav {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.events-groups-navlink {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: 40%;
+}
+
+.event-same-page {
+    color: teal;
+    text-decoration: underline;
+}
+
+.subtitle-nav-events {
+    color: lightgray;
+    margin-top: -20px;
+    font-weight: bold;
+}
+
+.get-all-top-container {
+    width: 50%;
+    margin: 0 auto
+}
+
+.get-all-listings {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid black
+}
+
+.get-all-img {
+    margin-right: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px
+}
+
+.listing-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

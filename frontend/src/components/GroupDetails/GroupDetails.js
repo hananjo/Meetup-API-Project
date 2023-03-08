@@ -56,6 +56,7 @@ const GroupDetail = () => {
     setShowMenu(false);
     history.push("/api/groups");
   };
+  console.log(groups, "hello");
   return (
     <div>
       <div className="breadcrumb-group-link">
@@ -69,11 +70,17 @@ const GroupDetail = () => {
       {groups && (
         <div>
           <div className="top-container">
-            <img
-              src={groups.GroupImages[0].url}
-              alt={groups.name}
-              style={{ width: "400px", height: "350px" }}
-            />
+            {groups.GroupImages && (
+              <img
+                src={
+                  groups.GroupImages > 0
+                    ? groups.GroupImages[0].url
+                    : "https://res.cloudinary.com/dqwy6sxtc/image/upload/v1678248891/poolupp/No_Image_Available_pqq4ay.jpg"
+                }
+                alt={groups.name}
+                style={{ width: "400px", height: "350px" }}
+              />
+            )}
             <div className="top-right-container">
               <div className="top-four-items">
                 <div className="group-detail-name">

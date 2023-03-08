@@ -19,6 +19,7 @@ const EventDetail = () => {
   const events = useSelector((state) => {
     return state?.event.details;
   });
+  console.log(events, "events%%%%%");
   //   const groups = useSelector((state) => {
   //     return state?.group.details;
   //   });
@@ -62,9 +63,10 @@ const EventDetail = () => {
       </p>
       {events && (
         <div>
+          <div></div>
           <h1>{events.name}</h1>
           <h2>Hosted by:</h2>
-          <img src={events.preview} alt={events.name} />
+          <img src={events.EventImages[0].url} alt={events.name} />
           <h2>Description:</h2>
           <p>{events.description}</p>
 
@@ -72,7 +74,7 @@ const EventDetail = () => {
             <p>{events.startDate}</p>
             <p>{events.endDate}</p>
             <p>{events.price}</p>
-            <p>{events.preview}</p>
+            <p>{events.type}</p>
           </div>
           <div className="group-info-box">
             <p>{events.Group.name}</p>
@@ -80,19 +82,25 @@ const EventDetail = () => {
           </div>
         </div>
       )}
-
+      {/* { user && events && user.id === } */}
       <div>
         <button onClick={openMenu}>Delete</button>
         {showMenu && (
           <div className="delete-modal">
-            <h3> Confirm Delete</h3>
-            <p> Are you sure you want to remove this event?</p>
-            <button className="delete-button" onClick={handleDelete}>
-              Yes (Delete Event)
-            </button>
-            <button className="keep-button" onClick={closeMenu}>
-              No (Keep Event)
-            </button>
+            <div className="delete-title">
+              <h3> Confirm Delete</h3>
+            </div>
+            <div className="delete-question">
+              <p> Are you sure you want to remove this event?</p>
+            </div>
+            <div className="confirmation-delete-buttons">
+              <button className="delete-button" onClick={handleDelete}>
+                Yes (Delete Event)
+              </button>
+              <button className="keep-button" onClick={closeMenu}>
+                No (Keep Event)
+              </button>
+            </div>
           </div>
         )}
       </div>
