@@ -52,14 +52,30 @@ const EventBrowser = () => {
                     <img src={event.preview} style={{ width: "200px" }} />
                   </div>
                   <div className="listing-info">
+                    <div className="startDate">
+                      <p>{event.startDate}</p>
+                    </div>
                     <div className="listing-name">
                       <h2>{event.name}</h2>
                     </div>
-                    <p>{event.description}</p>
-                    <p>Price: ${event.price}</p>
-                    <p>Capacity: {event.capacity}</p>
-                    <p>{event.type}</p>{" "}
+                    <div className="event-price">
+                      <p>Price: ${event.price}</p>
+                    </div>
+                    <div className="event-capacity">
+                      <p>Capacity: {event.capacity}</p>
+                    </div>
+                    <div className="event-type">
+                      <p>{event.type}</p>{" "}
+                    </div>
+                    <div className="event-location">
+                      {" "}
+                      <p>{event.Group.state}</p>
+                    </div>
                   </div>
+                </div>
+                <div className="event-description">
+                  {" "}
+                  <p>{event.description}</p>
                 </div>
               </NavLink>
             </div>

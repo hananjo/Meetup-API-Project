@@ -33,13 +33,26 @@ export const getAllGroups = () => async (dispatch) => {
 };
 
 export const addNewGroup = (data) => async (dispatch) => {
-  const response = await csrfFetch("/api/groups", {
+  const { preview } = data;
+  let response = await csrfFetch("/api/groups", {
     method: "POST",
     body: JSON.stringify(data),
   });
-  const group = await response.json();
-  dispatch(addGroup(group));
-  return group;
+  if (response.ok) {
+    response = await response.json();
+    const imgObj = {
+      url: preview,
+      groupId: response.id,
+      preview: true,
+    };
+    const fetchImage = await csrfFetch(`/api/groups/${response.id}/images`, {
+      method: "POST",
+      body: JSON.stringify(imgObj),
+    });
+    dispatch(addGroup(response));
+  }
+
+  return response;
 };
 
 export const getGroupDetails = (groupId) => async (dispatch) => {
@@ -89,7 +102,7 @@ const groupReducer = (state = initialState, action) => {
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
       console.log(action, "******");
-      delete deleteNewState[action.group.id];
+      delete deleteNewState.group[action.group.id];
 
       return deleteNewState;
     default:

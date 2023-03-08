@@ -73,9 +73,9 @@ const GroupDetail = () => {
             {groups.GroupImages && (
               <img
                 src={
-                  groups.GroupImages > 0
-                    ? groups.GroupImages[0].url
-                    : "https://res.cloudinary.com/dqwy6sxtc/image/upload/v1678248891/poolupp/No_Image_Available_pqq4ay.jpg"
+
+                     groups?.GroupImages[0].url
+
                 }
                 alt={groups.name}
                 style={{ width: "400px", height: "350px" }}

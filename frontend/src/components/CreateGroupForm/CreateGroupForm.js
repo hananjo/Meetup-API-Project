@@ -205,8 +205,10 @@ const CreateGroupForm = () => {
           <input
             type="text"
             name="preview"
+            value={preview}
             placeholder="Image Url"
             style={{ height: "25px", width: "352px" }}
+            onChange={(e) => setPreview(e.target.value)}
           />
         </div>
 

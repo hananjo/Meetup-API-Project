@@ -10,12 +10,13 @@ import { deleteEvent } from "../../store/event";
 import { useHistory } from "react-router-dom";
 
 const EventDetail = () => {
-  // const user = useSelector((state) => state.session.user);
+  const user = useSelector((state) => state.session.user);
   // console.log(user)
   const history = useHistory();
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
+  const group = useSelector((state) => state.groups);
   const events = useSelector((state) => {
     return state?.event.details;
   });
@@ -82,28 +83,32 @@ const EventDetail = () => {
           </div>
         </div>
       )}
-      {/* { user && events && user.id === } */}
-      <div>
-        <button onClick={openMenu}>Delete</button>
-        {showMenu && (
-          <div className="delete-modal">
-            <div className="delete-title">
-              <h3> Confirm Delete</h3>
-            </div>
-            <div className="delete-question">
-              <p> Are you sure you want to remove this event?</p>
-            </div>
-            <div className="confirmation-delete-buttons">
-              <button className="delete-button" onClick={handleDelete}>
-                Yes (Delete Event)
-              </button>
-              <button className="keep-button" onClick={closeMenu}>
-                No (Keep Event)
-              </button>
-            </div>
+      {group &&
+        (group[events[eventId].groupId].organizerId === user.id ? (
+          <div>
+            <button onClick={openMenu}>Delete</button>
+            {showMenu && (
+              <div className="delete-modal">
+                <div className="delete-title">
+                  <h3> Confirm Delete</h3>
+                </div>
+                <div className="delete-question">
+                  <p> Are you sure you want to remove this event?</p>
+                </div>
+                <div className="confirmation-delete-buttons">
+                  <button className="delete-button" onClick={handleDelete}>
+                    Yes (Delete Event)
+                  </button>
+                  <button className="keep-button" onClick={closeMenu}>
+                    No (Keep Event)
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        ) : (
+          <br />
+        ))}
     </div>
   );
 };

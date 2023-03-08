@@ -108,7 +108,13 @@ const GroupBrowser = () => {
                     <p>{group.city}</p>
                     <p>{group.state}</p>
                   </div>
-                  <p style={{ color: "black", marginTop: ".5px" }}>
+                  <p
+                    style={{
+                      color: "black",
+                      marginTop: ".5px",
+                      fontSize: "15px",
+                    }}
+                  >
                     {group.about}
                   </p>
                   <div

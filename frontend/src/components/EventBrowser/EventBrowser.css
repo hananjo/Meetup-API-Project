@@ -42,4 +42,36 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    color: black;
+
+}
+
+.startDate {
+    margin-top: 3px;
+}
+.listing-name {
+    font-size: 18px;
+    margin-top: -35px;
+}
+
+.event-price {
+    margin-top: -38px
+}
+
+.event-capacity {
+    margin-top: -50px
+}
+
+.event-type {
+    margin-top: -50px
+}
+
+.event-location {
+    margin-top: -50px
+}
+
+.event-description {
+    font-size: 30px;
+    color: black;
+    margin-top: -40px
 }
