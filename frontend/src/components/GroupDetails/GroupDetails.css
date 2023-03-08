@@ -62,9 +62,9 @@
     gap: 2px
 }
 .manage-group-container {
-        display: flex;
-        flex-direction: row;
-        gap: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
 }
 
 .manage-buttons {
@@ -113,7 +113,7 @@
 }
 
 .group-join-button {
-    background-color: #D0312D;
+    background-color: #d0312d;
     width: 160px;
     height: 40px;
     color: white;
@@ -126,4 +126,52 @@
 .group-manage-buttons-container {
     margin-top: 65px;
     /* margin-bottom: 50px */
+}
+
+.delete-modal {
+    position: fixed;
+    border-radius: 10px;
+    height: auto;
+    top: 30%;
+    padding-right: 5px;
+    padding: 10px;
+    border: 5px solid black;
+    border-radius: 15px;
+    background-color: white;
+    /* top: 30%;
+    bottom: 70%; */
+    /* transform: translate(-50%, -50%); */
+
+}
+
+.delete-title {
+    text-align: center;
+}
+
+.delete-question {
+    text-align: center;
+}
+
+.confirmation-delete-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px
+
+}
+
+.delete-button {
+    background-color: rgb(230, 84, 58);
+    color: white;
+    height: 40px;
+    box-shadow: 3px 3px 5px #000000;
+    border: 1px solid black;
+}
+
+.keep-button {
+    background-color: #666666;
+    color: white;
+    height: 40px;
+    box-shadow: 3px 3px 5px #000000;
+    border: 1px solid black;
 }

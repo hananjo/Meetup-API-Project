@@ -8,6 +8,7 @@ import { useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom";
 import EventGroups from "../EventsForGroup/EventsForGroup";
+
 import "./GroupDetails.css";
 
 const GroupDetail = () => {
@@ -103,15 +104,6 @@ const GroupDetail = () => {
                   <button
                     className="group-join-button"
                     onClick={() => alert("Feature coming soon")}
-                    // style={{
-                    //   backgroundColor: "#D0312D",
-                    //   width: "160px",
-                    //   height: "40px",
-                    //   color: "white",
-                    //   fontWeight: "bold",
-                    //   boxShadow: "3px 3px 5px #000000",
-                    //   border: "1px solid black",
-                    // }}
                   >
                     Join the Group
                   </button>
@@ -132,17 +124,24 @@ const GroupDetail = () => {
                     {showMenu && (
                       //   <OpenModalButton>
                       <div className="delete-modal">
-                        <h3> Confirm Delete</h3>
-                        <p> Are you sure you want to remove this group?</p>
-                        <button
-                          className="delete-button"
-                          onClick={handleDelete}
-                        >
-                          Yes (Delete Group)
-                        </button>
-                        <button className="keep-button" onClick={closeMenu}>
-                          No (Keep Group)
-                        </button>
+                        <div className="delete-title">
+                          <h3> Confirm Delete</h3>
+                        </div>
+                        <div className="delete-question">
+                          <p> Are you sure you want to remove this group?</p>
+                        </div>
+                        <div className="confirmation-delete-buttons">
+                          <button
+                            className="delete-button"
+                            onClick={handleDelete}
+                          >
+                            Yes (Delete Group)
+                          </button>
+
+                          <button className="keep-button" onClick={closeMenu}>
+                            No (Keep Group)
+                          </button>
+                        </div>
                       </div>
                       //   </OpenModalButton>
                     )}
