@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { deleteEvent } from "../../store/event";
 // import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom";
-
+import "./EventDetails.css";
 const EventDetail = () => {
   const user = useSelector((state) => state.session.user);
   // console.log(user)
@@ -58,59 +58,75 @@ const EventDetail = () => {
     history.push(`/api/groups/${events.Group.id}`);
   };
   return (
-    <div>
-      <p>
-        &lt; <NavLink to="/api/events"> Events</NavLink>
-      </p>
+    <div className="event-detail-container">
       {events && (
         <div>
-          <div></div>
-          <h1>{events.name}</h1>
-          <h2>Hosted by:</h2>
+          <div className="breadcrumb-event-link">
+            <p>
+              &lt;{" "}
+              <NavLink style={{ color: "teal" }} to="/api/events">
+                {" "}
+                Events
+              </NavLink>
+            </p>
+          </div>
+          <div className="event-detail-title">
+            <h1>{events.name}</h1>
+          </div>
+
           {/* {events.EventImages && ( */}
-          <img src={events.EventImages[0].url} alt={events.name} />
-          {/* )} */}
+          <div className="top-event-container">
+            <img
+              style={{ width: "400px", height: "350px" }}
+              src={events.EventImages[0].url}
+              alt={events.name}
+            />
+            {/* )} */}
+            <div className="group-and-event-info-box">
+              <div className="group-info-box">
+                <p className="group-name-events">{events.Group.name}</p>
+                {events.Group.private ? <p>Private</p> : <p>Public</p>}
+              </div>
+
+              <div className="event-info-box">
+                <div className="event-time">
+                  <p> {events.startDate}</p>
+                  <p> {events.endDate}</p>
+                </div>
+                <p>{events.price}</p>
+                <p>{events.type}</p>
+              </div>
+            </div>
+          </div>
           <h2>Description:</h2>
           <p>{events.description}</p>
-
-          <div className="event-info-box">
-            <p>{events.startDate}</p>
-            <p>{events.endDate}</p>
-            <p>{events.price}</p>
-            <p>{events.type}</p>
-          </div>
-          <div className="group-info-box">
-            <p>{events.Group.name}</p>
-            {events.Group.private ? <p>Private</p> : <p>Public</p>}
-          </div>
         </div>
       )}
-      {group &&
-        (group[events[eventId].groupId].organizerId === user.id ? (
-          <div>
-            <button onClick={openMenu}>Delete</button>
-            {showMenu && (
-              <div className="delete-modal">
-                <div className="delete-title">
-                  <h3> Confirm Delete</h3>
-                </div>
-                <div className="delete-question">
-                  <p> Are you sure you want to remove this event?</p>
-                </div>
-                <div className="confirmation-delete-buttons">
-                  <button className="delete-button" onClick={handleDelete}>
-                    Yes (Delete Event)
-                  </button>
-                  <button className="keep-button" onClick={closeMenu}>
-                    No (Keep Event)
-                  </button>
-                </div>
+      {group && group[events[eventId].groupId].organizerId === user.id ? (
+        <div>
+          <button onClick={openMenu}>Delete</button>
+          {showMenu && (
+            <div className="delete-modal">
+              <div className="delete-title">
+                <h3> Confirm Delete</h3>
               </div>
-            )}
-          </div>
-        ) : (
-          <br />
-        ))}
+              <div className="delete-question">
+                <p> Are you sure you want to remove this event?</p>
+              </div>
+              <div className="confirmation-delete-buttons">
+                <button className="delete-button" onClick={handleDelete}>
+                  Yes (Delete Event)
+                </button>
+                <button className="keep-button" onClick={closeMenu}>
+                  No (Keep Event)
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <br />
+      )}
     </div>
   );
 };

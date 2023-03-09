@@ -1,3 +1,18 @@
 .hidden {
     display: none
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+.start-new-group-nav{
+    color: teal;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.rightNav {
+    display: flex;
+    gap: 20px
+}

@@ -79,7 +79,7 @@ const CreateEventForm = () => {
     <div className="event-form-container">
       {groups && (
         <form onSubmit={handleSubmit}>
-          <div></div>
+          {/* <div></div> */}
           <div className="event-form-title">
             <h2>Create a new event for {groups.name}</h2>
           </div>
@@ -112,16 +112,36 @@ const CreateEventForm = () => {
                   <label>Is this an in-person or online group?</label>
                 </div>
                 <select className="event-setting-input" name="groupSetting">
-                  <option value={groupSetting}>In person</option>
-                  <option value={groupSetting}>Online</option>
+                  <option
+                    value={groupSetting}
+                    onChange={(e) => setGroupSetting(e.target.value)}
+                  >
+                    In person
+                  </option>
+                  <option
+                    value={groupSetting}
+                    onChange={(e) => setGroupSetting(e.target.value)}
+                  >
+                    Online
+                  </option>
                 </select>
               </div>
               <div className="event-form-q3">
                 <label>Is this group private or public?</label>
               </div>
               <select className="event-privacy-input" name="privacy">
-                <option value={true}>Private</option>
-                <option value={false}>Public</option>
+                <option
+                  value={true}
+                  onChange={(e) => setPrivacy(e.target.value)}
+                >
+                  Private
+                </option>
+                <option
+                  value={false}
+                  onChange={(e) => setPrivacy(e.target.value)}
+                >
+                  Public
+                </option>
               </select>
             </div>
             <div>
@@ -174,7 +194,9 @@ const CreateEventForm = () => {
               className="event-form-q7-input"
               type="text"
               name="preview"
+              value={preview}
               placeholder="Image Url"
+              onChange={(e) => setPreview(e.target.value)}
             />
           </div>
           <div className="event-form-section-5">

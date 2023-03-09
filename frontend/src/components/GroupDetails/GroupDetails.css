@@ -179,13 +179,16 @@
     border: 1px solid black;
     border-radius: 20px;
     width: 550px;
-    height: 235px
+    height: 235px;
+    margin-top: 30px
 }
-
+.events-group-title {
+    margin-bottom: -15px
+}
 .events-for-group-container {
     display: flex;
     flex-direction: row;
-    padding: 30px
+    padding: 30px;
 }
 
 .events-for-group-info {
@@ -210,5 +213,10 @@
 }
 
 .events-for-group-name {
-    margin-top: -20px
+    margin-top: -20px;
+    color: black
+}
+
+.navlink-events-groups {
+    text-decoration: none;
 }

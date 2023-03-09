@@ -3,6 +3,7 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { NavLink } from "react-router-dom";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -23,35 +24,53 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="login-container">
+      <h1 className="login-title">Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
+        <div className="login-credentials">
+          <label className="username-email">
+            {/* Username or Email */}
+            <input
+              className="credentials"
+              type="text"
+              value={credential}
+              placeholder="Username or Email"
+              onChange={(e) => setCredential(e.target.value)}
+              required
+            />
+          </label>
+          <label className="password">
+            {/* Password */}
+            <input
+              className="credentials"
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {/* {errors ? ( */}
+          <button className="submit-login" type="submit">
+            Log In
+          </button>
+          {/* // ) : (
+          //   <button className="submit-login-success" type="submit">
+          //     Log In
+          //   </button>
+          // )} */}
+
+          <a className="demo" href="#">
+            Demo User
+          </a>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

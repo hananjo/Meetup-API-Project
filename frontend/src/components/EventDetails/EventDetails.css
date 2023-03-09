@@ -1,0 +1,53 @@
+.event-detail-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.breadcrumb-event-link {
+
+    margin-bottom: -10px;
+
+ }
+
+
+
+.group-and-event-info-box{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px
+}
+
+.top-event-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px
+}
+.group-info-box {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px
+}
+.event-info-box {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px
+}
+
+.group-name-events {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -5px
+}
+
+.event-time {
+    color: teal;
+    font-weight: bold
+
+}
