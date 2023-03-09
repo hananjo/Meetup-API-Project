@@ -67,7 +67,9 @@ const EventDetail = () => {
           <div></div>
           <h1>{events.name}</h1>
           <h2>Hosted by:</h2>
+          {/* {events.EventImages && ( */}
           <img src={events.EventImages[0].url} alt={events.name} />
+          {/* )} */}
           <h2>Description:</h2>
           <p>{events.description}</p>
 

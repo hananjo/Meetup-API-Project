@@ -1,0 +1,171 @@
+.event-form-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 50%;
+    gap: 40px
+}
+
+.event-form-title {
+    margin-bottom: -40px;
+    font-size: 20px;
+}
+
+.event-form-errors {
+    color: rgb(186, 27, 27);
+    padding-top: 20px;
+
+}
+
+.event-form-section-1 {
+    margin-top: -10px
+
+}
+
+.event-form-q1 {
+    font-size: 20px;
+
+}
+
+.event-form-input-q1 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 20px;
+    border: 2px solid black;
+    background-color: rgb(235, 242, 244);
+
+}
+
+.event-form-section-2 {
+    border-top: 1px solid black;
+    padding-top: 20px;
+    padding-right: 20px;
+
+}
+.event-form-q2 {
+    font-size: 20px;
+}
+
+.event-setting-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 25px;
+    border: 2px solid black;
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101)
+}
+
+.event-form-q3{
+    font-size: 20px
+}
+
+.event-privacy-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 25px;
+    border: 2px solid black;
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101)
+}
+
+.event-form-q4 {
+    font-size: 20px
+}
+
+.event-price-input {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 80px;
+    height: 25px;
+    border: 2px solid black;
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101)
+}
+.event-price-input {
+    height: 20px;
+    width: 70px;
+}
+.event-form-section-3 {
+    border-top: 1px solid black;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.event-form-q5{
+    font-size: 20px;
+
+}
+
+.event-form-q-5-6-input {
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 25px;
+    width: 200px;
+}
+
+.event-form-q6 {
+    font-size: 20px;
+}
+.event-form-section-4 {
+    border-top: 1px solid black;
+    margin-bottom: 20px
+
+}
+
+
+.event-form-q7 {
+    font-size: 20px;
+    margin-top: 15px
+}
+
+.event-form-q7-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 25px;
+    border: 2px solid black;
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101)
+}
+.event-form-section-5 {
+    border-top: 1px solid black;
+
+}
+
+.event-form-q8{
+    font-size: 20px;
+    margin-top: 12px;
+}
+
+.event-form-description-input {
+     margin-top: 10px;
+     margin-bottom: 15px;
+    width: 690px;
+    height: 200px;
+    background-color: rgb(235, 242, 244);
+    color: rgb(104, 101, 101);
+    border: 2px solid black;
+}
+
+.submit-event-button{
+    background-color: #d0312d;
+    width: 160px;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 3px 3px 5px #000000;
+    border: 1px solid black;
+    margin-top: -10px;
+    font-size: 18px;
+}
+
+.submit-event-form {
+    margin-top: 10px;
+
+}

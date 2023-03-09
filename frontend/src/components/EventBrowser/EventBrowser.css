@@ -48,6 +48,8 @@
 
 .startDate {
     margin-top: 3px;
+    color: teal;
+    font-weight: bold;
 }
 .listing-name {
     font-size: 18px;

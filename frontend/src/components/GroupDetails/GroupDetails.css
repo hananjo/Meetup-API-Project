@@ -175,3 +175,40 @@
     box-shadow: 3px 3px 5px #000000;
     border: 1px solid black;
 }
+.events-for-group-box {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 550px;
+    height: 235px
+}
+
+.events-for-group-container {
+    display: flex;
+    flex-direction: row;
+    padding: 30px
+}
+
+.events-for-group-info {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    margin-left: 30px
+}
+
+.location-event {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #666666;
+    margin-top: -15px;
+}
+
+.events-for-group-startDate {
+    margin-top: -15px;
+    color: teal;
+    font-weight: bold;
+}
+
+.events-for-group-name {
+    margin-top: -20px
+}
