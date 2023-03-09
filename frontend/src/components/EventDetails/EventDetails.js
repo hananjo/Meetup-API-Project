@@ -9,6 +9,7 @@ import { deleteEvent } from "../../store/event";
 // import OpenModalButton from "../OpenModalButton";
 import { useHistory } from "react-router-dom";
 import "./EventDetails.css";
+
 const EventDetail = () => {
   const user = useSelector((state) => state.session.user);
   // console.log(user)
@@ -16,14 +17,15 @@ const EventDetail = () => {
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
-  const group = useSelector((state) => state.groups);
+  const group = useSelector((state) => state?.groups);
   const events = useSelector((state) => {
     return state?.event.details;
   });
   console.log(events, "events%%%%%");
-  //   const groups = useSelector((state) => {
-  //     return state?.group.details;
-  //   });
+  const groups = useSelector((state) => {
+    return state?.group.details;
+  });
+  console.log(groups, "group%%%%%%");
   useEffect(() => {
     dispatch(getEventDetails(eventId));
   }, [dispatch]);
@@ -78,23 +80,47 @@ const EventDetail = () => {
           <div className="top-event-container">
             <img
               style={{ width: "400px", height: "350px" }}
-              src={events.EventImages[0].url}
+              src={events?.EventImages[0]?.url}
               alt={events.name}
             />
             {/* )} */}
             <div className="group-and-event-info-box">
               <div className="group-info-box">
+                {/* <img src={group[1].preview}></img> */}
                 <p className="group-name-events">{events.Group.name}</p>
                 {events.Group.private ? <p>Private</p> : <p>Public</p>}
               </div>
 
               <div className="event-info-box">
                 <div className="event-time">
-                  <p> {events.startDate}</p>
-                  <p> {events.endDate}</p>
+                  <i className="f-regular fa-clock"></i>
+
+                  <p>
+                    {new Date(events.startDate).toDateString().split(" ")[3]}
+                    {" / "}
+                    {new Date(events.startDate).toDateString().split(" ")[1]}
+                    {" / "}
+                    {new Date(events.startDate).toDateString().split(" ")[2]}
+                    {new Date(events.startDate).toDateString().split(" ")[4]}
+                    {"   "}
+                    &middot;
+                    {"    "}
+                  </p>
+                  <p>
+                    {new Date(events.endDate).toDateString().split(" ")[3]}
+                    {" / "}
+                    {new Date(events.endDate).toDateString().split(" ")[1]}
+                    {" / "}
+                    {new Date(events.endDate).toDateString().split(" ")[2]}
+                    {new Date(events.endDate).toDateString().split(" ")[4]}
+                    {"   "}
+                    &middot;
+                    {"    "}
+                  </p>
                 </div>
+                <i class="fas-solid fas-dollar-sign"></i>
                 <p>{events.price}</p>
-                <p>{events.type}</p>
+                <i class="fas-solid fas-map-pin"></i> <p>{events.type}</p>
               </div>
             </div>
           </div>

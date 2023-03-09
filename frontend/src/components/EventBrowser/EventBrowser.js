@@ -53,7 +53,17 @@ const EventBrowser = () => {
                   </div>
                   <div className="listing-info">
                     <div className="startDate">
-                      <p>{event.startDate}</p>
+                      <p>
+                        {new Date(event.startDate).toDateString().split(" ")[3]}
+                        {" / "}
+                        {new Date(event.startDate).toDateString().split(" ")[1]}
+                        {" / "}
+                        {new Date(event.startDate).toDateString().split(" ")[2]}
+                        {"   "}
+                        &middot;
+                        {"    "}
+                        {new Date(event.startDate).toDateString().split(" ")[4]}
+                      </p>
                     </div>
                     <div className="listing-name">
                       <h2>{event.name}</h2>

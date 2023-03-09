@@ -15,6 +15,16 @@ const EventGroups = () => {
     dispatch(getEventsForGroup(groupId));
   }, [dispatch]);
 
+  // const now = new Date();
+  // console.log(now, "now");
+  // const upComingEvents = events.filter(
+  //   (event) => new Date(event.startDate) > now
+  // );
+  // const pastEvents = events.filter((event) => new Date(event.startDate <= now));
+  // upComingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  // console.log(upComingEvents, "up");
+  // pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+  // console.log(pastEvents, "past");
   return (
     <div className="event-groups-container">
       <h2 className="events-group-title">Events ({events.length})</h2>
@@ -32,7 +42,18 @@ const EventGroups = () => {
               />
               <div className="events-for-group-info">
                 <div className="events-for-group-startDate">
-                  <p>{event.startDate}</p>
+                  <p>
+                    {new Date(event.startDate).toDateString().split(" ")[3]}
+                    {" / "}
+                    {new Date(event.startDate).toDateString().split(" ")[1]}
+                    {" / "}
+                    {new Date(event.startDate).toDateString().split(" ")[2]}
+                    {new Date(event.startDate).toDateString().split(" ")[4]}
+                    {"   "}
+                    &middot;
+                    {"    "}
+                    {/* {new Date(event.startDate).toDateString().split(" ")[]} */}
+                  </p>
                 </div>
                 <div className="events-for-group-name">
                   <h3>{event.name}</h3>

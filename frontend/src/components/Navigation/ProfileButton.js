@@ -4,6 +4,8 @@ import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
+import "./Navigation.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -41,37 +43,53 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button className="profile-button" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>
-              {user.firstName} {user.lastName}
-            </li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
+            <div className="logout-drop-down">
+              <li style={{ listStyleType: "none" }}>{user.username}</li>
+              <li style={{ listStyleType: "none" }}>
+                {user.firstName} {user.lastName}
+              </li>
+              <li style={{ listStyleType: "none" }}>{user.email}</li>
+              <li style={{ listStyleType: "none" }}>
+                <button className="logout-button" onClick={logout}>
+                  Log Out
+                </button>
+              </li>
+            </div>
           </>
         ) : (
           <>
-            <li>
-              <OpenModalButton
-                buttonText="Log In"
-                onButtonClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Sign Up"
-                onButtonClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </li>
+            <div className="drop-down-container">
+              <li style={{ listStyleType: "none" }}>
+                <OpenModalButton
+                  buttonText="Log In"
+                  onButtonClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+              <li style={{ listStyleType: "none" }}>
+                <OpenModalButton
+                  buttonText="Sign Up"
+                  onButtonClick={closeMenu}
+                  modalComponent={<SignupFormModal />}
+                />
+              </li>
+              <li style={{ listStyleType: "none" }}>
+                <NavLink className="navlink-drop-down" to="/api/groups">
+                  View groups
+                </NavLink>
+              </li>
+              <li style={{ listStyleType: "none" }}>
+                <NavLink className="navlink-drop-down" to="/api/events">
+                  View events
+                </NavLink>
+              </li>
+            </div>
           </>
         )}
       </ul>
