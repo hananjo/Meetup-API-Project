@@ -91,7 +91,7 @@ const LandingPage = () => {
         {user ? (
           <NavLink
             to="/api/groups/new"
-            // className={user ? "not-disabled" : "disabled"}
+            className={user ? "not-disabled" : "disabled"}
             style={{
               color: "teal",
               textAlign: "center",
