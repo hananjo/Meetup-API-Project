@@ -23,7 +23,7 @@ const CreateEventForm = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(groups);
+  // console.log(groups);
   useEffect(() => {
     const validationErrors = [];
     if (!name.length) {
@@ -41,6 +41,7 @@ const CreateEventForm = () => {
     if (!endDate.length) {
       validationErrors.push("End date is required");
     }
+
     setErrors(validationErrors);
   }, [name, description, price, startDate, endDate]);
 
@@ -111,16 +112,18 @@ const CreateEventForm = () => {
                 <div className="event-form-q2">
                   <label>Is this an in-person or online group?</label>
                 </div>
-                <select className="event-setting-input" name="groupSetting">
+                <select
+                  className="event-setting-input"
+                  // defaultValue="(select one)"
+                  name="groupSetting"
+                  value={groupSetting}
+                  onChange={(e) => setGroupSetting(e.target.value)}
+                >
+                  {/* <option value="(select one)">(select one)</option> */}
+                  <option value={"In person"}>In person</option>
                   <option
-                    value={groupSetting}
-                    onChange={(e) => setGroupSetting(e.target.value)}
-                  >
-                    In person
-                  </option>
-                  <option
-                    value={groupSetting}
-                    onChange={(e) => setGroupSetting(e.target.value)}
+                    value={"Online"}
+                    // onChange={(e) => setGroupSetting(e.target.value)}
                   >
                     Online
                   </option>
@@ -129,19 +132,18 @@ const CreateEventForm = () => {
               <div className="event-form-q3">
                 <label>Is this group private or public?</label>
               </div>
-              <select className="event-privacy-input" name="privacy">
-                <option
-                  value={true}
-                  onChange={(e) => setPrivacy(e.target.value)}
-                >
-                  Private
-                </option>
-                <option
-                  value={false}
-                  onChange={(e) => setPrivacy(e.target.value)}
-                >
-                  Public
-                </option>
+              <select
+                className="event-privacy-input"
+                // defaultValue="(select one)"
+                name="privacy"
+                value={privacy.toString()}
+                onChange={(e) => setPrivacy(e.target.value === "true")}
+              >
+                {/* <option value="default" disabled>
+                  (select one)
+                </option> */}
+                <option value={true}>Private</option>
+                <option value={false}>Public</option>
               </select>
             </div>
             <div>
@@ -172,6 +174,7 @@ const CreateEventForm = () => {
                 onChange={(e) => setStartDate(e.target.value)}
               ></input>
             </div>
+
             <div>
               <div className="event-form-q6">
                 <label> When does your event end?</label>

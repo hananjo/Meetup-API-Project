@@ -50,7 +50,7 @@
 .event-setting-input {
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 80px;
+    width: 100px;
     height: 25px;
     border: 2px solid black;
     background-color: rgb(235, 242, 244);
@@ -64,7 +64,7 @@
 .event-privacy-input {
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 80px;
+    width: 100px;
     height: 25px;
     border: 2px solid black;
     background-color: rgb(235, 242, 244);

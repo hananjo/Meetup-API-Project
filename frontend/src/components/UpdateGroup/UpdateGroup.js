@@ -171,16 +171,14 @@ const UpdateGroupForm = () => {
           </div>
           <label>Is this group private or public?</label>
           <div className="private-setting">
-            <select name="privacy" style={{ height: "25px", width: "100px" }}>
-              <option value={true} onChange={(e) => setPrivacy(e.target.value)}>
-                Private
-              </option>
-              <option
-                value={false}
-                onChange={(e) => setPrivacy(e.target.value)}
-              >
-                Public
-              </option>
+            <select
+              name="privacy"
+              value={privacy.toString()}
+              style={{ height: "25px", width: "100px" }}
+              onChange={(e) => setPrivacy(e.target.value === "true")}
+            >
+              <option value={true}>Private</option>
+              <option value={false}>Public</option>
             </select>
           </div>
           <label>Please add an image URL for your group below:</label>

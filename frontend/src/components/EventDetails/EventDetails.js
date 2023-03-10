@@ -93,34 +93,92 @@ const EventDetail = () => {
 
               <div className="event-info-box">
                 <div className="event-time">
-                  <i className="f-regular fa-clock"></i>
+                  <i
+                    style={{ color: "lightgray", fontSize: "30px" }}
+                    className="fas f-regular fa-clock"
+                  >
+                    <div className="start-end">
+                      <p>START</p>
+                      <div className="end">
+                        <p>END</p>
+                      </div>
+                    </div>
+                  </i>
+                  <div className="start-end-time">
+                    <p>
+                      {new Date(events.startDate).toDateString().split(" ")[3]}
+                      {" / "}
+                      {new Date(events.startDate).toDateString().split(" ")[1]}
+                      {" / "}
+                      {new Date(events.startDate).toDateString().split(" ")[2]}
+                      {"   "}
+                      &middot;
+                      {"    "}
+                      {new Date(events.startDate).toString().split(" ")[4]}
+                    </p>
 
-                  <p>
-                    {new Date(events.startDate).toDateString().split(" ")[3]}
-                    {" / "}
-                    {new Date(events.startDate).toDateString().split(" ")[1]}
-                    {" / "}
-                    {new Date(events.startDate).toDateString().split(" ")[2]}
-                    {new Date(events.startDate).toDateString().split(" ")[4]}
-                    {"   "}
-                    &middot;
-                    {"    "}
-                  </p>
-                  <p>
-                    {new Date(events.endDate).toDateString().split(" ")[3]}
-                    {" / "}
-                    {new Date(events.endDate).toDateString().split(" ")[1]}
-                    {" / "}
-                    {new Date(events.endDate).toDateString().split(" ")[2]}
-                    {new Date(events.endDate).toDateString().split(" ")[4]}
-                    {"   "}
-                    &middot;
-                    {"    "}
-                  </p>
+                    <p>
+                      {new Date(events.endDate).toDateString().split(" ")[3]}
+                      {" / "}
+                      {new Date(events.endDate).toDateString().split(" ")[1]}
+                      {" / "}
+                      {new Date(events.endDate).toString().split(" ")[2]}
+                      {"  "} &middot;
+                      {"  "}
+                      {new Date(events.endDate).toString().split(" ")[4]}
+                    </p>
+                  </div>
                 </div>
-                <i class="fas-solid fas-dollar-sign"></i>
-                <p>{events.price}</p>
-                <i class="fas-solid fas-map-pin"></i> <p>{events.type}</p>
+                <div className="price-icon">
+                  {" "}
+                  <i
+                    style={{ color: "lightgray", fontSize: "30px" }}
+                    className="fas fa-dollar-sign"
+                  ></i>{" "}
+                  <div className="event-detail-price">{events.price}</div>
+                </div>
+                <p>
+                  <div className="pin-needle-icon">
+                    <i
+                      style={{ color: "lightgray", fontSize: "30px" }}
+                      class="fas fa-map-pin"
+                    ></i>
+                    <div className="event-detail-type">{events.type}</div>
+                  </div>
+                </p>
+                <div className="event-detail-delete-container">
+                  <button
+                    className="event-detail-delete-button"
+                    onClick={openMenu}
+                  >
+                    Delete
+                  </button>
+                </div>
+                <div className="overlay">
+                  <div className="modal-container">
+                    {showMenu && (
+                      <div className="delete-event-modal">
+                        <div className="delete-title">
+                          <h3> Confirm Delete</h3>
+                        </div>
+                        <div className="delete-question">
+                          <p> Are you sure you want to remove this event?</p>
+                        </div>
+                        <div className="confirmation-delete-buttons">
+                          <button
+                            className="delete-button"
+                            onClick={handleDelete}
+                          >
+                            Yes (Delete Event)
+                          </button>
+                          <button className="keep-button" onClick={closeMenu}>
+                            No (Keep Event)
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -128,31 +186,11 @@ const EventDetail = () => {
           <p>{events.description}</p>
         </div>
       )}
-      {group && group[events[eventId].groupId].organizerId === user.id ? (
-        <div>
-          <button onClick={openMenu}>Delete</button>
-          {showMenu && (
-            <div className="delete-modal">
-              <div className="delete-title">
-                <h3> Confirm Delete</h3>
-              </div>
-              <div className="delete-question">
-                <p> Are you sure you want to remove this event?</p>
-              </div>
-              <div className="confirmation-delete-buttons">
-                <button className="delete-button" onClick={handleDelete}>
-                  Yes (Delete Event)
-                </button>
-                <button className="keep-button" onClick={closeMenu}>
-                  No (Keep Event)
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      ) : (
+      {/* {group && group[events[eventId].groupId].organizerId === user.id ? ( */}
+
+      {/* ) : (
         <br />
-      )}
+      )} */}
     </div>
   );
 };

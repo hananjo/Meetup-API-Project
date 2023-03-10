@@ -161,44 +161,30 @@ const CreateGroupForm = () => {
           </div>
           <div className="group-setting">
             <select
-              defaultValue="(select one)"
+              // defaultValue="(select one)"
+              onChange={(e) => setGroupSetting(e.target.value)}
               name="type"
               style={{ height: "25px", width: "100px" }}
             >
-              <option value="(select one)">(select one)</option>
+              {/* <option value="(select one)">(select one)</option> */}
 
-              <option
-                value={groupSetting}
-                onChange={(e) => setGroupSetting(e.target.value)}
-              >
-                In person
-              </option>
-              <option
-                value={groupSetting}
-                onChange={(e) => setGroupSetting(e.target.value)}
-              >
-                Online
-              </option>
+              <option value={groupSetting}>In person</option>
+              <option value={groupSetting}>Online</option>
             </select>
           </div>
           <label>Is this group private or public?</label>
           <div className="private-setting">
             <select
-              defaultValue="(select one)"
+              // defaultValue="(select one)"
               name="private"
+              value={privacy.toString()}
+              onChange={(e) => setPrivacy(e.target.value === "true")}
               style={{ height: "25px", width: "100px" }}
             >
-              <option value="(select one)">(select one)</option>
+              {/* <option value="(select one)">(select one)</option> */}
 
-              <option value={true} onChange={(e) => setPrivacy(e.target.value)}>
-                Private
-              </option>
-              <option
-                value={false}
-                onChange={(e) => setPrivacy(e.target.value)}
-              >
-                Public
-              </option>
+              <option value={true}>Private</option>
+              <option value={false}>Public</option>
             </select>
           </div>
           <label>Please add an image URL for your group below:</label>
