@@ -36,15 +36,17 @@ const LandingPage = () => {
       {/* <section className="section3"> */}
       {/* <div className="column"> */}
       <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "15px",
-          // justifyContent: "space-evenly",
-        }}
+        className="bottom-landing-page-container"
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   gap: "15px",
+        //   // justifyContent: "space-evenly",
+        // }}
       >
         <NavLink
           to="/api/groups"
+          // className="navlink-see-all-groups"
           style={{
             color: "teal",
             textAlign: "center",
@@ -68,6 +70,7 @@ const LandingPage = () => {
         {/* <div className="column"> */}
         <NavLink
           to="/api/events"
+          // className="navlink-see-all-events"
           style={{
             color: "teal",
             textAlign: "center",
@@ -91,7 +94,8 @@ const LandingPage = () => {
         {user ? (
           <NavLink
             to="/api/groups/new"
-            className={user ? "not-disabled" : "disabled"}
+            // className={user ? "not-disabled" : "disabled"}
+            // className="navlink-create-new-group"
             style={{
               color: "teal",
               textAlign: "center",
@@ -116,7 +120,10 @@ const LandingPage = () => {
       </div>
       {/* </section> */}
       <section className="section4">
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          className="join-group-button-landing"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <button
             style={{
               backgroundColor: "teal",

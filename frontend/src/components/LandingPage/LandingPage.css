@@ -50,6 +50,7 @@
 
 .subTitle-info {
     justify-content: center;
+    margin-left: -30px
 }
 
 /* .section3 { */
@@ -68,3 +69,39 @@
     /* align-items: center; */
 
 /* } */
+
+.bottom-landing-page-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px
+}
+
+/* .navlink-see-all-groups {
+    color: teal;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.navlink-see-all-events {
+    color: teal;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.navlink-create-new-group {
+    color: teal;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+} */
+
+
+.join-group-button-landing {
+    margin-right: 50px
+}
