@@ -12,7 +12,6 @@ import "./EventDetails.css";
 
 const EventDetail = () => {
   const user = useSelector((state) => state.session.user);
-  // console.log(user)
   const history = useHistory();
   const dispatch = useDispatch();
   const { eventId } = useParams();
@@ -25,7 +24,7 @@ const EventDetail = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(groups, "group%%%%%%");
+  console.log(group, "group%%%%%%");
   useEffect(() => {
     dispatch(getEventDetails(eventId));
   }, [dispatch]);
@@ -190,7 +189,7 @@ const EventDetail = () => {
           <p>{events.description}</p>
         </div>
       )}
-      {/* // {groups && groups[events?.groupId]?.organizerId === user?.id ? ( */}
+
       {/* {group && group[events[eventId].groupId].organizerId === user.id ? ( */}
 
       {/* ) : (
