@@ -112,7 +112,7 @@
 }
 
 .event-detail-delete-button {
-    background-color: rgb(230, 84, 58);
+    background-color: rgb(75, 66, 65);
     color: white;
     height: 20px;
     width: 70px;
@@ -151,7 +151,7 @@
 
 }
 
-/* .overlay {
+/* .modal-container {
     position: fixed;
     top: 0;
     left: 0;

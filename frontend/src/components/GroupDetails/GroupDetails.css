@@ -81,7 +81,8 @@
     margin:  0 auto;
     flex-direction: column;
     width: 70%;
-    margin-top: -80px
+    margin-top: -80px;
+
 }
 
 .events-bottom-container {

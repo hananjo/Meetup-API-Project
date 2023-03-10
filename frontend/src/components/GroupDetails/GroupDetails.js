@@ -72,11 +72,7 @@ const GroupDetail = () => {
           <div className="top-container">
             {groups.GroupImages && (
               <img
-                src={
-
-                     groups?.GroupImages[0].url
-
-                }
+                src={groups?.GroupImages[0].url}
                 alt={groups.name}
                 style={{ width: "400px", height: "350px" }}
               />

@@ -17,7 +17,7 @@ const EventDetail = () => {
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
-  const group = useSelector((state) => state?.groups);
+  const group = useSelector((state) => state?.group);
   const events = useSelector((state) => {
     return state?.event.details;
   });
@@ -146,15 +146,19 @@ const EventDetail = () => {
                     <div className="event-detail-type">{events.type}</div>
                   </div>
                 </p>
-                <div className="event-detail-delete-container">
-                  <button
-                    className="event-detail-delete-button"
-                    onClick={openMenu}
-                  >
-                    Delete
-                  </button>
-                </div>
-                <div className="overlay">
+                {group && group[events?.groupId]?.organizerId === user?.id ? (
+                  <div className="event-detail-delete-container">
+                    <button
+                      className="event-detail-delete-button"
+                      onClick={openMenu}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ) : (
+                  <br />
+                )}
+                <div>
                   <div className="modal-container">
                     {showMenu && (
                       <div className="delete-event-modal">
@@ -186,6 +190,7 @@ const EventDetail = () => {
           <p>{events.description}</p>
         </div>
       )}
+      {/* // {groups && groups[events?.groupId]?.organizerId === user?.id ? ( */}
       {/* {group && group[events[eventId].groupId].organizerId === user.id ? ( */}
 
       {/* ) : (
