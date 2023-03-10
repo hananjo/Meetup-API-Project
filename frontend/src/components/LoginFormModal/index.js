@@ -12,6 +12,12 @@ function LoginFormModal() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+  const handleDemoLogin = (e) => {
+    e.preventDefault();
+    setCredential("Demo-lition");
+    setPassword("password");
+    dispatch(sessionActions.login("Demo-lition", "password"));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
@@ -65,7 +71,7 @@ function LoginFormModal() {
           //   </button>
           // )} */}
 
-          <a className="demo" href="#">
+          <a className="demo" href="#" onClick={handleDemoLogin}>
             Demo User
           </a>
         </div>
