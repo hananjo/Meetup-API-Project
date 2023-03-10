@@ -165,28 +165,38 @@ const CreateEventForm = () => {
               <div className="event-form-q5">
                 <label> When does your event start?</label>
               </div>
-              <input
-                className="event-form-q-5-6-input"
-                type="text"
-                name="startDate"
-                value={startDate}
-                placeholder="MM/DD/YYYY, HH/mm AM"
-                onChange={(e) => setStartDate(e.target.value)}
-              ></input>
+              <div className="calendar-icon-container">
+                <input
+                  className="event-form-q-5-6-input"
+                  type="text"
+                  name="startDate"
+                  value={startDate}
+                  placeholder="MM/DD/YYYY, HH/mm AM"
+                  onChange={(e) => setStartDate(e.target.value)}
+                ></input>
+                <div className="calendar-icon">
+                  <i className="fas fa-calendar"> </i>
+                </div>
+              </div>
             </div>
 
             <div>
               <div className="event-form-q6">
                 <label> When does your event end?</label>
               </div>
-              <input
-                className="event-form-q-5-6-input"
-                type="text"
-                name="endDate"
-                value={endDate}
-                placeholder="MM/DD/YYYY, HH/mm PM"
-                onChange={(e) => setEndDate(e.target.value)}
-              ></input>
+              <div className="calendar-icon-container">
+                <input
+                  className="event-form-q-5-6-input"
+                  type="text"
+                  name="endDate"
+                  value={endDate}
+                  placeholder="MM/DD/YYYY, HH/mm PM"
+                  onChange={(e) => setEndDate(e.target.value)}
+                ></input>
+                <div className="calendar-icon">
+                  <i className="fas fa-calendar"> </i>
+                </div>
+              </div>
             </div>
           </div>
           <div className="event-form-section-4">

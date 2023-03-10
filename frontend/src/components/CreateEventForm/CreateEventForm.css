@@ -169,3 +169,13 @@
     margin-top: 10px;
 
 }
+
+.calendar-icon-container {
+display: flex;
+
+}
+
+.calendar-icon {
+    margin-top: 13px;
+    margin-left: 10px
+}
