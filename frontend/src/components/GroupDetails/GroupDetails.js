@@ -22,6 +22,8 @@ const GroupDetail = () => {
     return state?.group.details;
   });
   console.log(groups);
+  const events = useSelector((state) => Object.values(state?.event));
+  console.log(events, "555");
 
   useEffect(() => {
     dispatch(getGroupDetails(groupId));
@@ -89,7 +91,8 @@ const GroupDetail = () => {
                   </div>
 
                   <div className="number-of-events-privacy">
-                    <p>Number of Events: {groups.numMembers} </p>
+                    <p>Number of Events: {events.length} </p>
+
                     <p>&middot;</p>
                     {groups.private ? <p>Private</p> : <p>Public</p>}
                   </div>

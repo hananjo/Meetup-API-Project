@@ -157,31 +157,31 @@ const EventDetail = () => {
                 ) : (
                   <br />
                 )}
-                <div>
-                  <div className="modal-container">
-                    {showMenu && (
-                      <div className="delete-event-modal">
-                        <div className="delete-title">
-                          <h3> Confirm Delete</h3>
-                        </div>
-                        <div className="delete-question">
-                          <p> Are you sure you want to remove this event?</p>
-                        </div>
-                        <div className="confirmation-delete-buttons">
-                          <button
-                            className="delete-button"
-                            onClick={handleDelete}
-                          >
-                            Yes (Delete Event)
-                          </button>
-                          <button className="keep-button" onClick={closeMenu}>
-                            No (Keep Event)
-                          </button>
-                        </div>
+                {/* <div> */}
+                <div className="modal-container">
+                  {showMenu && (
+                    <div className="delete-event-modal">
+                      <div className="delete-title">
+                        <h3> Confirm Delete</h3>
                       </div>
-                    )}
-                  </div>
+                      <div className="delete-question">
+                        <p> Are you sure you want to remove this event?</p>
+                      </div>
+                      <div className="confirmation-delete-buttons">
+                        <button
+                          className="delete-button"
+                          onClick={handleDelete}
+                        >
+                          Yes (Delete Event)
+                        </button>
+                        <button className="keep-button" onClick={closeMenu}>
+                          No (Keep Event)
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
+                {/*  */}
               </div>
             </div>
           </div>

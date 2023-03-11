@@ -1,10 +1,51 @@
 import React from "react";
 import "./LandingPage.css";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+// import { useHistory } from "react-router-dom";
+import SignupFormModal from "../SignupFormModal";
 const LandingPage = () => {
   const user = useSelector((state) => state.session.user);
+
+  // function openSignUpModal() {
+  //   setShowModal(true);
+  // }
   // console.log("******123", user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
+
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      //   if (!ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+      //   }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  const closeMenu = () => setShowMenu(false);
+
+  const handleSubmit = () => {
+    dispatch(SignupFormModal());
+    setShowMenu(false);
+    // history.push(`/`);
+  };
+
   return (
     <div className="container">
       <section className="section1">
@@ -124,21 +165,28 @@ const LandingPage = () => {
           className="join-group-button-landing"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <button
-            style={{
-              backgroundColor: "teal",
-              borderRadius: "0px",
-              padding: "10px 22px",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
-              fontFamily: "Helvetica, sans-serif",
-              boxShadow: "2px 2px 0px 0px #000",
-              borderColor: "5px #000",
-            }}
-          >
-            Join Meetup
-          </button>
+          <div>
+            <button
+              style={{
+                backgroundColor: "teal",
+                borderRadius: "0px",
+                padding: "10px 22px",
+                fontSize: "15px",
+                fontWeight: "bold",
+                color: "white",
+                fontFamily: "Helvetica, sans-serif",
+                boxShadow: "2px 2px 0px 0px #000",
+                borderColor: "5px #000",
+                marginBottom: "20px",
+              }}
+              onClick={openMenu}
+            >
+              Join Meetup
+            </button>
+            <div className="landing-page-join-signup">
+              {showMenu && <SignupFormModal closeMenu={handleSubmit} />}
+            </div>
+          </div>
         </div>
       </section>
     </div>

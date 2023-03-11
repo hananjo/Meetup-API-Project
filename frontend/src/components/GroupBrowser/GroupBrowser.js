@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import { getAllGroups } from "../../store/group";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -13,7 +13,8 @@ const GroupBrowser = () => {
     // console.log("*********", groups);
   });
   //   console.log("9999999", groups);
-
+  const events = useSelector((state) => Object.values(state?.event));
+  console.log(events, "^^^");
   useEffect(() => {
     dispatch(getAllGroups());
   }, [dispatch]);
@@ -127,7 +128,7 @@ const GroupBrowser = () => {
                       marginBottom: "15%",
                     }}
                   >
-                    <p>Number of Events: {group.numMembers} </p>
+                    <p>Number of Events: {events.length} </p>
                     <p>&middot;</p>
                     {group.private ? <p>Private</p> : <p>Public</p>}
                   </div>

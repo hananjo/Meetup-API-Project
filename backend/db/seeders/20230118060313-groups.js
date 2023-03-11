@@ -12,7 +12,7 @@ module.exports = {
       {
         organizerId: 1,
         name: "Girls Want to Have Fun",
-        about: "Event for girls who want to enjoy fun activites!!!",
+        about: "Group for girls who want to enjoy fun activites!!!",
         type: "In person",
         private: false,
         city: "San Jose",
@@ -21,7 +21,8 @@ module.exports = {
       {
         organizerId: 2,
         name: "Networking Professionals",
-        about: "Event for networking with people in your industry",
+        about:
+          "Groups looking to network with people in their desired industry",
         type: "Online",
         private: true,
         city: "Santa Clara",
@@ -29,8 +30,8 @@ module.exports = {
       },
       {
         organizerId: 3,
-        name: "Singles Event",
-        about: "This event will have you meeting the love of your life!",
+        name: "Single & Ready to Mingle",
+        about: "This group will have you meeting the love of your life!",
         type: "In person",
         private: true,
         city: "Fremont",

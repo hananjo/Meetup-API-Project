@@ -168,7 +168,7 @@ const CreateEventForm = () => {
               <div className="calendar-icon-container">
                 <input
                   className="event-form-q-5-6-input"
-                  type="text"
+                  type="datetime-local"
                   name="startDate"
                   value={startDate}
                   placeholder="MM/DD/YYYY, HH/mm AM"
@@ -187,7 +187,7 @@ const CreateEventForm = () => {
               <div className="calendar-icon-container">
                 <input
                   className="event-form-q-5-6-input"
-                  type="text"
+                  type="datetime-local"
                   name="endDate"
                   value={endDate}
                   placeholder="MM/DD/YYYY, HH/mm PM"

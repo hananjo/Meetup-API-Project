@@ -105,3 +105,14 @@
 .join-group-button-landing {
     margin-right: 50px
 }
+
+.landing-page-join-signup {
+    position: fixed;
+    display: flex;
+
+    align-content: center;
+    margin-top: -820px;
+    margin-left: -110px;
+
+    background-color: white;
+}

@@ -186,7 +186,9 @@ const UpdateGroupForm = () => {
             type="text"
             name="preview"
             placeholder="Image Url"
+            value={preview}
             style={{ height: "25px", width: "352px" }}
+            onChange={(e) => setPreview(e.target.value)}
           />
         </div>
         <button
