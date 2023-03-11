@@ -59,7 +59,7 @@ export const getGroupDetails = (groupId) => async (dispatch) => {
   const response = await fetch(`/api/groups/${groupId}`);
   if (response.ok) {
     const group = await response.json();
-    console.log(group, "0000");
+
     dispatch(loadDetails(group));
   }
 };
@@ -101,7 +101,7 @@ const groupReducer = (state = initialState, action) => {
       return { ...state, details: action.groupId };
     case REMOVE_GROUP:
       const deleteNewState = { ...state };
-      console.log(action, "******");
+     
       delete deleteNewState.group[action.group.id];
 
       return deleteNewState;

@@ -17,15 +17,15 @@ const EventDetail = () => {
   const { eventId } = useParams();
 
   const group = useSelector((state) => state?.group);
-  console.log(group, "event detail group");
+
   const events = useSelector((state) => {
     return state?.event.details;
   });
-  console.log(events, "events%%%%%");
+
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(groups, "group%%%%%%");
+
 
   useEffect(() => {
     dispatch(getEventDetails(eventId));

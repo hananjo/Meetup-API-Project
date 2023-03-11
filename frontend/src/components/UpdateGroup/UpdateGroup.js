@@ -11,7 +11,7 @@ const UpdateGroupForm = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log("23458984", groups);
+
 
   const [name, setName] = useState(groups.name);
   const [city, setCity] = useState(groups.city);
@@ -54,7 +54,7 @@ const UpdateGroupForm = () => {
         preview,
         type: groupSetting,
       };
-      console.log(groupFormInput, "(((((((((((((");
+     
       let updatedGroup;
 
       updatedGroup = await dispatch(updateGroup(groupId, groupFormInput));

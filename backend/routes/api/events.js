@@ -174,7 +174,7 @@ router.get("/:eventId", async (req, res) => {
   const attending = await Attendee.findAll({
     where: { eventId: event.id },
   });
-  console.log(attending);
+  // console.log(attending);
   // console.log(attending.length);
   event.dataValues.numAttending = attending.length;
 
@@ -202,7 +202,7 @@ router.get("/:eventId/attendees", async (req, res) => {
       eventId: req.params.eventId,
     },
   });
-  console.log(attendee);
+  // console.log(attendee);
   const resObj = { Attendees: [] };
   for await (let oneOfAttendee of attendee) {
     const user = await User.findOne({
@@ -394,7 +394,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
     },
   });
   // console.log(event, group);
-  console.log(attendance);
+  // console.log(attendance);
   // const attendance = await Attendee.findOne({
   //   where: { userId: req.user.id, eventId: req.params.eventId },
   // });
@@ -445,7 +445,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res) => {
       });
     }
   }
-  console.log(attendance);
+  // console.log(attendance);
   const returnObj = {
     id: attendance.id,
     userId: attendance.userId,

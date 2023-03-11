@@ -12,17 +12,9 @@ const GroupBrowser = () => {
   const groups = useSelector((state) => {
     return Object.values(state?.group);
   });
-  console.log("*********", groups);
+
   const events = useSelector((state) => Object.values(state?.event));
 
-  // const groupEvents = ;
-
-  // events.filter((event) => {
-  //  groupEvents[event.groupId] =
-
-  // })
-
-  console.log(events, "^^^");
   useEffect(() => {
     dispatch(getAllGroups());
     dispatch(getAllEvents());

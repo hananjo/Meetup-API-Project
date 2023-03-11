@@ -13,7 +13,7 @@ import "./GroupDetails.css";
 
 const GroupDetail = () => {
   const user = useSelector((state) => state.session.user);
-  console.log(user);
+
   const history = useHistory();
   const dispatch = useDispatch();
   const { groupId } = useParams();
@@ -21,9 +21,8 @@ const GroupDetail = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(groups, "9999");
+
   const events = useSelector((state) => Object.values(state?.event));
-  console.log(events, "555");
 
   useEffect(() => {
     dispatch(getGroupDetails(groupId));
@@ -58,7 +57,7 @@ const GroupDetail = () => {
     setShowMenu(false);
     history.push("/api/groups");
   };
-  console.log(groups, "hello");
+
   return (
     <div>
       <div className="breadcrumb-group-link">

@@ -10,22 +10,21 @@ const EventGroups = () => {
   const events = useSelector((state) => {
     return Object.values(state?.event);
   });
-  console.log(events, "$$$");
+
   useEffect(() => {
     dispatch(getEventsForGroup(groupId));
     dispatch(getEventDetails(groupId));
   }, [dispatch]);
 
   const now = new Date();
-  console.log(now, "now");
+
   const upComingEvents = events.filter(
     (event) => new Date(event.startDate) >= now
   );
   const pastEvents = events.filter((event) => new Date(event.startDate) < now);
   upComingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-  console.log(upComingEvents, "up");
+
   pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-  console.log(pastEvents, "past");
 
   return (
     <div className="event-groups-container">

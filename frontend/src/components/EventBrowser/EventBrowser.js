@@ -11,7 +11,7 @@ const EventBrowser = () => {
   const events = useSelector((state) => {
     return Object.values(state?.event);
   });
-  console.log(events, "%%%%%%%");
+  // console.log(events, "%%%%%%%");
   useEffect(() => {
     dispatch(getAllEvents());
   }, [dispatch]);
