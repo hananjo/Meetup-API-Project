@@ -28,9 +28,9 @@ const LandingPage = () => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      //   if (!ulRef.current.contains(e.target)) {
-      setShowMenu(false);
-      //   }
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
     };
 
     document.addEventListener("click", closeMenu);
@@ -164,6 +164,7 @@ const LandingPage = () => {
         <div
           className="join-group-button-landing"
           style={{ display: "flex", justifyContent: "center" }}
+          ref={ulRef}
         >
           <div>
             <button
