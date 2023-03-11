@@ -21,7 +21,7 @@ const GroupDetail = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(groups);
+  console.log(groups, "9999");
   const events = useSelector((state) => Object.values(state?.event));
   console.log(events, "555");
 

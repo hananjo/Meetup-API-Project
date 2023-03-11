@@ -31,7 +31,12 @@
     border: 1px solid black;
     border-radius: 20px;
     padding: 20px;
-    width: 300px
+    width: 300px;
+    display: flex;
+}
+
+.event-detail-group-info-box {
+    margin-left: 20px
 }
 .event-info-box {
     border: 1px solid black;

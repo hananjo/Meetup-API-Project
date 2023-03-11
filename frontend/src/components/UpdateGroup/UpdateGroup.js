@@ -181,7 +181,7 @@ const UpdateGroupForm = () => {
               <option value={false}>Public</option>
             </select>
           </div>
-          <label>Please add an image URL for your group below:</label>
+          {/* <label>Please add an image URL for your group below:</label>
           <input
             type="text"
             name="preview"
@@ -189,7 +189,7 @@ const UpdateGroupForm = () => {
             value={preview}
             style={{ height: "25px", width: "352px" }}
             onChange={(e) => setPreview(e.target.value)}
-          />
+          /> */}
         </div>
         <button
           className="submit-button"

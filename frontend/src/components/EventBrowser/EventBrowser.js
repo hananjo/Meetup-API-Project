@@ -43,7 +43,7 @@ const EventBrowser = () => {
           return (
             <div key={event.id}>
               <NavLink
-                key={event.id}
+                // key={event.id}
                 to={`/api/events/${event.id}`}
                 style={{ textDecoration: "none" }}
               >
@@ -79,7 +79,7 @@ const EventBrowser = () => {
                     </div>
                     <div className="event-location">
                       {" "}
-                      <p>{event.Group.state}</p>
+                      {event && event.Group && <p>{event?.Group.state}</p>}
                     </div>
                   </div>
                 </div>

@@ -17,6 +17,7 @@ const EventDetail = () => {
   const { eventId } = useParams();
 
   const group = useSelector((state) => state?.group);
+  console.log(group, "event detail group");
   const events = useSelector((state) => {
     return state?.event.details;
   });
@@ -24,9 +25,11 @@ const EventDetail = () => {
   const groups = useSelector((state) => {
     return state?.group.details;
   });
-  console.log(group, "group%%%%%%");
+  console.log(groups, "group%%%%%%");
+
   useEffect(() => {
     dispatch(getEventDetails(eventId));
+    dispatch(getGroupDetails(eventId));
   }, [dispatch]);
 
   const [showMenu, setShowMenu] = useState(false);
@@ -85,9 +88,14 @@ const EventDetail = () => {
             {/* )} */}
             <div className="group-and-event-info-box">
               <div className="group-info-box">
-                {/* <img src={group[1].preview}></img> */}
-                <p className="group-name-events">{events.Group.name}</p>
-                {events.Group.private ? <p>Private</p> : <p>Public</p>}
+                <img
+                  style={{ width: "100px" }}
+                  src={groups?.GroupImages[0].url}
+                ></img>
+                <div className="event-detail-group-info-box">
+                  <p className="group-name-events">{events.Group.name}</p>
+                  {events.Group.private ? <p>Private</p> : <p>Public</p>}
+                </div>
               </div>
 
               <div className="event-info-box">
@@ -140,7 +148,7 @@ const EventDetail = () => {
                   <div className="pin-needle-icon">
                     <i
                       style={{ color: "lightgray", fontSize: "30px" }}
-                      class="fas fa-map-pin"
+                      className="fas fa-map-pin"
                     ></i>
                     <div className="event-detail-type">{events.type}</div>
                   </div>

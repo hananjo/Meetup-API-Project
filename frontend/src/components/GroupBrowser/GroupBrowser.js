@@ -3,20 +3,29 @@ import { getAllGroups } from "../../store/group";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import React from "react";
+import { getAllEvents } from "../../store/event";
 
 const GroupBrowser = () => {
-  const { groupId } = useParams();
+  // const { groupId } = useParams();
   const dispatch = useDispatch();
 
   const groups = useSelector((state) => {
     return Object.values(state?.group);
-    // console.log("*********", groups);
   });
-  //   console.log("9999999", groups);
+  console.log("*********", groups);
   const events = useSelector((state) => Object.values(state?.event));
+
+  // const groupEvents = ;
+
+  // events.filter((event) => {
+  //  groupEvents[event.groupId] =
+
+  // })
+
   console.log(events, "^^^");
   useEffect(() => {
     dispatch(getAllGroups());
+    dispatch(getAllEvents());
   }, [dispatch]);
 
   return (
@@ -128,7 +137,7 @@ const GroupBrowser = () => {
                       marginBottom: "15%",
                     }}
                   >
-                    <p>Number of Events: {events.length} </p>
+                    <p>Number of Events: {group.numEvents} </p>
                     <p>&middot;</p>
                     {group.private ? <p>Private</p> : <p>Public</p>}
                   </div>

@@ -1,4 +1,4 @@
-import { getEventsForGroup } from "../../store/event";
+import { getEventDetails, getEventsForGroup } from "../../store/event";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -10,9 +10,10 @@ const EventGroups = () => {
   const events = useSelector((state) => {
     return Object.values(state?.event);
   });
-
+  console.log(events, "$$$");
   useEffect(() => {
     dispatch(getEventsForGroup(groupId));
+    dispatch(getEventDetails(groupId));
   }, [dispatch]);
 
   const now = new Date();
@@ -35,6 +36,7 @@ const EventGroups = () => {
           </h2>
           {upComingEvents?.map((event) => (
             <NavLink
+              key={event.id}
               className="navlink-events-groups"
               to={`/api/events/${event.id}`}
             >

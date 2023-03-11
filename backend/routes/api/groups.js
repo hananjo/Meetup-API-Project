@@ -119,8 +119,12 @@ const validateEvent = [
 //Get all Groups
 router.get("/", async (req, res) => {
   // console.log("hello");
-  const groups = await Group.findAll({});
+  const groups = await Group.findAll();
   for await (let group of groups) {
+    const events = await Event.findAll({
+      where: { groupId: group.dataValues.id },
+    });
+    group.dataValues.numEvents = events.length;
     // console.log(group);
     const members = await Membership.findAll({
       where: { groupId: group.dataValues.id },
@@ -175,7 +179,7 @@ router.get("/current", requireAuth, async (req, res) => {
 
 // Get details of a Group from an id
 router.get("/:groupId", async (req, res) => {
-  console.log(req.params.groupId);
+  // console.log(req.params.groupId);
   const group = await Group.findByPk(req.params.groupId, {
     include: [
       {
@@ -203,7 +207,7 @@ router.get("/:groupId", async (req, res) => {
     const members = await Membership.findAll({
       where: { groupId: group.dataValues.id },
     });
-    console.log(group.dataValues);
+    // console.log(group.dataValues);
     // console.log(members.length);
     group.dataValues.numMembers = members.length;
     res.json(group);
@@ -236,7 +240,7 @@ router.get("/:groupId/members", async (req, res) => {
     groupMembers.forEach((member) => {
       const memberObj = {};
 
-      console.log(member.Memberships);
+      // console.log(member.Memberships);
       memberObj.id = member.id;
       memberObj.firstName = member.firstName;
       memberObj.lastName = member.lastName;
@@ -342,7 +346,7 @@ router.get("/:groupId/events", async (req, res) => {
       },
     });
     if (image) {
-      console.log(image.eventId);
+      // console.log(image.eventId);
       event.dataValues.preview = image.url;
     } else {
       event.dataValues.preview = null;
@@ -680,11 +684,11 @@ router.put("/:groupId/membership", requireAuth, async (req, res) => {
   const { userId, status } = req.body;
   // console.log(group, "!!!!!!!");
   // console.log(req.params.groupId);
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(member.dataValues, "!!!!!");
 
   // console.log(member.userId);
-  console.log(req.user.id);
+  // console.log(req.user.id);
   if (!group) {
     return res.status(404).json({
       message: "Group couldn't be found",
