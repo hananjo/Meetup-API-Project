@@ -55,14 +55,14 @@ const GroupDetail = () => {
   const handleDelete = () => {
     dispatch(deleteGroup(groupId));
     setShowMenu(false);
-    history.push("/api/groups");
+    history.push("/groups");
   };
 
   return (
     <div>
       <div className="breadcrumb-group-link">
         &lt;
-        <NavLink className="get-all-groups" to="/api/groups">
+        <NavLink className="get-all-groups" to="/groups">
           {" "}
           Groups{" "}
         </NavLink>
@@ -116,10 +116,10 @@ const GroupDetail = () => {
                 {user && groups && user.id === groups.organizerId ? (
                   <div>
                     <div className="manage-group-container">
-                      <NavLink to={`/api/groups/${groupId}/events`}>
+                      <NavLink to={`/groups/${groupId}/events`}>
                         <button className="manage-buttons">Create Event</button>
                       </NavLink>
-                      <NavLink to={`/api/groups/${groupId}/update`}>
+                      <NavLink to={`/groups/${groupId}/update`}>
                         <button className="manage-buttons">Update</button>
                       </NavLink>
                       <button className="manage-buttons" onClick={openMenu}>

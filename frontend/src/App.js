@@ -25,22 +25,18 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/api/groups" component={GroupBrowser} />
-          <Route exact path="/api/events" component={EventBrowser} />
-          <Route exact path="/api/groups/new" component={CreateGroupForm} />
-          <Route exact path="/api/groups/:groupId" component={GroupDetail} />
+          <Route exact path="/groups" component={GroupBrowser} />
+          <Route exact path="/events" component={EventBrowser} />
+          <Route exact path="/groups/new" component={CreateGroupForm} />
+          <Route exact path="/groups/:groupId" component={GroupDetail} />
           {/* <Route path="/api/groups/:groupId" component={EventGroups} /> */}
           <Route
             exact
-            path="/api/groups/:groupId/events"
+            path="/groups/:groupId/events"
             component={CreateEventForm}
           />
-          <Route exact path="/api/events/:eventId" component={EventDetail} />
-          <Route
-            exact
-            path="/api/groups/:groupId/update"
-            component={UpdateGroup}
-          />
+          <Route exact path="/events/:eventId" component={EventDetail} />
+          <Route exact path="/groups/:groupId/update" component={UpdateGroup} />
         </Switch>
       )}
     </>

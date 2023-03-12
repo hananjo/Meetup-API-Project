@@ -62,7 +62,7 @@ const CreateEventForm = () => {
       let addedNewEvent;
       addedNewEvent = await dispatch(addNewEvent(groupId, eventFormInput));
       if (addedNewEvent) {
-        history.push(`/api/events/${addedNewEvent.id}`);
+        history.push(`/events/${addedNewEvent.id}`);
       }
     }
 

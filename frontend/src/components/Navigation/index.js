@@ -22,7 +22,7 @@ function Navigation({ isLoaded }) {
       <div className="rightNav">
         {sessionUser && (
           <li style={{ listStyleType: "none" }}>
-            <NavLink exact to="/api/groups/new" className="start-new-group-nav">
+            <NavLink exact to="/groups/new" className="start-new-group-nav">
               Start a new group
             </NavLink>
           </li>
