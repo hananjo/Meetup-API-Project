@@ -69,13 +69,11 @@ function ProfileButton({ user }) {
           <>
             <div className="drop-down-container">
               <li style={{ listStyleType: "none" }}>
-                <div className="login-button-dropdown">
-                  <OpenModalButton
-                    buttonText="Log In"
-                    onButtonClick={closeMenu}
-                    modalComponent={<LoginFormModal />}
-                  />
-                </div>
+                <OpenModalButton
+                  buttonText="Log In"
+                  onButtonClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
               </li>
               <li style={{ listStyleType: "none" }}>
                 <OpenModalButton
