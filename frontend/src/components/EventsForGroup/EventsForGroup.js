@@ -13,7 +13,7 @@ const EventGroups = () => {
 
   useEffect(() => {
     dispatch(getEventsForGroup(groupId));
-    dispatch(getEventDetails(groupId));
+    // dispatch(getEventDetails(groupId));
   }, [dispatch]);
 
   const now = new Date();
@@ -35,7 +35,7 @@ const EventGroups = () => {
           </h2>
           {upComingEvents?.map((event) => (
             <NavLink
-              key={event.id}
+              // key={event.id}
               className="navlink-events-groups"
               to={`/events/${event.id}`}
             >

@@ -19,7 +19,8 @@ const CreateGroupForm = () => {
 
   useEffect(() => {
     const validationErrors = [];
-
+    const acceptedExtensions = [".png", "jpg", ".jpeg"];
+    const extension = preview.split(".").pop().toLowerCase();
     if (!name.length) {
       validationErrors.push("Name is required");
     }
@@ -39,8 +40,11 @@ const CreateGroupForm = () => {
       validationErrors.push("Visibility type is required");
     }
 
+    if (!acceptedExtensions.includes("." + extension)) {
+      validationErrors.push("Image URL must end in .png, .jpg, or .jpeg");
+    }
     setErrors(validationErrors);
-  }, [name, city, state, about]);
+  }, [name, city, state, about, preview]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

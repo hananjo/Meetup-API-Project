@@ -1,6 +1,6 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
-
+import "../Navigation/Navigation.css";
 function OpenModalButton({
   modalComponent, // component to render inside the modal
   buttonText, // text of the button that opens the modal
@@ -15,7 +15,11 @@ function OpenModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return (
+    <button className="login-button-dropdown" onClick={onClick}>
+      {buttonText}
+    </button>
+  );
 }
 
 export default OpenModalButton;

@@ -43,9 +43,12 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button className="profile-button" onClick={openMenu}>
+      <div className="profile-button">
+        <i className="fas fa-user-circle" onClick={openMenu} />
+      </div>
+      {/* <button className="profile-button" onClick={openMenu}>
         <i className="fas fa-user-circle" />
-      </button>
+      </button> */}
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
@@ -66,11 +69,13 @@ function ProfileButton({ user }) {
           <>
             <div className="drop-down-container">
               <li style={{ listStyleType: "none" }}>
-                <OpenModalButton
-                  buttonText="Log In"
-                  onButtonClick={closeMenu}
-                  modalComponent={<LoginFormModal />}
-                />
+                <div className="login-button-dropdown">
+                  <OpenModalButton
+                    buttonText="Log In"
+                    onButtonClick={closeMenu}
+                    modalComponent={<LoginFormModal />}
+                  />
+                </div>
               </li>
               <li style={{ listStyleType: "none" }}>
                 <OpenModalButton

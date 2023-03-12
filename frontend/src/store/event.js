@@ -52,15 +52,37 @@ export const getEventDetails = (eventId) => async (dispatch) => {
 };
 
 export const addNewEvent = (groupId, data) => async (dispatch) => {
-
+  const { preview } = data;
   const response = await csrfFetch(`/api/groups/${groupId}/events`, {
     method: "POST",
     body: JSON.stringify(data),
   });
-  const event = await response.json();
-  dispatch(addEvent(event));
+  let event;
+  if (response.ok) {
+    event = await response.json();
+    const bodyObj = {
+      url: preview,
+      preview: true,
+    };
+
+    await csrfFetch(`/api/events/${event.id}/images`, {
+      method: "POST",
+      body: JSON.stringify(bodyObj),
+    });
+    dispatch(addEvent(event));
+  }
   return event;
 };
+// export const addNewEvent = (groupId, data) => async (dispatch) => {
+
+//   const response = await csrfFetch(`/api/groups/${groupId}/events`, {
+//     method: "POST",
+//     body: JSON.stringify(data),
+//   });
+//   const event = await response.json();
+//   dispatch(addEvent(event));
+//   return event;
+// };
 export const deleteEvent = (eventId) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}`, {
     method: "DELETE",
@@ -78,7 +100,6 @@ const eventReducer = (state = initialState, action) => {
       const newState = {};
       action.list.forEach((event) => {
         newState[event.id] = event;
-
       });
       return {
         ...newState,
