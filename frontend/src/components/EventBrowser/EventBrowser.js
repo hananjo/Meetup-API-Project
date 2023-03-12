@@ -39,9 +39,9 @@ const EventBrowser = () => {
         </div>
       </div>
       <div className="get-all-top-container">
-        {events?.map((event) => {
+        {events?.map((event, index) => {
           return (
-            <div key={event.id}>
+            <div key={index}>
               <NavLink
                 // key={event.id}
                 to={`/events/${event.id}`}

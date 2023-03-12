@@ -33,7 +33,8 @@ const EventGroups = () => {
           <h2 className="events-group-title">
             Upcoming Events ({upComingEvents.length})
           </h2>
-          {upComingEvents?.map((event) => (
+          {upComingEvents?.map((event, index) => (
+            // <li key={index} style={{ listStyleType: "none" }}>
             <NavLink
               // key={event.id}
               className="navlink-events-groups"
@@ -76,6 +77,7 @@ const EventGroups = () => {
                 </div>
               </div>
             </NavLink>
+            // </li>
           ))}{" "}
         </div>
       ) : null}
