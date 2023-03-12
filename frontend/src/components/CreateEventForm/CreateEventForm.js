@@ -26,6 +26,9 @@ const CreateEventForm = () => {
   // console.log(groups);
   useEffect(() => {
     const validationErrors = [];
+    const acceptedExtensions = [".png", "jpg", ".jpeg"];
+    const extension = preview.split(".").pop().toLowerCase();
+
     if (!name.length) {
       validationErrors.push("Name is required");
     }
@@ -42,8 +45,11 @@ const CreateEventForm = () => {
       validationErrors.push("End date is required");
     }
 
+    if (!acceptedExtensions.includes("." + extension)) {
+      validationErrors.push("Image URL must end in .png, .jpg, or .jpeg");
+    }
     setErrors(validationErrors);
-  }, [name, description, price, startDate, endDate]);
+  }, [name, description, price, startDate, endDate, preview]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
