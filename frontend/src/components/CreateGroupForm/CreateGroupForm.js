@@ -19,6 +19,7 @@ const CreateGroupForm = () => {
 
   useEffect(() => {
     const validationErrors = [];
+
     if (!name.length) {
       validationErrors.push("Name is required");
     }
