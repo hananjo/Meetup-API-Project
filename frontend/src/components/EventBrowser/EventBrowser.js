@@ -105,7 +105,7 @@ const EventBrowser = () => {
       <div className="get-all-top-container">
         {pastEvents?.map((event) => {
           return (
-            <div key={index}>
+            <div key={event.id}>
               <NavLink
                 // key={event.id}
                 to={`/events/${event.id}`}
