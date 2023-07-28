@@ -1,4 +1,64 @@
-# `<name of application here>`
+# Meetup Project
+
+# Technologies Used:
+
+## Frontend:
+
+- React, Redux, Javascript
+
+## Backend:
+
+- Express
+
+## Hosting and Deployement:
+
+- Render
+
+# Link to Live Site:
+
+https://app-academy-meetup-project.onrender.com
+
+## Log in/Sign up:
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690575971/Screen_Shot_2023-07-28_at_1.25.42_PM_yeczmy.png)
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690575971/Screen_Shot_2023-07-28_at_1.25.50_PM_jgegtr.png)
+
+A user can log in with their login credentials. If a user doesn't have an account, they can create a new one by clicking on the sign up button, or they can log in as a demo user in the log in form.
+
+## Landing Page:
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574002/Screen_Shot_2023-07-28_at_12.50.31_PM_ydmgtb.png)
+
+This a the landing page where a logged in/out user can navigate to groups and events. Only a logged in user can access the 'Start a new group' link.
+
+## Groups:
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573998/Screen_Shot_2023-07-28_at_12.50.42_PM_sfehqj.png)
+
+Presented are the list of groups on Meetup.
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573998/Screen_Shot_2023-07-28_at_12.51.18_PM_iihwwj.png)
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574003/Screen_Shot_2023-07-28_at_12.51.33_PM_kjyel1.png)
+
+When a user clicks on a group, they are redirected to the group detail page. This page has the group information such as name, description, and list of associated events. These events are listed in chronological order of most recent to past events. If the user is the organizer of the group, they have the option to update and delete the group, as well as adding an event to the group.
+
+## Events:
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690574002/Screen_Shot_2023-07-28_at_12.52.42_PM_z1xbem.png)
+
+This presents the event detail page listing all the event information. On the right top of the screen is the group it is associated with.
+
+## Post Group/Event Forms:
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573997/Screen_Shot_2023-07-28_at_12.51.58_PM_cqe9an.png)
+
+Displayed here is the form to create a new group.
+
+![](https://res.cloudinary.com/dwphwqyrn/image/upload/v1690573997/Screen_Shot_2023-07-28_at_12.51.48_PM_omjlqc.png)
+
+Displayed above is the form to create a new group associated event.
 
 ## Database Schema Design
 
