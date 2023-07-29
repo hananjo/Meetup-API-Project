@@ -12,12 +12,24 @@ function LoginFormModal() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+  // const handleDemoLogin = (e) => {
+  //   e.preventDefault();
+  //   setCredential("Demo-lition");
+  //   setPassword("password");
+  //   dispatch(sessionActions.login("Demo-lition", "password"))
+  //   .then(closeModal);
+  // };
   const handleDemoLogin = (e) => {
     e.preventDefault();
-    setCredential("Demo-lition");
-    setPassword("password");
-    dispatch(sessionActions.login("Demo-lition", "password"));
+    const demoUser = {
+      credential: "Demo-lition",
+      password: "password",
+    };
+    setCredential(demoUser.credential);
+    setPassword(demoUser.password);
+    dispatch(sessionActions.login(demoUser)).then(closeModal);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
@@ -32,7 +44,10 @@ function LoginFormModal() {
   return (
     <div className="login-container">
       <h1 className="login-title">Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form
+        // ref={formRef}
+        onSubmit={handleSubmit}
+      >
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
