@@ -19,18 +19,24 @@ const EventDetail = () => {
   const group = useSelector((state) => state?.group);
 
   const events = useSelector((state) => {
-    return state?.event.details;
+    return state?.event?.details;
   });
+  console.log(events?.groupId, "events*******");
 
   const groups = useSelector((state) => {
-    return state?.group.details;
+    return state?.group?.details;
   });
 
-
   useEffect(() => {
-    dispatch(getEventDetails(eventId));
-    dispatch(getGroupDetails(eventId));
-  }, [dispatch]);
+    const fetchData = async () => {
+      dispatch(getEventDetails(eventId));
+      if (events?.groupId) {
+        await dispatch(getGroupDetails(events?.groupId));
+      }
+    };
+    fetchData();
+    // dispatch(getGroupDetails(events?.groupId));
+  }, [dispatch, eventId, events?.groupId]);
 
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -75,7 +81,7 @@ const EventDetail = () => {
             </p>
           </div>
           <div className="event-detail-title">
-            <h1>{events.name}</h1>
+            <h1>{events?.name}</h1>
           </div>
 
           {/* {events.EventImages && ( */}
@@ -83,18 +89,18 @@ const EventDetail = () => {
             <img
               style={{ width: "400px", height: "350px" }}
               src={events?.EventImages[0]?.url}
-              alt={events.name}
+              alt={events?.name}
             />
             {/* )} */}
             <div className="group-and-event-info-box">
               <div className="group-info-box">
                 <img
                   style={{ width: "100px" }}
-                  src={groups?.GroupImages[0].url}
+                  src={groups?.GroupImages[0]?.url}
                 ></img>
                 <div className="event-detail-group-info-box">
-                  <p className="group-name-events">{events.Group.name}</p>
-                  {events.Group.private ? <p>Private</p> : <p>Public</p>}
+                  <p className="group-name-events">{events?.Group?.name}</p>
+                  {events?.Group?.private ? <p>Private</p> : <p>Public</p>}
                 </div>
               </div>
 
