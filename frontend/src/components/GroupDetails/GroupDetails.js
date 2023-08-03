@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getGroupDetails } from "../../store/group";
 import { deleteGroup } from "../../store/group";
+import { getAllGroups } from "../../store/group";
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
@@ -56,6 +57,7 @@ const GroupDetail = () => {
     dispatch(deleteGroup(groupId));
     setShowMenu(false);
     history.push("/groups");
+    dispatch(getAllGroups());
   };
 
   return (
