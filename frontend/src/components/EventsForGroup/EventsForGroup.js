@@ -37,7 +37,7 @@ const EventGroups = () => {
             <NavLink
               // key={event.id}
               className="navlink-events-groups"
-              to={`/api/events/${event.id}`}
+              to={`/events/${event.id}`}
             >
               <div className="events-for-group-box">
                 <div className="events-for-group-container">
@@ -85,7 +85,7 @@ const EventGroups = () => {
           {pastEvents?.map((event) => (
             <NavLink
               className="navlink-events-groups"
-              to={`/api/events/${event.id}`}
+              to={`/events/${event.id}`}
             >
               <div className="events-for-group-box">
                 <div className="events-for-group-container">

@@ -35,7 +35,7 @@ const EventBrowser = () => {
           </div>
 
           <NavLink
-            to="/api/groups"
+            to="/groups"
             style={{ color: "#666666" }}
             onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
             onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
@@ -54,7 +54,7 @@ const EventBrowser = () => {
             <div key={event.id}>
               <NavLink
                 // key={event.id}
-                to={`/api/events/${event.id}`}
+                to={`/events/${event.id}`}
                 style={{ textDecoration: "none" }}
               >
                 <div className="get-all-listings">
@@ -108,7 +108,7 @@ const EventBrowser = () => {
             <div key={event.id}>
               <NavLink
                 // key={event.id}
-                to={`/api/events/${event.id}`}
+                to={`/events/${event.id}`}
                 style={{ textDecoration: "none" }}
               >
                 <div className="get-all-listings">

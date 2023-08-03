@@ -64,7 +64,7 @@ const CreateGroupForm = () => {
       // console.log("******", addedNewGroup);
       // console.log(addNewGroup);
       if (addedNewGroup) {
-        history.push(`/api/groups/${addedNewGroup.id}`);
+        history.push(`/groups/${addedNewGroup.id}`);
         // hideForm();
       }
     }

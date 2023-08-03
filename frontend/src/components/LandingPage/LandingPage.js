@@ -86,7 +86,7 @@ const LandingPage = () => {
         // }}
       >
         <NavLink
-          to="/api/groups"
+          to="/groups"
           // className="navlink-see-all-groups"
           style={{
             color: "teal",
@@ -110,7 +110,7 @@ const LandingPage = () => {
         {/* </div> */}
         {/* <div className="column"> */}
         <NavLink
-          to="/api/events"
+          to="/events"
           // className="navlink-see-all-events"
           style={{
             color: "teal",
@@ -134,7 +134,7 @@ const LandingPage = () => {
         {/* <div className="column"> */}
         {user ? (
           <NavLink
-            to="/api/groups/new"
+            to="/groups/new"
             // className={user ? "not-disabled" : "disabled"}
             // className="navlink-create-new-group"
             style={{

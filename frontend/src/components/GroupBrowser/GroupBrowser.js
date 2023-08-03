@@ -32,7 +32,7 @@ const GroupBrowser = () => {
           }}
         >
           <NavLink
-            to="/api/events"
+            to="/events"
             style={{
               marginRight: "20px",
               textDecoration: "none",
@@ -62,7 +62,7 @@ const GroupBrowser = () => {
             // <div key={group.id}>
             <NavLink
               key={group.id}
-              to={`/api/groups/${group.id}`}
+              to={`/groups/${group.id}`}
               style={{ textDecoration: "none" }}
             >
               <div

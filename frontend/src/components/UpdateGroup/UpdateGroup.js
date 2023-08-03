@@ -12,7 +12,6 @@ const UpdateGroupForm = () => {
     return state?.group.details;
   });
 
-
   const [name, setName] = useState(groups.name);
   const [city, setCity] = useState(groups.city);
   const [state, setState] = useState(groups.state);
@@ -54,13 +53,13 @@ const UpdateGroupForm = () => {
         preview,
         type: groupSetting,
       };
-     
+
       let updatedGroup;
 
       updatedGroup = await dispatch(updateGroup(groupId, groupFormInput));
 
       if (updatedGroup) {
-        history.push(`/api/groups/${groupId}`);
+        history.push(`/groups/${groupId}`);
       }
     }
   };

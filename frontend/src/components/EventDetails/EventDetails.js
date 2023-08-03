@@ -65,7 +65,7 @@ const EventDetail = () => {
   const handleDelete = () => {
     dispatch(deleteEvent(eventId));
     setShowMenu(false);
-    history.push(`/api/groups/${events.Group.id}`);
+    history.push(`/groups/${events.Group.id}`);
   };
   return (
     <div className="event-detail-container">
@@ -74,7 +74,7 @@ const EventDetail = () => {
           <div className="breadcrumb-event-link">
             <p>
               &lt;{" "}
-              <NavLink style={{ color: "teal" }} to="/api/events">
+              <NavLink style={{ color: "teal" }} to="/events">
                 {" "}
                 Events
               </NavLink>
