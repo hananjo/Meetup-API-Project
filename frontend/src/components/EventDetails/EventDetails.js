@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getEventDetails } from "../../store/event";
+import { getAllEvents, getEventDetails } from "../../store/event";
 import { getGroupDetails } from "../../store/group";
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
@@ -64,8 +64,11 @@ const EventDetail = () => {
 
   const handleDelete = () => {
     dispatch(deleteEvent(eventId));
+
     setShowMenu(false);
     history.push(`/groups/${events.Group.id}`);
+
+    // dispatch(getAllEvents());
   };
   return (
     <div className="event-detail-container">

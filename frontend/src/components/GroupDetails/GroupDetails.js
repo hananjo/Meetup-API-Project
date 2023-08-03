@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import EventGroups from "../EventsForGroup/EventsForGroup";
 
 import "./GroupDetails.css";
+import { getAllEvents } from "../../store/event";
 
 const GroupDetail = () => {
   const user = useSelector((state) => state.session.user);
