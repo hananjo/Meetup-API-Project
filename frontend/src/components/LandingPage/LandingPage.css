@@ -116,3 +116,118 @@
     margin-left: -126px;
     background-color: white;
 }
+
+
+.landing-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background: linear-gradient(to bottom, #f2e8d6 60%, white 40%); */
+    background-color: teal;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-left: -20px;
+    margin-right: -30px;
+    margin-bottom: -50px;
+    border-top: 1px solid rgb(211, 209, 209);
+    border-bottom: 1px solid rgb(211, 209, 209);
+
+
+}
+
+.social-links-landing-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    margin-left: -40px;
+}
+
+.credits-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 90px;
+}
+.github-project-link{
+    /* display: flex;
+    flex-direction: row;
+    gap: 10px; */
+    display: inline-block;
+}
+.meetup {
+    font-size: 20px;
+}
+.a-link{
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.a-link:hover {
+    color:rgb(211, 209, 209);
+
+    text-decoration: none;
+}
+/* .github-project-link:hover{
+    color:rgb(254, 55, 20)
+} */
+.member-name {
+    font-size: 18px;
+}
+.meetup-github{
+    font-family: 'Courier New', Courier, monospace;
+    font-size:  20px;
+    text-decoration: none;
+    color: white;
+}
+
+.meetup-github:hover {
+    /* color:rgb(254, 55, 20) */
+
+}
+/* .fa.fa-github {
+    font-size: 20px;
+    color: white;
+
+
+} */
+
+.github-icon-2:hover {
+    color:rgb(211, 209, 209)
+}
+
+.fa.fa-github:hover {
+    /* color:rgb(254, 55, 20) */
+    color:rgb(211, 209, 209)
+}
+.fa.fa-linkedin-square {
+    font-size: 20px;
+    color: white;
+}
+
+.fa.fa-linkedin-square:hover {
+    /* color:rgb(254, 55, 20) */
+    color:rgb(211, 209, 209)
+}
+
+.fa.fa-angellist{
+    font-size: 20px;
+    color: white;
+}
+
+.fa.fa-angellist:hover {
+    /* color:rgb(254, 55, 20) */
+    color:rgb(211, 209, 209)
+}
+.member {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.github-and-linkedin{
+    display: flex;
+    justify-content: center;
+    gap: 13px;
+}

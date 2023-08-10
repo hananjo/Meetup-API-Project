@@ -190,6 +190,52 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      <div className="landing-footer">
+        <div className="social-links-landing-container">
+          <div className="github-project-link">
+            <div>
+              <a
+                className="a-link"
+                href="https://github.com/hananjo/Meetup-API-Project"
+              >
+                <span className="github-icon-1">
+                  <i class="fa fa-github" aria-hidden="true"></i>
+                </span>{" "}
+                <span className="meetup">M e e t u p</span>
+              </a>
+            </div>
+          </div>
+          <div className="credits-container">
+            <div className="member">
+              {/* <div className="member-name">
+                <p>Hanan Jomaa</p>
+              </div> */}
+              <div className="github-and-linkedin">
+                <a href="https://github.com/hananjo">
+                  <div
+                    className="github-icon-2"
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                      ":hover": {
+                        color: "grey",
+                      },
+                    }}
+                  >
+                    <i class="fa fa-github" aria-hidden="true"></i>
+                  </div>
+                </a>
+                <a href="https://www.linkedin.com/in/hanan-jomaa-94350192/">
+                  <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </a>
+                <a href="https://wellfound.com/u/hanan-jomaa">
+                  <i class="fa fa-angellist" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
